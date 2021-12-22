@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.db</groupId>
-	<artifactId>coracoes_da_lila</artifactId>
+	<artifactId>ProjetoLilaBack</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>coracoes_da_lila</name>
 	<description>Jogo de cartas </description>
