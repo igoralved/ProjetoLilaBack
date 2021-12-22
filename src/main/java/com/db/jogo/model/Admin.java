@@ -31,6 +31,13 @@ public class Admin  {
 	@Column
 	private String senha;
 
+	public Admin(UUID id, String senha) {
+		super();
+		this.id = id;
+		this.senha = senha;
+	}
+
+	
 	
 	
 	
