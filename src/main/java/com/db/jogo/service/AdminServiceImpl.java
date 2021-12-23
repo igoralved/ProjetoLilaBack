@@ -1,14 +1,14 @@
 package com.db.jogo.service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import com.db.jogo.model.Admin;
 import com.db.jogo.repository.AdminRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AdminServiceImpl  implements AdminService{
@@ -34,5 +34,11 @@ public class AdminServiceImpl  implements AdminService{
     @Override
     public Admin saveAdmin(Admin admin) throws DataAccessException {
         return adminRepository.save(admin);
+    }
+
+    @Override
+    public Iterable<Admin> findAll() throws DataAccessException {
+        
+        return adminRepository.findAll();
     }
 }
