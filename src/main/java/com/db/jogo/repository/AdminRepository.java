@@ -1,11 +1,11 @@
 package com.db.jogo.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.db.jogo.model.Admin;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AdminRepository extends JpaRepository<Admin , Long>{
-	
-	Admin findById(long id);
+import java.util.UUID;
 
+@Repository
+public interface AdminRepository extends CrudRepository<Admin , UUID> {
 }

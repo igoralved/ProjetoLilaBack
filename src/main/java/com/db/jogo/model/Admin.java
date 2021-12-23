@@ -9,43 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Data
-@Getter
-@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 @Entity
-@Table(name = "TB_ADMIN")
+@Table(name="tb_admin")
 public class Admin  {
 	
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
 	@Column
 	private String senha;
-
-	public Admin(UUID id, String senha) {
-		super();
-		this.id = id;
-		this.senha = senha;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
