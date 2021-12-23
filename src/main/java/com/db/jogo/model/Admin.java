@@ -10,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Entity
@@ -21,7 +18,6 @@ public class Admin  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private UUID id;
 	
 	@Column
