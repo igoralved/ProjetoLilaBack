@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,12 +19,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Admin  {
+public class Baralho {
+	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
+	@Column 
+	private  String codigo;
+	
+	@Column 
+	private String titulo;
+	
 	@Column
-	private String senha;
+	private String descricao;
+	
 }
+
+
