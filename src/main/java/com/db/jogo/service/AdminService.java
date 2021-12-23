@@ -1,5 +1,15 @@
 package com.db.jogo.service;
 
-public class AdminService {
+import java.util.UUID;
+
+import com.db.jogo.model.Admin;
+
+import org.springframework.dao.DataAccessException;
+
+public interface AdminService {
+
+    Admin findById(UUID id) throws DataAccessException;
+    Admin saveAdmin(Admin admin) throws DataAccessException;
+    Iterable<Admin> findAll() throws DataAccessException;
 
 }
