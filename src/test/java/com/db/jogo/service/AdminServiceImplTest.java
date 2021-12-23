@@ -21,7 +21,7 @@ class AdminServiceImplTest {
 
     Admin admin = Admin.builder().senha("123").build();
 
-    @DisplayName("Teste da POST de um admin")
+    @DisplayName("Teste do SAVE do Service de um Admin")
     @Test
     void saveAdmin() {
        when(adminServiceImpl.saveAdmin(admin)).thenReturn(admin);
