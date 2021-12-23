@@ -15,30 +15,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
-@Table(name = "TB_ADMIN")
+@Table(name="tb_admin")
 public class Admin  {
-	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+
 	private UUID id;
 	
 	@Column
 	private String senha;
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
