@@ -1,5 +1,7 @@
 # ProjetoLilaBack
 
+[![Java CI with Maven](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml)
+
 /* Padronização */
 
 * Configuração do Banco  postegresSQL- 14 versão
