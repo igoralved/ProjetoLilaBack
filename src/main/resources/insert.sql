@@ -1,5 +1,2 @@
-INSERT INTO tb_admin(senha) VALUES('senha secreta');
-INSERT INTO tb_admin(senha) VALUES('456');
-
--- INSERT INTO tb_admin(senha) SELECT('senhasecreta') FROM tb_admin
--- WHERE NOT EXISTS (SELECT * FROM tb_admin where senha = 'senhasecreta');
+INSERT INTO tb_admin(id, senha) 
+VALUES('d1516d33-ff6f-4dc9-aedf-9316421096cb','senha secreta') ON CONFLICT(id) DO NOTHING;
