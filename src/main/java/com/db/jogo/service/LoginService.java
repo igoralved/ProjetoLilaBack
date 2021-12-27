@@ -1,10 +1,9 @@
 package com.db.jogo.service;
 
 import com.db.jogo.model.Admin;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class LoginService {
@@ -12,14 +11,14 @@ public class LoginService {
     @Autowired
     private AdminService admService;
 
-    public Boolean verificaSenha(Admin admin) throws IllegalArgumentException{
+    public Boolean verificaSenha(String senha) throws IllegalArgumentException{
         Boolean result = false;
         try {
-            if(admin.getSenha() == null){
+            if(senha == null){
                 result = false;
             }else {
-                Admin adminFind = admService.findById(admin.getId());
-                result = adminFind.getSenha().equals(admin.getSenha());
+                Admin adminFind = admService.findBySenha(senha);
+                result = adminFind != null;
             }
         }catch(NullPointerException e){
             result = false;

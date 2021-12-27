@@ -41,4 +41,15 @@ public class AdminServiceImpl  implements AdminService{
         
         return adminRepository.findAll();
     }
+
+    @Override
+    public Admin findBySenha(String senha) throws DataAccessException {
+        Admin admin = this.adminRepository.findBySenha(senha);
+        if (admin == null){
+            return null;
+        }
+        return admin;
+}
+        
+    
 }
