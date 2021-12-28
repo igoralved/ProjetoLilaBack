@@ -1,6 +1,7 @@
 package com.db.jogo.controller;
 
 import com.db.jogo.model.Admin;
+import com.db.jogo.model.Autenticacao;
 import com.db.jogo.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Boolean> verificaSenha(@RequestBody Admin admin, BindingResult bindingResult){
+    public ResponseEntity<Autenticacao> verificaSenha(@RequestBody Admin admin, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Autenticacao>(new Autenticacao(false), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Boolean>(loginService.verificaSenha(admin.getSenha()), HttpStatus.OK);
+        return new ResponseEntity<Autenticacao>(new Autenticacao(loginService.verificaSenha(admin.getSenha())), HttpStatus.OK);
     }
 }
