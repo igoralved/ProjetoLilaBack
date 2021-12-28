@@ -1,43 +1,59 @@
-// package com.db.jogo.controller;
+package com.db.jogo.controller;
 
-// import java.util.UUID;
+import static org.mockito.BDDMockito.given;
 
-// import com.db.jogo.model.Admin;
-// import com.db.jogo.service.AdminService;
+import java.util.UUID;
 
-// import org.junit.jupiter.api.Test;
-// import org.junit.runner.RunWith;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-// import org.springframework.boot.test.context.SpringBootTest;
-// import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-// import org.springframework.boot.test.mock.mockito.MockBean;
-// import org.springframework.test.context.TestPropertySource;
-// import org.springframework.test.context.junit4.SpringRunner;
-// import org.springframework.test.web.servlet.MockMvc;
+import com.db.jogo.model.Admin;
+import com.db.jogo.service.AdminService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-// @RunWith(SpringRunner.class)
-// @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
-// @AutoConfigureMockMvc
-// @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-// public class LoginControllerTest {
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+@SpringBootTest
+@AutoConfigureMockMvc
+public class LoginControllerTest {
     
-//     @Autowired
-//     private LoginController loginController;
+    @Autowired
+    private LoginController loginController;
 
-//     @Autowired
-//     private MockMvc mvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-//     @MockBean
-// 	private AdminService adminService;
+    @Autowired
+    @MockBean
+	private AdminService adminService;
 
-//    @Test
-//     public void testVerificaSenha() throws Exception {
-//         Admin admin = new Admin();
-//         admin.setId(UUID.randomUUID());
-//         admin.setSenha("123");
-//         given(adminService.findBySenha("123")).willReturn(admin);
-    
-//     }
+    @Test
+    public void testVerificaSenha() throws Exception{
+        Admin admin = new Admin();
+        admin.setId(UUID.randomUUID());
+        admin.setSenha("123");
+        given(adminService.findBySenha("123")).willReturn(admin);
+        
 
-// }
+        this.mockMvc.perform(get("/login")
+            .content(asJsonString(admin))
+            .accept(MediaType.APPLICATION_JSON_VALUE)  
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("true"))
+            .andExpect(status().isOk());
+
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+}
+}
