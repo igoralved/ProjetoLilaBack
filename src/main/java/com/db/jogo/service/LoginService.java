@@ -23,7 +23,6 @@ public class LoginService {
         }catch(NullPointerException e){
             resultado = false;
         }
-
         return resultado;
     }
 }
