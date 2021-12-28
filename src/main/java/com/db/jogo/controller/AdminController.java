@@ -31,7 +31,6 @@ public class AdminController {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Iterable<Admin>> findAdmin() {
-      
         return new ResponseEntity<Iterable<Admin>>(adminService.findAll(), HttpStatus.OK);
     }
 }
