@@ -12,18 +12,18 @@ public class LoginService {
     private AdminService admService;
 
     public Boolean verificaSenha(String senha) throws IllegalArgumentException{
-        Boolean result = false;
+        Boolean resultado = false;
         try {
             if(senha == null){
-                result = false;
+                resultado = false;
             }else {
-                Admin adminFind = admService.findBySenha(senha);
-                result = adminFind != null;
+                Admin adminEncontrado = admService.findBySenha(senha);
+                resultado = adminEncontrado != null;
             }
         }catch(NullPointerException e){
-            result = false;
+            resultado = false;
         }
 
-        return result;
+        return resultado;
     }
 }
