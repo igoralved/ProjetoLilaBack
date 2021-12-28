@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Baralho {
 	
 	@Id
-	private String id;
+	private String codigo;
 	
 	@Column
 	private String titulo;

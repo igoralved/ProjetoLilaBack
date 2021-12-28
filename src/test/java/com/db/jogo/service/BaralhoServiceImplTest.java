@@ -24,7 +24,7 @@ class BaralhoServiceImplTest {
 	@Mock
     private BaralhoServiceImpl baralhoServiceImpl;
 
-    Baralho baralho = Baralho.builder().id("LILA1").titulo("Corações de Lila").descricao("Jogo de cartas").build();
+    Baralho baralho = Baralho.builder().codigo("LILA1").titulo("Corações de Lila").descricao("Jogo de cartas").build();
 
     @DisplayName("Teste do SAVE do Service de um Baralho")
     @Test
