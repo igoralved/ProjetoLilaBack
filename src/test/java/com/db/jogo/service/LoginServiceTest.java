@@ -19,7 +19,7 @@ class LoginServiceTest {
 	@Test
 	public void loginComSucesso() throws Exception {
 
-		boolean actual = loginService.verificaSenha("12783");
+		boolean actual = loginService.verificaSenha("Lil@123");
 
 		assertEquals(true, actual);
 	}
