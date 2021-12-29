@@ -1,3 +1,5 @@
+
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS public.admin (
@@ -16,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.baralho
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
 CREATE TABLE IF NOT EXISTS public.categoria_de_carta
 (
     id uuid NOT NULL,
@@ -24,8 +27,8 @@ CREATE TABLE IF NOT EXISTS public.categoria_de_carta
 );
 CREATE TABLE IF NOT EXISTS public.tipo_carta
 (
-    id uuid NOT NULL,
+    id uuid NOT NULL DEFAULT uuid_generate_v4(),
     bonus boolean NOT NULL,
     nome character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_carta_pkey PRIMARY KEY (id)
-)
+);
