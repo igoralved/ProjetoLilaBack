@@ -22,8 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class LoginControllerTest {
     
-    @Autowired
-    private LoginController loginController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -67,7 +65,8 @@ public class LoginControllerTest {
                     .andExpect(status().isOk());
 
     }
-    public static String asJsonString(final Object obj) {
+
+    private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {

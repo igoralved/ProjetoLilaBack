@@ -2,10 +2,6 @@ package com.db.jogo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.db.jogo.model.Admin;
-import com.db.jogo.service.AdminService;
-import com.db.jogo.service.LoginService;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
