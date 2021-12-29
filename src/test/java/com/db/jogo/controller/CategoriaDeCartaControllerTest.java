@@ -1,8 +1,8 @@
 package com.db.jogo.controller;
 
 
-import com.db.jogo.model.Categoria;
-import com.db.jogo.service.CategoriaServicelmpl;
+import com.db.jogo.model.CategoriaDeCarta;
+import com.db.jogo.service.CategoriaDeCartaServicelmpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,17 +30,17 @@ public class CategoriaControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    CategoriaServicelmpl categoriaService;
+    CategoriaDeCartaServicelmpl categoriaService;
 
     @Test
     @DisplayName("teste do Post do ontroller da Categoria")
     public void testCriacaoCategoria() throws Exception {
-        Categoria newCategoria = Categoria.builder().nome("Fisica")
+        CategoriaDeCarta newCategoria = CategoriaDeCarta.builder().nome("Fisica")
                 .build();
         ObjectMapper mapper = new ObjectMapper();
 
         String newCategoriaAsJSON = mapper.writeValueAsString(newCategoria);
-        this.mockMvc.perform(post("/baralho").content(newCategoriaAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(post("/categoriaDeCarta").content(newCategoriaAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isCreated());
     }
 
