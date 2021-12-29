@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INSERT INTO admin(senha) VALUES('123')ON CONFLICT(id) DO NOTHING;
 INSERT INTO admin(senha) VALUES('456')ON CONFLICT(id) DO NOTHING;
 
@@ -11,3 +12,7 @@ INSERT INTO public.categoria_de_carta(
 	INSERT INTO public.tipo_carta(
 	id, bonus, nome)
 	VALUES ('fd7b6723-77e2-4846-bd22-88df15ca150a', 'true', 'pessoa');
+=======
+INSERT INTO tb_admin(senha) VALUES('123');
+INSERT INTO tb_admin(senha) VALUES('456');
+>>>>>>> origin/US004modeldobaralho

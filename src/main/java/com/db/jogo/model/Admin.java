@@ -21,6 +21,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
+<<<<<<< HEAD
+=======
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+>>>>>>> origin/US004modeldobaralho
 
 public class Admin  {
 	@Id

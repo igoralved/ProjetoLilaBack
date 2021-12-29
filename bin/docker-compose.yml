@@ -5,9 +5,15 @@ services:
         image: postgres:latest
         restart: always
         environment:
+<<<<<<< HEAD
             POSTGRES_DB: lila
             POSTGRES_USER: lila
             POSTGRES_PASSWORD: lila
+=======
+            POSTGRES_DB: coracoes_da_lila
+            POSTGRES_USER: coracoes_da_lila
+            POSTGRES_PASSWORD: coracoes_da_lila
+>>>>>>> origin/US004modeldobaralho
             PGDATA: /var/lib/postgresql/data
         volumes:
             - db-data:/var/lib/postgresql/data
@@ -18,7 +24,11 @@ services:
         image: dpage/pgadmin4:latest
         restart: always
         environment:
+<<<<<<< HEAD
             PGADMIN_DEFAULT_EMAIL: admin@linuxhint.com
+=======
+            PGADMIN_DEFAULT_EMAIL: admin@email.com
+>>>>>>> origin/US004modeldobaralho
             PGADMIN_DEFAULT_PASSWORD: lila
             PGADMIN_LISTEN_PORT: 80
         ports:
