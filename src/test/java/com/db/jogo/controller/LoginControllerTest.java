@@ -1,15 +1,16 @@
 package com.db.jogo.controller;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.UUID;
 
 import com.db.jogo.model.Admin;
-import com.db.jogo.model.Autenticacao;
 import com.db.jogo.service.AdminService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LoginControllerTest {
@@ -41,11 +41,11 @@ public class LoginControllerTest {
         
 
         this.mockMvc.perform(get("/login")
-            .content(asJsonString(admin))
-            .accept(MediaType.APPLICATION_JSON_VALUE)  
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.logado").value("true"))
-            .andExpect(status().isOk());
+                    .content(asJsonString(admin))
+                    .accept(MediaType.APPLICATION_JSON_VALUE)  
+                    .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andExpect(jsonPath("$.logado").value("true"))
+                    .andExpect(status().isOk());
 
     }
 
@@ -60,11 +60,11 @@ public class LoginControllerTest {
         adminRequest.setSenha("321");
 
         this.mockMvc.perform(get("/login")
-                        .content(asJsonString(adminRequest))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.logado").value("false"))
-                .andExpect(status().isOk());
+                    .content(asJsonString(adminRequest))
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andExpect(jsonPath("$.logado").value("false"))
+                    .andExpect(status().isOk());
 
     }
     public static String asJsonString(final Object obj) {
