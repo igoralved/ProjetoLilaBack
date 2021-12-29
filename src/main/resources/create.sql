@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS public.baralho
         ON DELETE NO ACTION
 );
 
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS public.categoria_de_carta
 (
     id uuid NOT NULL,
@@ -30,14 +29,4 @@ CREATE TABLE IF NOT EXISTS public.tipo_carta
     bonus boolean NOT NULL,
     nome character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_carta_pkey PRIMARY KEY (id)
-=======
-CREATE TABLE IF NOT EXISTS public.baralho
-(
-    id uuid NOT NULL,
-    codigo character varying(255) COLLATE pg_catalog."default" PRIMARY KEY,
-    descricao character varying(255) COLLATE pg_catalog."default",
-    senha character varying(255) COLLATE pg_catalog."default",
-    titulo character varying(255) COLLATE pg_catalog."default"
-   
->>>>>>> origin/US004modeldobaralho
 );
