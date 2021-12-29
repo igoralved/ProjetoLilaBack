@@ -42,7 +42,7 @@ class BaralhoControllerTest {
 	@Test
 	@DisplayName("Teste do POST do Controller do Baralho")
 	public void testCriacaoBaralho() throws Exception {
-		Baralho newBaralho = Baralho.builder().id("LILA1")
+		Baralho newBaralho = Baralho.builder().id_codigo("LILA1")
 				.titulo("Corações de Lila")
 				.descricao("Jogo de cartas.")
 				.build();

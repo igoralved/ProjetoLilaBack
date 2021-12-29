@@ -3,6 +3,8 @@ package com.db.jogo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -15,16 +17,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-@Table(name="tb_baralho")
+
 public class Baralho {
 	
 	@Id
-	private String id;
-	
-	@Column
+	private  String id_codigo;
+		
+	@ManyToOne
+	@JoinColumn(name="admin_id_codigo")
+	private Admin admin;
+
+	@Column( name ="titulo", nullable = false)
 	private String titulo;
 	
-	@Column
-	private String descricao;	
-	
+	@Column( name ="descricao", nullable = false)
+	private String descricao;
 }
