@@ -1,7 +1,8 @@
 package com.db.jogo.controller;
 
 import com.db.jogo.model.Admin;
-import com.db.jogo.service.AdminService;
+import com.db.jogo.model.Autenticacao;
+import com.db.jogo.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,22 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/login")
+public class LoginController {
 
     @Autowired
-    private AdminService adminService;
-
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<Admin> saveAdmin(@RequestBody Admin admin, BindingResult bindingResult) {
-        if(bindingResult.hasErrors() || (admin.getSenha() == null)){
-            return new ResponseEntity<Admin>(admin, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<Admin>(adminService.saveAdmin(admin), HttpStatus.CREATED);
-    }
+    private LoginService loginService;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Iterable<Admin>> findAdmin() {
-        return new ResponseEntity<Iterable<Admin>>(adminService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Autenticacao> verificaSenha(@RequestBody Admin admin, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<Autenticacao>(new Autenticacao(false), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Autenticacao>(new Autenticacao(loginService.verificaSenha(admin.getSenha())), HttpStatus.OK);
     }
 }
