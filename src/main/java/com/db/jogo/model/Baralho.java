@@ -1,11 +1,7 @@
 package com.db.jogo.model;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,13 +15,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-@Table(name="tb_admin")
-public class Admin  {
+@Table(name="tb_baralho")
+public class Baralho {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private String id;
 	
 	@Column
-	private String senha;
+	private String titulo;
+	
+	@Column
+	private String descricao;	
+	
 }
