@@ -23,8 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(BaralhoController.class)
-@DisplayName("Categoria Controller Teste")
-public class CategoriaControllerTest {
+@DisplayName("CategoriaDeCarta Controller Teste")
+public class CategoriaDeCartaControllerTest {
 
     @Autowired
     MockMvc mockMvc;

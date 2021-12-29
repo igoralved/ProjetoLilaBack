@@ -9,19 +9,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 @Entity
-@Table(name="tb_categoria")
-public class Categoria {
+public class CategoriaDeCarta {
 
 
     @Id
-    private long id;
+    private UUID id;
 
-    @Column
+    @Column( name ="nome",nullable = false )
     private String nome;
+
+
 }

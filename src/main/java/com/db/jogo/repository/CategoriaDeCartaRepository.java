@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-public interface CategoriaRepository  extends CrudRepository<CategoriaDeCarta, UUID> {
+public interface CategoriaDeCartaRepository extends CrudRepository<CategoriaDeCarta, UUID> {
 }
