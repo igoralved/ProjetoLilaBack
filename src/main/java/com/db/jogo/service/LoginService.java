@@ -11,6 +11,12 @@ public class LoginService {
     @Autowired
     private AdminService admService;
 
+    /**
+     *  Este método verifica se a senha passada está correta
+     * @param senha A senha que queremos que seja verificada
+     * @return true se a senha estiver correta, false se a senha estiver incorreta
+     * @throws IllegalArgumentException
+     */
     public Boolean verificaSenha(String senha) throws IllegalArgumentException{
         Boolean resultado = false;
         try {

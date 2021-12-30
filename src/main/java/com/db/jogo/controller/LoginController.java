@@ -22,7 +22,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<Autenticacao> verificaSenha(@RequestBody Admin admin, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return new ResponseEntity<Autenticacao>(new Autenticacao(false), HttpStatus.BAD_REQUEST);
