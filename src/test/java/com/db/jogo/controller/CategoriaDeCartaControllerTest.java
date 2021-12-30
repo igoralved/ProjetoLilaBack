@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@WebMvcTest(BaralhoController.class)
+@WebMvcTest(CategoriaDeCarta.class)
 @DisplayName("CategoriaDeCarta Controller Teste")
 public class CategoriaDeCartaControllerTest {
 
