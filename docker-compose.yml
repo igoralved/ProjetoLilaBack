@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+    db:
+        image: postgres:latest
+        restart: always
+        environment:
+            POSTGRES_DB: coracoes_da_lila
+            POSTGRES_USER: lila
+            POSTGRES_PASSWORD: lila
+
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+
+volumes:
+    db-data:
