@@ -24,7 +24,13 @@ CREATE TABLE IF NOT EXISTS public.carta_do_jogo
     fonte character varying(255) COLLATE pg_catalog."default" NOT NULL,
     texto character varying(255) COLLATE pg_catalog."default" NOT NULL,
     tipo character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    valor_cor_grande integer,
-    valor_cor_pequeno integer
+    valor_cor_grande integer ,
+    valor_cor_pequeno integer,
+    pontos integer,
+    baralho_id_codigo character varying(255) COLLATE pg_catalog."default",
+       CONSTRAINT fk83lf2a1xn7mlsrma7ht1xswn6 FOREIGN KEY (baralho_id_codigo)
+        REFERENCES public.baralho (id_codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
     
 );
