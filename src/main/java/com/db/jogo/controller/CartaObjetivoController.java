@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 
 @CrossOrigin(exposedHeaders = "errors, content-type")
 @RequestMapping("/CartaObjetivo")
@@ -24,7 +26,7 @@ public class CartaObjetivoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<CartaObjetivo> findCartaObjetivoById(Integer Id) {
+    public ResponseEntity<CartaObjetivo> findCartaObjetivoById(UUID Id) {
         return new ResponseEntity<CartaObjetivo>(cartaObjetivoService.findById(Id), HttpStatus.OK);
     }
 
