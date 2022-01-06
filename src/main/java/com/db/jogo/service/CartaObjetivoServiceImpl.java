@@ -7,7 +7,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CartaObjetivoServiceImpl {
@@ -19,7 +18,7 @@ public class CartaObjetivoServiceImpl {
         this.cartaObjetivoRepository = cartaObjetivoRepository;
     }
 
-    public CartaObjetivo findById(UUID id) throws DataAccessException {
+    public CartaObjetivo findById(Integer id) throws DataAccessException {
         Optional<CartaObjetivo> cartaObjetivo = this.cartaObjetivoRepository.findById(id);
         return cartaObjetivo.orElse(null);
     }

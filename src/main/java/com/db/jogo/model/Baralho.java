@@ -1,15 +1,14 @@
 package com.db.jogo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +19,9 @@ public class Baralho {
 	
 	@Id
 	private  String id_codigo;
+
+	@OneToMany(mappedBy = "baralho" )
+	private List<CartaObjetivo> cartaObjetivo= new ArrayList<>();
 		
 	@ManyToOne
 	@JoinColumn(name="admin_id_codigo")

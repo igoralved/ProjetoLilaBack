@@ -18,6 +18,10 @@ public class CartaObjetivo{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name="baralho_id")
+    private Baralho baralho;
+
     @Column( name ="pontos", nullable = false)
     private Integer pontos;
 

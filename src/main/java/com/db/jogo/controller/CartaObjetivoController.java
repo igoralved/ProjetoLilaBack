@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+
 @CrossOrigin(exposedHeaders = "errors, content-type")
 @RequestMapping("/CartaObjetivo")
 @RestController
@@ -20,6 +21,11 @@ public class CartaObjetivoController {
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Iterable<CartaObjetivo>> findCartaObjetivo() {
         return new ResponseEntity<Iterable<CartaObjetivo>>(cartaObjetivoService.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<CartaObjetivo> findCartaObjetivoById(Integer Id) {
+        return new ResponseEntity<CartaObjetivo>(cartaObjetivoService.findById(Id), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
