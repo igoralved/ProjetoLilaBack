@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import org.springframework.lang.NonNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +23,7 @@ public class Sala {
 	private UUID id;
 
     @Column(name = "hash",nullable = false)
+    @NonNull
     String hash;
 
     //List <Player> player;
@@ -38,6 +41,7 @@ public class Sala {
 
     @OneToOne
     Baralho baralho;
+
 
     
 }

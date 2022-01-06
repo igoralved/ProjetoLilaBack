@@ -4,6 +4,7 @@ import com.db.jogo.model.Sala;
 import com.db.jogo.service.WebSocketService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +24,6 @@ public class WebSocketController {
     public ResponseEntity<Sala> execute(@RequestBody Sala sala) {
         service.jogada(sala);
 
-        return ResponseEntity.ok().body();
-    }
+        return new ResponseEntity<Sala>(HttpStatus.OK);
+}
 }
