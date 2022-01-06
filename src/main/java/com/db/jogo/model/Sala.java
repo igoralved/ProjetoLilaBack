@@ -9,6 +9,8 @@ import java.util.Base64.Encoder;
 
 import javax.persistence.*;
 
+import org.springframework.lang.NonNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +28,8 @@ public class Sala {
 	private UUID id;
 
     @Column(name = "hash",nullable = false)
-    private String hash;
+    @NonNull
+    String hash;
 
     @OneToMany
     private List<Jogador> jogadores;
