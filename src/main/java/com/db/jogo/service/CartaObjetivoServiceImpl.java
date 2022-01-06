@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CartaObjetivoServiceImpl {
+public class CartaObjetivoServiceImpl implements CartaObjetivoService {
 
     private final CartaObjetivoRepository cartaObjetivoRepository;
 
@@ -19,15 +19,17 @@ public class CartaObjetivoServiceImpl {
         this.cartaObjetivoRepository = cartaObjetivoRepository;
     }
 
-    public Optional<Optional<CartaObjetivo>> findById(UUID id) throws DataAccessException {
-        Optional<CartaObjetivo> cartaObjetivo = this.cartaObjetivoRepository.findById(id);
-        return Optional.of(cartaObjetivo);
+    @Override
+    public Optional<CartaObjetivo> findById(UUID id) throws DataAccessException {
+        return cartaObjetivoRepository.findById(id);
     }
 
+    @Override
     public Iterable<CartaObjetivo> findAll() throws DataAccessException {
         return cartaObjetivoRepository.findAll();
     }
 
+    @Override
     public CartaObjetivo saveCartaObjetivo(CartaObjetivo cartaObjetivo) throws DataAccessException {
         return cartaObjetivoRepository.save(cartaObjetivo);
     }

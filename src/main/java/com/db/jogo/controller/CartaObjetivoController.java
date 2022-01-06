@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -26,8 +27,11 @@ public class CartaObjetivoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<CartaObjetivo> findCartaObjetivoById(UUID Id) {
-        return new ResponseEntity<CartaObjetivo>(cartaObjetivoService.findById(Id), HttpStatus.OK);
+    public ResponseEntity<Optional<CartaObjetivo>> findCartaObjetivoById(UUID Id) {
+        if (cartaObjetivoService.findById(Id).isPresent()) {
+            return ResponseEntity.ok(cartaObjetivoService.findById(Id));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
