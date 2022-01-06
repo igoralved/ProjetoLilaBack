@@ -18,9 +18,9 @@ public class CartaObjetivoServiceImpl {
         this.cartaObjetivoRepository = cartaObjetivoRepository;
     }
 
-    public CartaObjetivo findById(Integer id) throws DataAccessException {
+    public Optional<Optional<CartaObjetivo>> findById(Integer id) throws DataAccessException {
         Optional<CartaObjetivo> cartaObjetivo = this.cartaObjetivoRepository.findById(id);
-        return cartaObjetivo.orElse(null);
+        return Optional.of(cartaObjetivo);
     }
 
     public Iterable<CartaObjetivo> findAll() throws DataAccessException {

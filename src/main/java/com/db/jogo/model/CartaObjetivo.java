@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +17,14 @@ public class CartaObjetivo{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private UUID id;
 
     @ManyToOne
-    @JoinColumn(name="baralho_id")
+    @JoinColumn(name="baralho_id_codigo")
     private Baralho baralho;
+
+    @Column ( name = "classificacao", nullable = false)
+    private String classificacao;
 
     @Column( name ="pontos", nullable = false)
     private Integer pontos;
