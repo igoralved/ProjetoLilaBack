@@ -32,7 +32,7 @@ public class WebSocketController {
 
     @PostMapping("/conectar")
     public ResponseEntity<Optional<Sala>> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
-        log.info("connect request: {}", request);
+        log.info("Requisição da conexão: {}", request);
         return ResponseEntity.ok(webSocketService.conectarJogo(request.getJogador(), request.getHash()));
     }
 }
