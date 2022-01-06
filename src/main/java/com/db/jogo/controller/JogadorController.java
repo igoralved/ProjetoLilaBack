@@ -1,5 +1,8 @@
 package com.db.jogo.controller;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +32,57 @@ public class JogadorController {
 	
 	 @RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	    public ResponseEntity<Jogador> saveJogador(@RequestBody Jogador jogador, BindingResult bindingResult) {
-	        if(bindingResult.hasErrors()){
+	         
+		 	Optional<Jogador>jogadorParaSalvar = Optional.of(jogador);
+		 
+		 	if(bindingResult.hasErrors() || jogadorParaSalvar.isEmpty()){
 	            return new ResponseEntity<Jogador>(jogador, HttpStatus.BAD_REQUEST);
 	        }
 	        return new ResponseEntity<Jogador>(jogadorService.saveJogador(jogador), HttpStatus.CREATED);
 	    }
+	 
+	 
+	 @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+	    public ResponseEntity<Jogador> procuraJogador(@RequestBody UUID id) {
+		 	
+		 	Optional<Jogador> jogador= Optional.empty();
+		 	jogador = jogadorService.findById(id);
+		 	if(jogador.isEmpty()) {
+		 		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND );
+		 	} 	
+		 	return new ResponseEntity<Jogador>(jogador.get(), HttpStatus.OK);
+	    }
+	 
+	 @RequestMapping(value = "/", method = RequestMethod.PUT, produces = "application/json")
+	    public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador) {
+
+	        try {
+	            Optional<Jogador> jogadorParaAtualizar = Optional.empty();
+	            jogadorParaAtualizar = this.jogadorService.findById(jogador.getId());
+
+	            if (!jogadorParaAtualizar.isEmpty()) {
+
+	                jogadorParaAtualizar.get().setBonusCoracaoGra(jogador.getBonusCoracaoGra());
+	                jogadorParaAtualizar.get().setBonusCoracaoPeq(jogador.getBonusCoracaoPeq());
+	                jogadorParaAtualizar.get().setCoracaoGra(jogador.getCoracaoGra());
+	                jogadorParaAtualizar.get().setCoracaoPeq(jogador.getCoracaoPeq());
+	                jogadorParaAtualizar.get().setListaDeCartas(jogador.getListaDeCartas());
+	                jogadorParaAtualizar.get().setListaDeObjetivos(jogador.getListaDeObjetivos());
+	                jogadorParaAtualizar.get().setNome(jogador.getNome());
+	                jogadorParaAtualizar.get().setPontos(jogador.getPontos());
+
+	                this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+
+	                return new ResponseEntity<Jogador>(jogadorParaAtualizar.get(), HttpStatus.OK);
+	            }
+
+	        } catch (Exception e) {
+	            new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);
+	        }
+
+	        return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+
+	    }
+	 
+	 
 }

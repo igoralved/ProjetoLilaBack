@@ -1,6 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS public.admin (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     senha character varying(255)
@@ -31,10 +30,3 @@ CREATE TABLE IF NOT EXISTS public.tipo_carta
     nome character varying(255) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT tipo_carta_pkey PRIMARY KEY (id)
 );
-=======
-CREATE TABLE IF NOT EXISTS public.tb_admin (
-    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
-    senha character varying(255)
-);
-
->>>>>>> origin/US004modeldobaralho
