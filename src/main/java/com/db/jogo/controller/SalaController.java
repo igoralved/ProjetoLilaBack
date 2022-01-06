@@ -33,7 +33,7 @@ public class SalaController {
         return new ResponseEntity<>(salaService.saveSala(sala), HttpStatus.CREATED);
     }
 
-    @GetMapping("{/hash}")
+    @GetMapping("/{hash}")
     public ResponseEntity<Sala> findSala(@PathVariable String hash) {
         Optional<Sala> sala = salaService.findSalaByHash(hash);
         if (sala.isPresent()) {

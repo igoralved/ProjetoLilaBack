@@ -2,6 +2,7 @@ package com.db.jogo.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,7 +39,7 @@ public class LoginControllerTest {
         given(adminService.findBySenha("123")).willReturn(admin);
 
 
-        this.mockMvc.perform(get("/login")
+        this.mockMvc.perform(post("/login")
                         .content(asJsonString(admin))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -57,7 +58,7 @@ public class LoginControllerTest {
         Admin adminRequest = new Admin();
         adminRequest.setSenha("321");
 
-        this.mockMvc.perform(get("/login")
+        this.mockMvc.perform(post("/login")
                         .content(asJsonString(adminRequest))
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
