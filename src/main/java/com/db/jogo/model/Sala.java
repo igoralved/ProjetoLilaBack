@@ -1,6 +1,11 @@
 package com.db.jogo.model;
 
+import java.security.SecureRandom;
+import java.util.List;
 import java.util.UUID;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 import javax.persistence.*;
 
@@ -21,23 +26,44 @@ public class Sala {
 	private UUID id;
 
     @Column(name = "hash",nullable = false)
-    String hash;
+    private String hash;
 
-    //List <Player> player;
-    @Column(name = "coracaoPequeno",nullable = false)
-    Integer coracaoPequeno;
-
-    @Column(name = "coracaoGrande",nullable = false)
-    Integer coracaoGrande;
-
-    @Column(name = "bonusCoracaoPequeno",nullable = false)
-    Integer bonusCoracaoPequeno;
-
-    @Column(name = "bonusCoracaoPequeno",nullable = false)
-    Integer bonusCoracaoGrande;
+    @OneToMany
+    private List<Jogador> jogadores;
 
     @OneToOne
-    Baralho baralho;
+    private Baralho baralho;
 
-    
+    private StatusEnum statusEnum = StatusEnum.NOVO;
+
+    public String generateHash() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[6];
+        random.nextBytes(bytes);
+        Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+        String hash = encoder.encodeToString(bytes);
+        return hash;
+    }
+
+    public void adicionarJogador(Jogador jogador){
+        this.jogadores.add(jogador);
+    }
+
+    public boolean removerJogador(Jogador jogador){
+        return this.jogadores.remove(jogador);
+    }
+
+    public enum StatusEnum {
+        NOVO,
+        JOGANDO,
+        FINALIZADO
+    }
+
+    public StatusEnum getStatusEnum() {
+        return this.statusEnum;
+    }
+
+    public void setStatusEnum(StatusEnum statusEnum) {
+        this.statusEnum = statusEnum;
+    }
 }

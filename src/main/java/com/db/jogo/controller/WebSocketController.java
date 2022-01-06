@@ -1,28 +1,39 @@
 package com.db.jogo.controller;
 
+import com.db.jogo.dto.SalaRequest;
+import com.db.jogo.exception.JogoInvalidoException;
+import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.WebSocketService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin
+@Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "/api")
 public class WebSocketController {
 
-    @Autowired
-    private WebSocketService service;
+    private final WebSocketService webSocketService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @PutMapping
-    public ResponseEntity<Sala> execute(@RequestBody Sala sala) {
-        service.jogada(sala);
-
-        return ResponseEntity.ok().body();
+    @PostMapping("/iniciar")
+    public ResponseEntity<Sala> iniciarJogo(@RequestBody Jogador jogador) {
+        log.info("Requisição para iniciar jogo {}", jogador);
+        return ResponseEntity.ok(webSocketService.criarJogo(jogador));
     }
+
+    @PostMapping("/conectar")
+    public ResponseEntity<Optional<Sala>> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
+        log.info("connect request: {}", request);
+        return ResponseEntity.ok(webSocketService.conectarJogo(request.getJogador(), request.getHash()));
+    }
+
 }

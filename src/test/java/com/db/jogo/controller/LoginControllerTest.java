@@ -21,14 +21,14 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LoginControllerTest {
-    
+
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     @MockBean
-	private AdminService adminService;
+    private AdminService adminService;
 
     @Test
     public void testVerificaSenhaSucesso() throws Exception{
@@ -36,14 +36,14 @@ public class LoginControllerTest {
         admin.setId(UUID.randomUUID());
         admin.setSenha("123");
         given(adminService.findBySenha("123")).willReturn(admin);
-        
+
 
         this.mockMvc.perform(get("/login")
-                    .content(asJsonString(admin))
-                    .accept(MediaType.APPLICATION_JSON_VALUE)  
-                    .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(jsonPath("$.logado").value("true"))
-                    .andExpect(status().isOk());
+                        .content(asJsonString(admin))
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.logado").value("true"))
+                .andExpect(status().isOk());
 
     }
 
@@ -58,11 +58,11 @@ public class LoginControllerTest {
         adminRequest.setSenha("321");
 
         this.mockMvc.perform(get("/login")
-                    .content(asJsonString(adminRequest))
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(jsonPath("$.logado").value("false"))
-                    .andExpect(status().isOk());
+                        .content(asJsonString(adminRequest))
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.logado").value("false"))
+                .andExpect(status().isOk());
 
     }
 
@@ -73,5 +73,5 @@ public class LoginControllerTest {
             throw new RuntimeException(e);
         }
 
-}
+    }
 }
