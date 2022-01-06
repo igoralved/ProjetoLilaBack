@@ -34,3 +34,16 @@ CREATE TABLE IF NOT EXISTS public.carta_do_jogo
         ON DELETE NO ACTION
     
 );
+CREATE TABLE IF NOT EXISTS public.carta_objetivo
+(
+    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    categoria character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    classificacao character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    descricao character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    pontos integer NOT NULL,
+    baralho_id_codigo character varying(255) COLLATE pg_catalog."default",
+        CONSTRAINT fkfwk7risacj4p4ykqsqi7q7inq FOREIGN KEY (baralho_id_codigo)
+        REFERENCES public.baralho (id_codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);

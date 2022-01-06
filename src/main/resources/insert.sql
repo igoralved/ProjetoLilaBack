@@ -58,3 +58,39 @@ INSERT INTO public.carta_do_jogo(
  ('false', 'Genérica','Joyce Cristina Souza Bastos (TCC)', 'Para ter um programa de inclusão efetiva, incentive conhecimento de novos horizontes profissionais e possibilidades de progressão. ','Ação', '0', '3', '2', 'Clila'),
  ('false', 'Genérica','Joyce Cristina Souza Bastos (TCC)', 'Promova a interação e convivência de pessoas com e sem deficiência.', 'Ação', '1', '2', '3', 'Clila'),
  ('false', 'Genérica', ' Programa de Inclusão DBServer', 'Antes da contratação, percorra as dependências da empresa com a pessoa para identificar pontos de dificuldades de acesso.', 'Ação', '2', '1', '3', 'Clila');
+
+ INSERT INTO public.carta_objetivo( categoria, classificacao, descricao, pontos, baralho_id_codigo)
+	VALUES ( 'FISICA', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Física ao final da partida','Um dos seus
+funcionários passou a usar cadeira de rodas.','3','Clila'),
+
+( 'FISICA ', 'Ganhe 1 ponto por cada carta que você tiver da categoria Física ao final da partida', 'Uma das suas amigas quebrouo braço.', '1','Clila'),
+
+( 'INTELECTUAL', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Intelectual ao final da partida', 'Você é o mentor do novo
+funcionário com deficiência intelectual.', '3', 'Clila'),
+
+( 'INTELECTUAL', 'Ganhe 1 ponto por cada carta que você tiver da categoria Intelectual ao final da partida', 'Sua avó está com dificuldades para se lembrar das coisas.', '1', 'Clila'),
+
+( 'VISUAL', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Visual ao final da partida', 'Sua visão noturna diminuiu
+recentemente.', '3', 'Clila'),
+
+( 'VISUAL', 'Ganhe 1 ponto por cada carta que você tiver da categoria Visual ao final da partida', 'Seu grau de óculos aumentou muito.', '1', 'Clila'),
+
+( 'TRANSTORNO DO ESPECTRO AUTISTA (TEA)', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Transtorno do Espectro Autista (TEA) 
+ao final da partida
+', 'Você é o mentor do novo funcionário com autismo.', '3', 'Clila'),
+
+( 'TRANSTORNO DO ESPECTRO AUTISTA (TEA)', 'Ganhe 1 ponto por cada carta que você tiver da categoria Transtorno do Espectro Autista (TEA) ao final da partida', 'Seu ambiente de trabalho tem muitas distrações.', '1', 'Clila'),
+
+( 'AUDITIVA', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Auditiva ao final da partida', 'Seu pai já tem certa idade e está perdendo a audição', '3', 'Clila'),
+
+( 'AUDITIVA','Ganhe 1 ponto por cada carta que você tiver da categoria Auditiva ao final da partida','Seu ambiente de trabalho é muito barulhento.', '1', 'Clila'),
+
+( 'CATEGORIA AO FINAL DA PARTIDA', 'Ganhe 3 pontos se você tiver a maior variedade de categorias ao final da partida', 'Seu filho pequeno está prendendo a respeitar os coleguinhas.', '3', 'Clila'),
+
+( 'CATEGORIA AO FINAL DA PARTIDA','Ganhe 1 ponto por cada categoria que você tiver ao final da partida', 'Sua empresa passou a ter mais de 100 
+funcionários.', '1','Clila'),
+
+( 'CARTA DE FILME', 'Ganhe 2 pontos se você tiver alguma carta de filme ao final da partida', 'Sua sobrinha adolescente se identifica com personagens.', '2', 'Clila'),
+
+( 'CARTA DE INFORMAÇÃO', 'Ganhe 2 pontos se você tiver alguma carta de informação ao final da partida', 'Você é responsável pelo newsletter da empresa', '2', 'Clila') 
+;
