@@ -4,6 +4,7 @@ import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
+import com.db.jogo.service.SalaService;
 import com.db.jogo.service.WebSocketService;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class WebSocketController {
 
     private final WebSocketService webSocketService;
+    private final SalaService salaService;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @PostMapping("/iniciar")
@@ -31,8 +33,16 @@ public class WebSocketController {
     }
 
     @PostMapping("/conectar")
-    public ResponseEntity<Optional<Sala>> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
+    public ResponseEntity<Sala> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
         log.info("Requisição da conexão: {}", request);
-        return ResponseEntity.ok(webSocketService.conectarJogo(request.getJogador(), request.getHash()));
+        return ResponseEntity.ok(webSocketService.conectarJogo(request.getJogador(), request.getHash()).get());
+    }
+
+    @PostMapping("/jogo")
+    public ResponseEntity<Sala> jogada(@RequestBody Sala request) {
+        log.info("Jogada: {}", request);
+        Sala sala = salaService.jogada(request);
+        simpMessagingTemplate.convertAndSend("/topic/" + sala.getHash(), sala);
+        return ResponseEntity.ok(sala);
     }
 }

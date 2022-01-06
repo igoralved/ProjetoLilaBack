@@ -31,25 +31,6 @@ public class SalaServiceTest {
     .id(UUID.randomUUID())
     .build();
 
-    // Sala salaNula = Sala.builder().hash(null)
-    // .coracaoPequeno(null)
-    // .coracaoGrande(null)
-    // .baralho(null)
-    // .bonusCoracaoGrande(null)
-    // .bonusCoracaoPequeno(null)
-    // .id(UUID.randomUUID())
-    // .build();
-
-    // Sala salaVazia = Sala.builder().hash("")
-    // .coracaoPequeno(0)
-    // .coracaoGrande(0)
-    // .baralho(baralho)
-    // .bonusCoracaoGrande(0)
-    // .bonusCoracaoPequeno(0)
-    // .id(UUID.randomUUID())
-    // .build();
-    
-    
     @Test
     @DisplayName("Deve retornar uma sala")
     void testFindSalaByHash() throws Exception {
@@ -62,7 +43,6 @@ public class SalaServiceTest {
      void testSaveSala() throws Exception {
          when(salaService.saveSala(sala)).thenReturn(sala);;
          assertEquals(sala, salaService.saveSala(sala));
-
      }
 
      @DisplayName("Teste de erro do retorno da sala")
@@ -76,8 +56,7 @@ public class SalaServiceTest {
      @Test
       void testErrorSaveSala() throws Exception {
           Sala sala = salaService.saveSala(null);
-          when(salaService.saveSala(null)).thenReturn(sala);;
+          when(salaService.saveSala(null)).thenReturn(sala);
           assertNotEquals(true, salaService.saveSala(sala));
- 
       }
 }

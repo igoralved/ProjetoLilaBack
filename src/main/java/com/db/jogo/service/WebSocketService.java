@@ -39,24 +39,19 @@ public class WebSocketService {
 //
 //    @Async
 //    public void jogada(Sala sala) {
-//        String URLresposta = "/" + sala.getHash().toString();
-//
-//        try {
-//
+//        String URLresposta = "/" + sala.getHash().toString();//
+//        try {//
 //            template.convertAndSend(URLresposta, gerarMensagem()
 //                    + "\n: Sala Número: " + sala.getId()
 //                    + " \n : " + sala.getBonusCoracaoGrande()
 //                    + " \n : " + sala.getBonusCoracaoPequeno()
 //                    + " \n : " + sala.getCoracaoGrande()
-//                    + " \n : " + sala.getCoracaoPequeno()
-//
+//                    + " \n : " + sala.getCoracaoPequeno()//
 //            );
-//
 //        } catch (Exception e) {
 //            log.error("Erro durante o procesamento.", e);
 //        }
 //    }
-//
 //    private String gerarMensagem() {
 //        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 //    }
