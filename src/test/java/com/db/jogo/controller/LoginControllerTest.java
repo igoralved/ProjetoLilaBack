@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LoginControllerTest {
@@ -44,7 +45,6 @@ public class LoginControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.logado").value("true"))
                 .andExpect(status().isOk());
-
     }
 
     @Test

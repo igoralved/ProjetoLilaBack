@@ -32,31 +32,7 @@ public class WebSocketService {
         this.baralhoService = baralhoService;
     }
 
-
-//    public WebSocketService(SimpMessagingTemplate template) {
-//        this.template = template;
-//    }
-//
-//    @Async
-//    public void jogada(Sala sala) {
-//        String URLresposta = "/" + sala.getHash().toString();//
-//        try {//
-//            template.convertAndSend(URLresposta, gerarMensagem()
-//                    + "\n: Sala Número: " + sala.getId()
-//                    + " \n : " + sala.getBonusCoracaoGrande()
-//                    + " \n : " + sala.getBonusCoracaoPequeno()
-//                    + " \n : " + sala.getCoracaoGrande()
-//                    + " \n : " + sala.getCoracaoPequeno()//
-//            );
-//        } catch (Exception e) {
-//            log.error("Erro durante o procesamento.", e);
-//        }
-//    }
-//    private String gerarMensagem() {
-//        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-//    }
-
-    public Sala criarJogo ( Jogador jogador){
+    public Sala criarJogo (Jogador jogador){
         Sala sala = new Sala();
         Baralho baralho = baralhoService.findById("lila1");
         sala.setId(UUID.randomUUID());

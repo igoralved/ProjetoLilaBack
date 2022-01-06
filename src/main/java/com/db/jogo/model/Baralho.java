@@ -20,10 +20,6 @@ public class Baralho {
 	
 	@Id
 	private  String id_codigo;
-		
-	@ManyToOne
-	@JoinColumn(name="admin_id_codigo")
-	private Admin admin;
 
 	@Column( name ="titulo", nullable = false)
 	private String titulo;
