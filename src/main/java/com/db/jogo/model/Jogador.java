@@ -40,7 +40,7 @@ public class Jogador {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
-    private  Set<CartaDeObjetivo> listaDeObjetivos = new HashSet<>();
+    private  Set<CartaObjetivo> listaDeObjetivos = new HashSet<>();
 
     @NonNull
     @Column( name ="pontos")
@@ -71,11 +71,11 @@ public class Jogador {
         this.listaDeCartas.remove(carta);
     }
 
-    public void adicionaObjetivo(CartaDeObjetivo carta) {
+    public void adicionaObjetivo(CartaObjetivo carta) {
         this.listaDeObjetivos.add(carta);
     }
 
-    public void removeObjetivo(CartaDeObjetivo carta) {
+    public void removeObjetivo(CartaObjetivo carta) {
         this.listaDeObjetivos.remove(carta);
     }
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-public class CartaDeObjetivo {
+public class CartaObjetivo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
