@@ -1,26 +1,37 @@
 package com.db.jogo.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.Mockito.when;
-
-import com.db.jogo.model.*;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
-@ExtendWith(MockitoExtension.class)
-public class SalaServiceTest {
+import com.db.jogo.exception.JogoInvalidoException;
+import com.db.jogo.model.Baralho;
+import com.db.jogo.model.CartaDeObjetivo;
+import com.db.jogo.model.CartaDoJogo;
+import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
+public class WebSocketServiceTest {
+
+    @Mock
+    WebSocketService webSocketService;
+    
     @Mock
     private SalaService salaService;
 
@@ -53,8 +64,7 @@ public class SalaServiceTest {
         cartaObjetivo.setClassificacao("Ganhe pontos");
         cartaObjetivo.setCategoria("Física");
 
-        baralho.setId(UUID.randomUUID());
-        baralho.setCodigo("LILA");
+        baralho.setId_codigo("LILA");
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
         baralho.setCartasInicio(new ArrayList<>());
@@ -82,41 +92,27 @@ public class SalaServiceTest {
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
     }
-
-
-
-    Optional<Sala> salaLocalizada;
-
+  
 
     @Test
-    @DisplayName("Teste para encontrar uma sala por Hash")
-    void encontrarSalaPorHash() throws Exception {
+    @DisplayName("Teste para conectar ao jogo")
+    void testConectarJogo() {
+        sala.getHash();
+        try {
+            when(webSocketService.conectarJogo(jogador, sala.getHash())).thenReturn(Optional.of(sala));
+            assertEquals(sala, webSocketService.conectarJogo(jogador, sala.getHash()).get());
+        } catch (JogoInvalidoException e) {
+            // TODO Auto-generated catch block
+            fail("jogo inválido");
+        }
 
-        salaLocalizada = salaService.findSalaByHash("iuervnijr0f");
-        assertEquals(salaLocalizada, salaService.findSalaByHash("iuervnijr0f"));
     }
 
-     @DisplayName("Teste para criar uma sala do Service")
-     @Test
-     void criarSala() throws Exception {
-         
-
-         when(salaService.saveSala(sala)).thenReturn(sala);;
-         assertEquals(sala, salaService.saveSala(sala));
-     }
-
-     @DisplayName("Teste de erro do retorno da sala")
-     @Test
-     void encontrarSalaPorHashComErro() throws Exception {
-
-         salaLocalizada = salaService.findSalaByHash("ertfvygbhnj");
-         assertNotEquals(salaLocalizada, sala);
-     }
- 
-     @DisplayName("Teste de erro do SAVE do Service")
-     @Test
-      void criarSalaComErro() throws Exception {
-         when(salaService.saveSala(null)).thenReturn(null);
-         assertEquals(null, salaService.saveSala(null));
-      }
+    @Test
+    @DisplayName("Teste para criar um jogo")
+    void testCriarJogo() {
+        
+        when(webSocketService.criarJogo(jogador)).thenReturn(sala);;
+        assertEquals(sala, webSocketService.criarJogo(jogador));
+    }
 }
