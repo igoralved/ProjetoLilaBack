@@ -1,7 +1,4 @@
 package com.db.jogo.model;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -9,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,11 +19,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-public class Admin  {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+public class CartaInicio {
 
-	@Column
-	private String senha;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @Column( name ="nome",nullable = false )
+    private String nome;
+
+    @Column(name = "descricao", nullable = false)
+    private String descricao;
 }

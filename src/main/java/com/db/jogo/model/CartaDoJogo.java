@@ -20,10 +20,6 @@ public class CartaDoJogo {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "baralho_id_codigo")
-    private Baralho baralho;
-
     @Column(name = "tipo", nullable = false)
     private String tipo;
 

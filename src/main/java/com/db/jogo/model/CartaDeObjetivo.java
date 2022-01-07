@@ -18,10 +18,6 @@ public class CartaDeObjetivo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name="baralho_id_codigo")
-    private Baralho baralho;
-
     @Column ( name = "classificacao", nullable = false)
     private String classificacao;
 

@@ -27,7 +27,7 @@ public class Sala {
 	private UUID id;
 
     @NonNull
-    @Column(name = "hash",nullable = false)
+    @Column(name = "hash")
     String hash;
 
     @NonNull

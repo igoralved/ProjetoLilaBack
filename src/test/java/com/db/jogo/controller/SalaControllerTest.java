@@ -37,6 +37,7 @@ class SalaControllerTest {
     @MockBean
     private SalaService salaService;
 
+    CartaInicio cartaInicio = new CartaInicio();
     Baralho baralho = new Baralho();
     CartaDoJogo carta = new CartaDoJogo();
     CartaDeObjetivo cartaObjetivo = new CartaDeObjetivo();
@@ -44,9 +45,9 @@ class SalaControllerTest {
 
     @BeforeEach
     public void init(){
-        baralho.setId_codigo("baralho");
-        baralho.setTitulo("LILA");
-        baralho.setDescricao("Descricao");
+        cartaInicio.setId(UUID.randomUUID());
+        cartaInicio.setNome("Teste");
+        cartaInicio.setDescricao("Descricao");
 
         carta.setId(UUID.randomUUID());
         carta.setPontos(2);
@@ -54,17 +55,25 @@ class SalaControllerTest {
         carta.setCategoria("Visual");
         carta.setTexto("Deficiencia visual");
         carta.setFonte("Wikipedia");
-        carta.setBaralho(baralho);
         carta.setValorCorGrande(0);
         carta.setValorCorPequeno(0);
         carta.setTipo("Ação");
 
         cartaObjetivo.setId(UUID.randomUUID());
-        cartaObjetivo.setDescricao("Objetivo");
+        cartaObjetivo.setDescricao("Texto da carta");
         cartaObjetivo.setPontos(0);
-        cartaObjetivo.setBaralho(baralho);
-        cartaObjetivo.setClassificacao("Genérica");
-        cartaObjetivo.setCategoria("Exemplo");
+        cartaObjetivo.setClassificacao("Ganhe pontos");
+        cartaObjetivo.setCategoria("Física");
+
+        baralho.setId_codigo("LILA");
+        baralho.setTitulo("Teste");
+        baralho.setDescricao("Exemplo");
+        baralho.setCartasInicio(new ArrayList<>());
+        baralho.adicionarCartaDoInicio(cartaInicio);
+        baralho.setCartasDoJogo(new ArrayList<>());
+        baralho.adicionarCartadoJogo(carta);
+        baralho.setCartasDeObjetivo(new ArrayList<>());
+        baralho.adicionarCartaDoInicio(cartaInicio);
 
         jogador.setId(UUID.randomUUID());
         jogador.setNome("Felipe");
