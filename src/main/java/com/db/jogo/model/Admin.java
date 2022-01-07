@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,9 +27,7 @@ public class Admin  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@OneToMany(mappedBy = "admin" )
-	private List<Baralho> baralho= new ArrayList<>();
-	
+	@NonNull
 	@Column
 	private String senha;
 }

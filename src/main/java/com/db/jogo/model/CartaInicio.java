@@ -21,43 +21,21 @@ import lombok.NonNull;
 @Builder
 @Data
 @Entity
-public class CartaDoJogo {
-	@Id
+public class CartaInicio {
+
+	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
 	private UUID id;
-
-	@NonNull
-	@Column(name = "tipo")
-	private String tipo;
 	
 	@NonNull
-	@Column(name = "categoria")
-	private String categoria;
-
-	@NonNull
-	@Column(name = "bonus")
-	private Boolean bonus;
-
-	@NonNull
-	@Column(name = "texto")
-	private String texto;
-
-	@NonNull
-	@Column(name = "valorCorPequeno")
-	private Integer valorCorPequeno;
-
-	@NonNull
-	@Column(name = "valorCorGrande")
-	private Integer valorCorGrande;
-
+	@Column( name ="nome" )
+	private String nome;
 	
 	@NonNull
-	@Column(name = "fonte")
-	private String fonte;
+	@Column(name = "descricao")
+	private String descricao;
 	
-	@NonNull
-	@Column(name="pontos")
-	private  Integer pontos;
-
+	
+	
+	
 }
