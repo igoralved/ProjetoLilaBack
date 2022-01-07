@@ -16,77 +16,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.db.jogo.model.Jogador;
-import com.db.jogo.service.JogadorService;
+import com.db.jogo.service.JogadorServiceImpl;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
 @RequestMapping("/jogador")
 public class JogadorController {
 
-	private JogadorService jogadorService;
-	
+	private JogadorServiceImpl jogadorService;
+
 	@Autowired
-	public JogadorController(JogadorService jogadorService) {
+	public JogadorController(JogadorServiceImpl jogadorService) {
 		this.jogadorService = jogadorService;
 	}
-	
-	
-	 @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-	    public ResponseEntity<Jogador> saveJogador(@RequestBody @Validated Jogador jogador, BindingResult bindingResult) {
-	         
-		 	Optional<Jogador>jogadorParaSalvar = Optional.of(jogador);
-		 
-		 	if(bindingResult.hasErrors() || jogadorParaSalvar.isEmpty()){
-	            return new ResponseEntity<Jogador>(jogador, HttpStatus.BAD_REQUEST);
-	        }
-	        return new ResponseEntity<Jogador>(jogadorService.saveJogador(jogador), HttpStatus.CREATED);
-	    }
-	 
-	 
-	 @GetMapping("/{id}")
-	    public ResponseEntity<Jogador> procuraJogador(@PathVariable UUID id) {
-		 
-		 		Optional<Jogador> jogador= Optional.empty();
-		 			jogador = jogadorService.findById(id);
-		 	
-		 	if(jogador.isEmpty()) {
-		 		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND );
-		 	} 	
-		 	return new ResponseEntity<Jogador>(jogador.get(), HttpStatus.OK);
-	    }
-	 
-	 @RequestMapping( method = RequestMethod.PUT, produces = "application/json")
-	    public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador) {
 
-	        try {
-	            Optional<Jogador> jogadorParaAtualizar = Optional.empty();
-	            jogadorParaAtualizar = this.jogadorService.findById(jogador.getId());
+	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<Jogador> saveJogador(@RequestBody @Validated Jogador jogador, BindingResult bindingResult) {
 
-	            if (!jogadorParaAtualizar.isEmpty()) {
+		Optional<Jogador> jogadorParaSalvar = Optional.of(jogador);
 
-	                jogadorParaAtualizar.get().setBonusCoracaoGra(jogador.getBonusCoracaoGra());
-	                jogadorParaAtualizar.get().setBonusCoracaoPeq(jogador.getBonusCoracaoPeq());
-	                jogadorParaAtualizar.get().setCoracaoGra(jogador.getCoracaoGra());
-	                jogadorParaAtualizar.get().setCoracaoPeq(jogador.getCoracaoPeq());
-	                jogadorParaAtualizar.get().setListaDeCartas(jogador.getListaDeCartas());
-	                jogadorParaAtualizar.get().setListaDeObjetivos(jogador.getListaDeObjetivos());
-	                jogadorParaAtualizar.get().setNome(jogador.getNome());
-	                jogadorParaAtualizar.get().setPontos(jogador.getPontos());
+		if (bindingResult.hasErrors() || jogadorParaSalvar.isEmpty()) {
+			return new ResponseEntity<Jogador>(jogador, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Jogador>(jogadorService.saveJogador(jogador), HttpStatus.CREATED);
+	}
 
-	                this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+	@GetMapping("/{id}")
+	public ResponseEntity<Jogador> procuraJogador(@PathVariable UUID id) {
 
-	                return new ResponseEntity<Jogador>(jogadorParaAtualizar.get(), HttpStatus.OK);
-	            }
+		Optional<Jogador> jogador = Optional.empty();
+		jogador = jogadorService.findById(id);
 
-	        } catch (Exception e) {
-	            new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);
-	        }
+		if (jogador.isEmpty()) {
+			return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Jogador>(jogador.get(), HttpStatus.OK);
+	}
 
-	        return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+	@RequestMapping(method = RequestMethod.PUT, produces = "application/json")
+	public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador, BindingResult bindingResult) {
 
-	    }
-	 
-	 
+		if (bindingResult.hasErrors() || jogador == null || jogador.getId() == null) {
+
+			return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+		}
+		
+		Optional<Jogador> jogadorParaAtualizar = this.jogadorService.atualizarJogador(jogador);
+		
+		if (jogadorParaAtualizar.isPresent()) {
+			return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
+		}
+		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+
+	}
+
 }

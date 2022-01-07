@@ -42,28 +42,23 @@ public class Jogador {
 
 	@NonNull
 	@Column( name ="pontos")
-	@Builder.Default
-	private Integer pontos = 0;
+	private Integer pontos;
 	
 	@NonNull
-	@Builder.Default
 	@Column( name ="coracaoPeq")
-	private Integer coracaoPeq = 2;
+	private Integer coracaoPeq;
 	
 	@NonNull
-	@Builder.Default
 	@Column( name ="coracaoGra")
-	private Integer coracaoGra = 0;
+	private Integer coracaoGra;
 	
 	@NonNull
-	@Builder.Default
 	@Column( name ="bonusCoracaoPeq")
-	private Integer bonusCoracaoPeq = 0;
+	private Integer bonusCoracaoPeq;
 	
 	@NonNull
-	@Builder.Default
 	@Column( name ="bonusCoracaoGra")
-	private Integer bonusCoracaoGra = 0;
+	private Integer bonusCoracaoGra;
 	
 	
 	public void adicionaCarta(CartaDoJogo carta) {
