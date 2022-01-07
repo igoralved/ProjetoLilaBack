@@ -42,10 +42,10 @@ class JogadorControllerTest {
 	Jogador jogador = Jogador.builder()
 			.id(UUID.fromString(id))
 			.nome("joão")
-			.bonusCoracaoGra(0)
-			.bonusCoracaoPeq(0)
-			.coracaoGra(0)
-			.pontos(0)
+			.bonusCoracaoGra(1)
+			.bonusCoracaoPeq(1)
+			.coracaoGra(1)
+			.pontos(1)
 			.coracaoPeq(2)
 			.build();
 
@@ -97,10 +97,10 @@ class JogadorControllerTest {
 		Jogador jogadore = Jogador.builder()
 				.id(null)
 				.nome("joão")
-				.bonusCoracaoGra(0)
-				.bonusCoracaoPeq(0)
-				.coracaoGra(0)
-				.pontos(0)
+				.bonusCoracaoGra(1)
+				.bonusCoracaoPeq(1)
+				.coracaoGra(1)
+				.pontos(1)
 				.coracaoPeq(2)
 				.build();
 		
@@ -119,7 +119,15 @@ class JogadorControllerTest {
 	@DisplayName("Teste PUT/Error ID não Encontrado do Controller do Jogador")
 	public void deveRetornarErro_QuandoAtualizarJogador() throws Exception {
 		
-		Jogador jogadorAtualizar = Jogador.builder().id(UUID.randomUUID()).build();
+		Jogador jogadorAtualizar = Jogador.builder()
+				.id(UUID.randomUUID())
+				.nome("joão")
+				.bonusCoracaoGra(1)
+				.bonusCoracaoPeq(1)
+				.coracaoGra(1)
+				.pontos(1)
+				.coracaoPeq(2)
+				.build();
 	
 		given(jogadorService.atualizarJogador(jogadorAtualizar)).willReturn(Optional.of(jogador));
 
