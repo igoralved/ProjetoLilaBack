@@ -11,9 +11,9 @@ import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.model.Baralho;
-import com.db.jogo.model.CartaDeObjetivo;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.SalaService;
@@ -54,7 +54,7 @@ public class WebSocketControllerTest {
     CartaInicio cartaInicio = new CartaInicio();
     Baralho baralho = new Baralho();
     CartaDoJogo carta = new CartaDoJogo();
-    CartaDeObjetivo cartaObjetivo = new CartaDeObjetivo();
+    CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
     Sala sala = new Sala();
     SalaRequest salaRequest = new SalaRequest();
@@ -128,15 +128,15 @@ public class WebSocketControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    @DisplayName("Teste para iniciar jogo")
-    void testIniciarJogo() throws Exception{
+    // @Test
+    // @DisplayName("Teste para iniciar jogo")
+    // void testIniciarJogo() throws Exception{
 
-    }
+    // }
 
-    @Test
-    @DisplayName("Teste da jogada")
-    void testJogada() throws Exception{
+    // @Test
+    // @DisplayName("Teste da jogada")
+    // void testJogada() throws Exception{
 
-    }
+    // }
 }
