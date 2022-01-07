@@ -18,6 +18,7 @@ import com.db.jogo.model.Jogador;
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Jogador Service Teste")
 class JogadorServiceImplTest {
+	
 	@Mock
     private JogadorServiceImpl jogadorService;
 	
@@ -26,16 +27,25 @@ class JogadorServiceImplTest {
     Optional<Jogador> jogadorOpt= Optional.of(jogador);
 
 	@Test
-	@DisplayName("Teste do GET do Controller do Jogador")
+	@DisplayName("Teste do GET do Service do Jogador")
 	public void testBuscaJogador() throws Exception {
 	
-	    	
-	    	
 	    	UUID id = UUID.fromString("fd7b6723-77e2-4846-bd22-88df15ca150a"); 
 
-	        when(jogadorService.findById(id).thenReturn(jogadorOpt);
+	        when(jogadorService.findById(id)).thenReturn(jogadorOpt);
 
 	        assertEquals(jogadorOpt, jogadorService.findById(id));
 
 	    }
+	
+	@Test
+	@DisplayName("Teste do SAVE do Service do Jogador")
+	public void testPostJogador() throws Exception {
+		
+	        when(jogadorService.saveJogador(jogador)).thenReturn(jogador);
+
+	        assertEquals(jogador, jogadorService.saveJogador(jogador));
+
+	    }
+	
 }

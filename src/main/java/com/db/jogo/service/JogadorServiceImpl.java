@@ -20,7 +20,6 @@ public class JogadorServiceImpl implements JogadorService {
 	        
 	    }
 	
-	
 	@Override
 	public Optional<Jogador> findById(UUID id) throws DataAccessException {
 		Optional<Jogador> jogador= Optional.empty();

@@ -1,17 +1,17 @@
 package com.db.jogo.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,14 +30,15 @@ public class Jogador {
 	private UUID id;
 	private String nome;
 	
-	@OneToMany
-	@JoinColumn(name = "CartaDoJogo_id")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jogador", fetch = FetchType.EAGER)
 	@Builder.Default
-	private ArrayList<CartaDoJogo> listaDeCartas = new ArrayList<>();
-	@OneToMany
-	@JoinColumn(name = "CartaDeObjetivo_id")
+	private Set<CartaDoJogo> listaDeCartas =  new HashSet<>();
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jogador", fetch = FetchType.EAGER)
 	@Builder.Default
-	private ArrayList<CartaDeObjetivo> listaDeObjetivos = new ArrayList<>();
+	private  Set<CartaDeObjetivo> listaDeObjetivos = new HashSet<>();
+	
+
 	
 	@Column( name ="pontos")
 	private Integer pontos;

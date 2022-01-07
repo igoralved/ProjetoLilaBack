@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +33,7 @@ public class JogadorController {
 	
 	
 	 @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-	    public ResponseEntity<Jogador> saveJogador(@RequestBody Jogador jogador, BindingResult bindingResult) {
+	    public ResponseEntity<Jogador> saveJogador(@RequestBody @Validated Jogador jogador, BindingResult bindingResult) {
 	         
 		 	Optional<Jogador>jogadorParaSalvar = Optional.of(jogador);
 		 
@@ -42,18 +44,19 @@ public class JogadorController {
 	    }
 	 
 	 
-	 @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	    public ResponseEntity<Jogador> procuraJogador(@RequestBody UUID id) {
+	 @RequestMapping(value = "/{Id}",method = RequestMethod.GET, produces = "application/json")
+	    public ResponseEntity<Jogador> procuraJogador(@PathVariable("Id") UUID id) {
+		 
+		 		Optional<Jogador> jogador= Optional.empty();
+		 			jogador = jogadorService.findById(id);
 		 	
-		 	Optional<Jogador> jogador= Optional.empty();
-		 	jogador = jogadorService.findById(id);
 		 	if(jogador.isEmpty()) {
 		 		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND );
 		 	} 	
 		 	return new ResponseEntity<Jogador>(jogador.get(), HttpStatus.OK);
 	    }
 	 
-	 @RequestMapping(value = "/", method = RequestMethod.PUT, produces = "application/json")
+	 @RequestMapping( method = RequestMethod.PUT, produces = "application/json")
 	    public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador) {
 
 	        try {
