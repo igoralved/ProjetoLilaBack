@@ -27,7 +27,7 @@ public class SalaServiceTest {
     CartaInicio cartaInicio = new CartaInicio();
     Baralho baralho = new Baralho();
     CartaDoJogo carta = new CartaDoJogo();
-    CartaDeObjetivo cartaObjetivo = new CartaDeObjetivo();
+    CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
     Sala sala = new Sala();
 

@@ -31,7 +31,7 @@ public class Baralho {
 	private List<CartaDoJogo> cartasDoJogo= new ArrayList<>();
 
 	@OneToMany
-	private List<CartaDeObjetivo> cartasDeObjetivo = new ArrayList<>();
+	private List<CartaObjetivo> cartasDeObjetivo = new ArrayList<>();
 
 	@OneToMany
 	private List<CartaInicio> cartasInicio = new ArrayList<>();
@@ -51,11 +51,11 @@ public class Baralho {
 		return this.cartasDoJogo.remove(cartaDoJogo);
 	}
 
-	public void adicionarCartaDoObjetivo(CartaDeObjetivo cartaDeObjetivo){
-		this.cartasDeObjetivo.add(cartaDeObjetivo);
+	public void adicionarCartaDoObjetivo(CartaObjetivo cartaObjetivo){
+		this.cartasDeObjetivo.add(cartaObjetivo);
 	}
 
-	public boolean removerCartaDoObjetivo(CartaDeObjetivo cartaDoObjetivo){
+	public boolean removerCartaDoObjetivo(CartaObjetivo cartaDoObjetivo){
 		return this.cartasDeObjetivo.remove(cartaDoObjetivo);
 	}
 
