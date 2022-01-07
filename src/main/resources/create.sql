@@ -61,6 +61,29 @@ CREATE TABLE IF NOT EXISTS public.carta_inicio
         ON DELETE NO ACTION
 );
 
+CREATE TABLE IF NOT EXISTS public.jogador
+(
+    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    bonus_coracao_gra integer,
+    bonus_coracao_peq integer,
+    coracao_gra integer,
+    coracao_peq integer,
+    nome character varying(255) COLLATE pg_catalog."default",
+    pontos integer
+    
+);
+
+CREATE TABLE IF NOT EXISTS public.sala
+(
+    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    hash character varying(255) COLLATE pg_catalog."default",
+    status_enum integer,
+    baralho_id uuid,
+     CONSTRAINT fkc3jty7ftkxv78cwlbkx8mgw85 FOREIGN KEY (baralho_id)
+        REFERENCES public.baralho (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
 
 
 
