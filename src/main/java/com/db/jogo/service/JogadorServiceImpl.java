@@ -12,30 +12,23 @@ import com.db.jogo.repository.JogadorRepository;
 @Service
 public class JogadorServiceImpl implements JogadorService {
 
-	 private JogadorRepository jogadorRepository;
+	private JogadorRepository jogadorRepository;
 
-	    @Autowired
-	    public JogadorServiceImpl(JogadorRepository jogadorRepository){
-	        this.jogadorRepository = jogadorRepository;
-	        
-	    }
-	
+	@Autowired
+	public JogadorServiceImpl(JogadorRepository jogadorRepository) {
+		this.jogadorRepository = jogadorRepository;
+
+	}
+
 	@Override
 	public Optional<Jogador> findById(UUID id) throws DataAccessException {
-		Optional<Jogador> jogador= Optional.empty();
-		jogador= jogadorRepository.findById(id);
-		
-        return jogador;
+		return jogadorRepository.findById(id);
 	}
 
 	@Override
 	public Jogador saveJogador(Jogador jogador) throws DataAccessException {
 		return jogadorRepository.save(jogador);
-		
-		
-		
-		
-	}
-	
-}
 
+	}
+
+}

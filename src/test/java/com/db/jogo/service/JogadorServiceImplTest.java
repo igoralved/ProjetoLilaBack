@@ -39,12 +39,21 @@ class JogadorServiceImplTest {
 	    }
 	
 	@Test
-	@DisplayName("Teste do SAVE do Service do Jogador")
+	@DisplayName("Teste do SAVE/Successo do Service do Jogador")
 	public void testPostJogador() throws Exception {
 		
 	        when(jogadorService.saveJogador(jogador)).thenReturn(jogador);
 
 	        assertEquals(jogador, jogadorService.saveJogador(jogador));
+
+	    }
+	@Test
+	@DisplayName("Teste do SAVE/Error do Service do Jogador")
+	public void testPostErrorJogador() throws Exception {
+		
+	        when(jogadorService.saveJogador(null)).thenReturn(null);
+
+	        assertEquals(null, jogadorService.saveJogador(null));
 
 	    }
 	

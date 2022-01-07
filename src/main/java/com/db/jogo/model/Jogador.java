@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,31 +31,39 @@ public class Jogador {
 	private UUID id;
 	private String nome;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jogador", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Builder.Default
 	private Set<CartaDoJogo> listaDeCartas =  new HashSet<>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jogador", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Builder.Default
 	private  Set<CartaDeObjetivo> listaDeObjetivos = new HashSet<>();
 	
 
-	
+	@NonNull
 	@Column( name ="pontos")
-	private Integer pontos;
-	
 	@Builder.Default
-	@Column( name ="coracaoPeq", nullable = false)
+	private Integer pontos = 0;
+	
+	@NonNull
+	@Builder.Default
+	@Column( name ="coracaoPeq")
 	private Integer coracaoPeq = 2;
 	
+	@NonNull
+	@Builder.Default
 	@Column( name ="coracaoGra")
-	private Integer coracaoGra;
+	private Integer coracaoGra = 0;
 	
+	@NonNull
+	@Builder.Default
 	@Column( name ="bonusCoracaoPeq")
-	private Integer bonusCoracaoPeq;
+	private Integer bonusCoracaoPeq = 0;
 	
+	@NonNull
+	@Builder.Default
 	@Column( name ="bonusCoracaoGra")
-	private Integer bonusCoracaoGra;
+	private Integer bonusCoracaoGra = 0;
 	
 	
 	public void adicionaCarta(CartaDoJogo carta) {
