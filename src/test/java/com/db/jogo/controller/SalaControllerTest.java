@@ -65,7 +65,8 @@ class SalaControllerTest {
         cartaObjetivo.setClassificacao("Ganhe pontos");
         cartaObjetivo.setCategoria("Física");
 
-        baralho.setId_codigo("LILA");
+        baralho.setId(UUID.randomUUID());
+        baralho.setCodigo("LILA");
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
         baralho.setCartasInicio(new ArrayList<>());

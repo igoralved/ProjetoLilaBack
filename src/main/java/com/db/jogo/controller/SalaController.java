@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sala")
 public class SalaController {
 
-    private SalaService salaService;
+    private final SalaService salaService;
 
     @Autowired
     public SalaController(SalaService salaService){

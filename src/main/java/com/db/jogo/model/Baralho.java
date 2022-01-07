@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +18,14 @@ import java.util.List;
 @Data
 @Entity
 public class Baralho {
-	
+
 	@Id
-	private  String id_codigo;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
+
+	@NonNull
+	@Column
+	private String codigo;
 
 	@OneToMany
 	private List<CartaDoJogo> cartasDoJogo= new ArrayList<>();

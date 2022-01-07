@@ -8,13 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.db.jogo.model.Jogador;
@@ -38,7 +32,7 @@ public class JogadorController {
 
         Optional<Jogador>jogadorParaSalvar = Optional.of(jogador);
 
-        if(bindingResult.hasErrors() || jogadorParaSalvar.isEmpty()){
+        if(bindingResult.hasErrors()){
             return new ResponseEntity<Jogador>(jogador, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Jogador>(jogadorService.saveJogador(jogador), HttpStatus.CREATED);
@@ -48,7 +42,7 @@ public class JogadorController {
     @GetMapping("/{id}")
     public ResponseEntity<Jogador> procuraJogador(@PathVariable UUID id) {
 
-        Optional<Jogador> jogador= Optional.empty();
+        Optional<Jogador> jogador;
         jogador = jogadorService.findById(id);
 
         if(jogador.isEmpty()) {
@@ -57,14 +51,14 @@ public class JogadorController {
         return new ResponseEntity<Jogador>(jogador.get(), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador) {
+    @PutMapping
+    public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador) throws IllegalArgumentException {
 
         try {
             Optional<Jogador> jogadorParaAtualizar = Optional.empty();
             jogadorParaAtualizar = this.jogadorService.findById(jogador.getId());
 
-            if (!jogadorParaAtualizar.isEmpty()) {
+            if (jogadorParaAtualizar.isPresent()) {
 
                 jogadorParaAtualizar.get().setBonusCoracaoGra(jogador.getBonusCoracaoGra());
                 jogadorParaAtualizar.get().setBonusCoracaoPeq(jogador.getBonusCoracaoPeq());
@@ -77,16 +71,14 @@ public class JogadorController {
 
                 this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
-                return new ResponseEntity<Jogador>(jogadorParaAtualizar.get(), HttpStatus.OK);
+                return new ResponseEntity<>(jogadorParaAtualizar.get(), HttpStatus.OK);
             }
 
         } catch (Exception e) {
-            new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);
+            throw new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);
         }
 
         return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
 
     }
-
-
 }
