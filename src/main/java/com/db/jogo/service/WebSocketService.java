@@ -34,6 +34,7 @@ public class WebSocketService {
 
     public Sala criarJogo (Jogador jogador){
         Sala sala = new Sala();
+        //jogadorService.save(jogador);
         Baralho baralho = baralhoService.findById("lila1");
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
