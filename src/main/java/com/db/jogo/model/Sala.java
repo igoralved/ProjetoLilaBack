@@ -3,7 +3,6 @@ package com.db.jogo.model;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
-import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
@@ -27,16 +26,19 @@ public class Sala {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-    @Column(name = "hash",nullable = false)
     @NonNull
+    @Column(name = "hash",nullable = false)
     String hash;
 
+    @NonNull
     @OneToMany
     private List<Jogador> jogadores;
 
     @OneToOne
+    @NonNull
     private Baralho baralho;
 
+    @NonNull
     private StatusEnum statusEnum = StatusEnum.NOVO;
 
     public String generateHash() {
@@ -44,8 +46,7 @@ public class Sala {
         byte[] bytes = new byte[6];
         random.nextBytes(bytes);
         Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-        String hash = encoder.encodeToString(bytes);
-        return hash;
+        return encoder.encodeToString(bytes);
     }
 
     public void adicionarJogador(Jogador jogador){
@@ -62,11 +63,12 @@ public class Sala {
         FINALIZADO
     }
 
+    @NonNull
     public StatusEnum getStatusEnum() {
         return this.statusEnum;
     }
 
-    public void setStatusEnum(StatusEnum statusEnum) {
+    public void setStatusEnum(@NonNull StatusEnum statusEnum) {
         this.statusEnum = statusEnum;
     }
 }

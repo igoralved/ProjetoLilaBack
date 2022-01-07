@@ -90,4 +90,41 @@ class SalaControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @DisplayName("Teste de Salvar/Criar uma sala do Controller de Sala com erro")
+    void criarSalaComErro() throws Exception {
+        Sala sala = new Sala();
+
+        given(salaService.saveSala(sala)).willReturn(sala);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String newSalaAsJSON = mapper.writeValueAsString(sala);
+        this.mockMvc.perform(post("/sala")
+                .content(newSalaAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Teste de encontrar sala por hash do Controller de Sala com erro")
+    void encontrarSalaPorHashComErro() throws Exception{
+        Sala sala = new Sala();
+        sala.setId(UUID.randomUUID());
+        sala.setBaralho(baralho);
+        sala.setHash("hashpraentrar");
+        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+        sala.adicionarJogador(jogador);
+
+        given(salaService.findSalaByHash("hashpraentrarerrado")).willReturn(Optional.of(sala));
+
+        ObjectMapper mapper = new ObjectMapper();
+        String encontrarSalaAsJSON = mapper.writeValueAsString(sala);
+        this.mockMvc.perform(get("/sala/" + sala.getHash())
+                        .content(encontrarSalaAsJSON)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+    }
 }

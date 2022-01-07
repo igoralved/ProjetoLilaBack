@@ -31,7 +31,7 @@ public class SalaController {
 
     @PostMapping
     public ResponseEntity<Sala> criarSala(@RequestBody Sala sala, BindingResult bindingResult) {
-        if(bindingResult.hasErrors() || (sala.getHash().isEmpty())){
+        if(bindingResult.hasErrors()){
             return new ResponseEntity<>(sala, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(salaService.saveSala(sala), HttpStatus.CREATED);
