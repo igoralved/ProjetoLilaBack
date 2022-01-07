@@ -23,7 +23,7 @@ public class BaralhoController {
 	
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Baralho> saveBaralho(@RequestBody Baralho baralho, BindingResult bindingResult){
-		if(bindingResult.hasErrors() || (baralho.getId_codigo() == null) || (baralho.getTitulo() == null) || (baralho.getDescricao() == null)) {
+		if(bindingResult.hasErrors() || (baralho.getId() == null) || (baralho.getTitulo() == null) || (baralho.getDescricao() == null)) {
 			return new ResponseEntity<Baralho>(baralho, HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<Baralho>(baralhoService.saveBaralho(baralho), HttpStatus.CREATED);

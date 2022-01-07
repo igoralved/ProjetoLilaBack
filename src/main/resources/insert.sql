@@ -1,5 +1,5 @@
 INSERT INTO public.baralho(codigo, descricao, titulo)
-	VALUES ('Clila' ,'primeiro Baralho', 'baralho01') ;
+	VALUES ('Clila' ,'primeiro Baralho', 'baralho01');
 	
 INSERT INTO public.carta_do_jogo( bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
  Values ('false', 'visual',  'Wikipedia', 'Deficiência visual abrange pessoas cegas e pessoas com visão reduzida', 'Definição', '0', '1','1'),
