@@ -24,9 +24,26 @@ class JogadorServiceImplTest {
 	@Mock
     private JogadorServiceImpl jogadorService;
 	
-	Jogador jogador= Jogador.builder().build();
+	Jogador jogador= Jogador.builder()
+			.id(UUID.randomUUID())
+			.nome("joão")
+			.bonusCoracaoGra(1)
+			.bonusCoracaoPeq(1)
+			.coracaoGra(1)
+			.pontos(1)
+			.coracaoPeq(2)
+			.build();
 
-    Optional<Jogador> jogadorOpt= Optional.of(jogador);
+    Optional<Jogador> jogadorOpt= 
+    		Optional.ofNullable(Jogador.builder()
+	.id(UUID.randomUUID())
+	.nome("joão")
+	.bonusCoracaoGra(1)
+	.bonusCoracaoPeq(1)
+	.coracaoGra(1)
+	.pontos(1)
+	.coracaoPeq(2)
+	.build());
 
 	@Test
 	@DisplayName("Teste do GET do ServiceImpl do Jogador")
@@ -62,9 +79,7 @@ class JogadorServiceImplTest {
 	@Test
 	@DisplayName("Teste do PUT/Sucesso do ServiceImpl do Jogador")
 	public void testPutSucessoJogador() throws Exception {
-		
-		Jogador jogador = Jogador.builder().id(UUID.randomUUID()).build();
-		
+				
 	        when(jogadorService.atualizarJogador(jogador)).thenReturn(Optional.of(jogador));
 
 	        assertEquals(Optional.of(jogador), jogadorService.atualizarJogador(jogador));
@@ -75,7 +90,7 @@ class JogadorServiceImplTest {
 	@DisplayName("Teste do PUT/Error do ServiceImpl do Jogador")
 	public void testPutErrorJogador() throws Exception {
 		
-		Jogador jogador = Jogador.builder().id(null).build();
+		jogador.setId(null);
 		
 	        when(jogadorService.atualizarJogador(jogador)).thenReturn(Optional.of(jogador));
 
