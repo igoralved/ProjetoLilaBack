@@ -25,23 +25,25 @@ public class WebSocketService {
     private SimpMessagingTemplate template;
     private SalaService salaService;
     private BaralhoService baralhoService;
+    private JogadorService jogadorService;
 
     @Autowired
-    private WebSocketService ( SalaService salaService, BaralhoService baralhoService){
+    private WebSocketService ( SalaService salaService, BaralhoService baralhoService, JogadorService jogadorService){
         this.salaService = salaService;
         this.baralhoService = baralhoService;
+        this.jogadorService = jogadorService;
     }
 
     public Sala criarJogo (Jogador jogador){
         Sala sala = new Sala();
-        //jogadorService.save(jogador);
+        Jogador savedJogador = jogadorService.saveJogador(jogador);
         Baralho baralho = baralhoService.findById("lila1");
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setJogadores(new ArrayList<>());
-        sala.adicionarJogador(jogador);
+        sala.adicionarJogador(savedJogador);
         sala.setHash(sala.generateHash());
-        return sala;
+        return salaService.saveSala(sala);
     }
 
     public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException{
@@ -53,6 +55,4 @@ public class WebSocketService {
         sala.get().setStatusEnum(JOGANDO);
         return sala;
     }
-
-
 }

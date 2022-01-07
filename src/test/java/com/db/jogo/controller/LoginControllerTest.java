@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class LoginControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -63,7 +62,6 @@ public class LoginControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.logado").value("false"))
                 .andExpect(status().isOk());
-
     }
 
     private static String asJsonString(final Object obj) {
@@ -72,6 +70,5 @@ public class LoginControllerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 }
