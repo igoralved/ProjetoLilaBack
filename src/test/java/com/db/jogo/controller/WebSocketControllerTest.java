@@ -160,9 +160,40 @@ public class WebSocketControllerTest {
                 .andExpect(status().isOk());
     }
 
-     @Test
-     @DisplayName("Teste da jogada")
-     void testJogada(){
+//     @Test
+//     @DisplayName("Teste da jogada")
+//     void testJogada(){
+//
+//     }
 
-     }
+    @Test
+    @DisplayName("Teste de BadRequest para iniciar o jogo")
+    void testIniciarJogoNull() throws Exception {
+
+        given(webSocketService.criarJogo(null)).willReturn(null);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jogadorAsJSON = mapper.writeValueAsString(null);
+        this.mockMvc.perform(post("/api/iniciar")
+                        .content(jogadorAsJSON)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Teste de BadRequest para conexão")
+    void testConectarComErro() throws Exception{
+        Jogador jogadorVazio = new Jogador();
+        Sala salaVazia = new Sala();
+        given(webSocketService.conectarJogo( jogadorVazio, salaVazia.getHash())).willReturn(null);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJSON = mapper.writeValueAsString(null);
+        this.mockMvc.perform(post("/api/conectar")
+                        .content(newConexaoAsJSON)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isBadRequest());
+    }
 }
