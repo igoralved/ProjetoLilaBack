@@ -51,7 +51,7 @@ public class WebSocketService {
         if(sala.get().getStatusEnum() == FINALIZADO){
             throw new JogoInvalidoException("Jogo ja foi finalizado");
         }
-        sala.ifPresent(value -> value.adicionarJogador(jogador));
+        sala.get().adicionarJogador(jogadorService.saveJogador(jogador));
         sala.get().setStatusEnum(JOGANDO);
         return sala;
     }

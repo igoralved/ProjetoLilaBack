@@ -1,7 +1,6 @@
 package com.db.jogo.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.db.jogo.model.*;
@@ -90,33 +89,29 @@ public class SalaServiceTest {
 
     @Test
     @DisplayName("Teste para encontrar uma sala por Hash")
-    void encontrarSalaPorHash() throws Exception {
-
+    void encontrarSalaPorHash() {
         salaLocalizada = salaService.findSalaByHash("iuervnijr0f");
         assertEquals(salaLocalizada, salaService.findSalaByHash("iuervnijr0f"));
     }
 
      @DisplayName("Teste para criar uma sala do Service")
      @Test
-     void criarSala() throws Exception {
-         
-
+     void criarSala(){
          when(salaService.saveSala(sala)).thenReturn(sala);;
          assertEquals(sala, salaService.saveSala(sala));
      }
 
      @DisplayName("Teste de erro do retorno da sala")
      @Test
-     void encontrarSalaPorHashComErro() throws Exception {
-
+     void encontrarSalaPorHashComErro() {
          salaLocalizada = salaService.findSalaByHash("ertfvygbhnj");
-         assertNotEquals(salaLocalizada, sala);
+         assertFalse(salaLocalizada.isPresent());
      }
  
      @DisplayName("Teste de erro do SAVE do Service")
      @Test
-      void criarSalaComErro() throws Exception {
+      void criarSalaComErro(){
          when(salaService.saveSala(null)).thenReturn(null);
-         assertEquals(null, salaService.saveSala(null));
+         assertNull(salaService.saveSala(null));
       }
 }

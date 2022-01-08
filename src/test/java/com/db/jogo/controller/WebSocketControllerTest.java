@@ -2,6 +2,7 @@ package com.db.jogo.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
+import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
@@ -18,6 +20,7 @@ import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.SalaService;
 import com.db.jogo.service.WebSocketService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +59,7 @@ public class WebSocketControllerTest {
     CartaDoJogo carta = new CartaDoJogo();
     CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
+    Jogador jogador2 = new Jogador();
     Sala sala = new Sala();
     SalaRequest salaRequest = new SalaRequest();
 
@@ -103,40 +107,62 @@ public class WebSocketControllerTest {
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
+        jogador2.setId(UUID.randomUUID());
+        jogador2.setNome("Guilherme");
+        jogador2.setPontos(2);
+        jogador2.setBonusCoracaoGra(3);
+        jogador2.setBonusCoracaoPeq(2);
+        jogador2.setCoracaoGra(5);
+        jogador2.setCoracaoPeq(3);
+        jogador2.setListaDeCartas(new HashSet<>());
+        jogador2.adicionaCarta(carta);
+        jogador2.adicionaObjetivo(cartaObjetivo);
+
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
+
         salaRequest.setHash("hashpraentrar");
-        salaRequest.setJogador(jogador);
+        salaRequest.setJogador(jogador2);
+    }
+
+    @Test
+    @DisplayName("Teste para iniciar o jogo")
+    void testIniciarJogo() throws Exception {
+
+        given(webSocketService.criarJogo(jogador)).willReturn(new Sala());
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jogadorAsJSON = mapper.writeValueAsString(jogador);
+        this.mockMvc.perform(post("/api/iniciar")
+                        .content(jogadorAsJSON)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isOk());
     }
   
     @Test
-    @DisplayName("Teste para conectar")
+    @DisplayName("Teste para conectar outro jogador")
     void testConectar() throws Exception{
-       
-        given(webSocketService.conectarJogo(salaRequest.getJogador(), salaRequest.getHash())).willReturn(Optional.of(sala));
+        sala.adicionarJogador(jogador2);
+
+        given(webSocketService.conectarJogo( salaRequest.getJogador(), salaRequest.getHash())).willReturn(Optional.of(sala));
 
         ObjectMapper mapper = new ObjectMapper();
-        String newJogadorAsJSON = mapper.writeValueAsString(jogador);
-        this.mockMvc.perform(post("/conectar")
-                .content(newJogadorAsJSON)
+        String newConexaoAsJSON = mapper.writeValueAsString(salaRequest);
+        this.mockMvc.perform(post("/api/conectar")
+                .content(newConexaoAsJSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
 
-    // @Test
-    // @DisplayName("Teste para iniciar jogo")
-    // void testIniciarJogo() throws Exception{
+     @Test
+     @DisplayName("Teste da jogada")
+     void testJogada(){
 
-    // }
-
-    // @Test
-    // @DisplayName("Teste da jogada")
-    // void testJogada() throws Exception{
-
-    // }
+     }
 }

@@ -42,6 +42,7 @@ class SalaControllerTest {
     CartaDoJogo carta = new CartaDoJogo();
     CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
+    Sala sala = new Sala();
 
     @BeforeEach
     public void init(){
@@ -86,18 +87,18 @@ class SalaControllerTest {
         jogador.setListaDeCartas(new HashSet<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
-    }
 
-    @Test
-    @DisplayName("Teste de Salvar/Criar uma sala do Controller de Sala")
-    void criarSala() throws Exception {
-        Sala sala = new Sala();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
+    }
+
+    @Test
+    @DisplayName("Teste de Salvar/Criar uma sala do Controller de Sala")
+    void criarSala() throws Exception {
 
         given(salaService.saveSala(sala)).willReturn(sala);
 
@@ -110,24 +111,15 @@ class SalaControllerTest {
                 .andExpect(status().isCreated());
     }
 
-
     @Test
     @DisplayName("Teste de encontrar sala por hash do Controller de Sala")
     void encontrarSalaPorHash() throws Exception{
-        Sala sala = new Sala();
-        sala.setId(UUID.randomUUID());
-        sala.setBaralho(baralho);
-        sala.setHash("hashpraentrar");
-        sala.setStatusEnum(Sala.StatusEnum.NOVO);
-        sala.setJogadores(new ArrayList<>());
-        sala.adicionarJogador(jogador);
 
-        given(salaService.findSalaByHash("hashpraentrar")).willReturn(Optional.of(sala));
+        given(salaService.findSalaByHash(sala.getHash())).willReturn(Optional.of(sala));
 
         ObjectMapper mapper = new ObjectMapper();
         String encontrarSalaAsJSON = mapper.writeValueAsString(sala);
         this.mockMvc.perform(get("/sala/" + sala.getHash())
-                .content(encontrarSalaAsJSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(content().json(encontrarSalaAsJSON))
@@ -146,7 +138,8 @@ class SalaControllerTest {
         this.mockMvc.perform(post("/sala")
                 .content(newSalaAsJSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isBadRequest());
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

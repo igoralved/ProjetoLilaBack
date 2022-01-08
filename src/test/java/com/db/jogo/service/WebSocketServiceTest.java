@@ -35,6 +35,7 @@ public class WebSocketServiceTest {
     CartaDoJogo carta = new CartaDoJogo();
     CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
+    Jogador jogador2 = new Jogador();
     Sala sala = new Sala();
 
     @BeforeEach
@@ -81,6 +82,17 @@ public class WebSocketServiceTest {
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
+        jogador2.setId(UUID.randomUUID());
+        jogador2.setNome("Guilherme");
+        jogador2.setPontos(2);
+        jogador2.setBonusCoracaoGra(3);
+        jogador2.setBonusCoracaoPeq(2);
+        jogador2.setCoracaoGra(5);
+        jogador2.setCoracaoPeq(3);
+        jogador2.setListaDeCartas(new HashSet<>());
+        jogador2.adicionaCarta(carta);
+        jogador2.adicionaObjetivo(cartaObjetivo);
+
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
@@ -92,12 +104,12 @@ public class WebSocketServiceTest {
     @Test
     @DisplayName("Teste para conectar ao jogo")
     void testConectarJogo() {
-        sala.getHash();
+        sala.adicionarJogador(jogador2);
         try {
-            when(webSocketService.conectarJogo(jogador, sala.getHash())).thenReturn(Optional.of(sala));
-            assertEquals(sala, webSocketService.conectarJogo(jogador, sala.getHash()).get());
+            when(webSocketService.conectarJogo(jogador2, sala.getHash())).thenReturn(Optional.of(sala));
+            Sala salaTarget = webSocketService.conectarJogo(jogador2, sala.getHash()).get();
+            assertEquals(sala, salaTarget);
         } catch (JogoInvalidoException e) {
-            // TODO Auto-generated catch block
             fail("jogo inválido");
         }
     }
