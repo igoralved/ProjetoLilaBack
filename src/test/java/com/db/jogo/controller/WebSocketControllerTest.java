@@ -2,7 +2,6 @@ package com.db.jogo.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
-import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
@@ -20,7 +18,6 @@ import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.SalaService;
 import com.db.jogo.service.WebSocketService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -160,11 +157,10 @@ public class WebSocketControllerTest {
                 .andExpect(status().isOk());
     }
 
-//     @Test
-//     @DisplayName("Teste da jogada")
-//     void testJogada(){
-//
-//     }
+    @Test
+    @DisplayName("Teste da jogada")
+    void testJogada() throws Exception {
+    }
 
     @Test
     @DisplayName("Teste de BadRequest para iniciar o jogo")
