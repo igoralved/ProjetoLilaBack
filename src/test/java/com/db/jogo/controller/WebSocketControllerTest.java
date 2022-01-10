@@ -152,11 +152,10 @@ public class WebSocketControllerTest {
                 .andExpect(status().isOk());
     }
 
-//     @Test
-//     @DisplayName("Teste da jogada")
-//     void testJogada(){
-//
-//     }
+    @Test
+    @DisplayName("Teste da jogada")
+    void testJogada() throws Exception {
+    }
 
     @Test
     @DisplayName("Teste de BadRequest para iniciar o jogo")

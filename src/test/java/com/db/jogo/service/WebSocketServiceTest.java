@@ -1,6 +1,7 @@
 package com.db.jogo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
@@ -11,9 +12,9 @@ import java.util.UUID;
 
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
-import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
@@ -99,6 +100,8 @@ public class WebSocketServiceTest {
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
+
+
     }
 
     @Test
@@ -120,4 +123,12 @@ public class WebSocketServiceTest {
         when(webSocketService.criarJogo(jogador)).thenReturn(sala);;
         assertEquals(sala, webSocketService.criarJogo(jogador));
     }
+
+    @Test
+    @DisplayName("Teste para criar um jogo com erro")
+    void testCriarJogoComErro() {
+        when(webSocketService.criarJogo(null)).thenReturn(null);;
+        assertNull(webSocketService.criarJogo(null));
+    }
+
 }

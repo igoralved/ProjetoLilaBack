@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Optional;
-
 @CrossOrigin
 @Slf4j
 @AllArgsConstructor
