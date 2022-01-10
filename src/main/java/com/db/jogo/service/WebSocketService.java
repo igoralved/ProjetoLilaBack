@@ -10,6 +10,7 @@ import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class WebSocketService {
     public Sala criarJogo (Jogador jogador){
         Sala sala = new Sala();
         Jogador savedJogador = jogadorService.saveJogador(jogador);
-        Baralho baralho = baralhoService.findById("lila1");
+        Baralho baralho = baralhoService.findByCodigo("lila1").get();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setJogadores(new ArrayList<>());
@@ -46,13 +47,25 @@ public class WebSocketService {
         return salaService.saveSala(sala);
     }
 
-    public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException{
-        Optional<Sala> sala = salaService.findSalaByHash(hash);
-        if(sala.get().getStatusEnum() == FINALIZADO){
-            throw new JogoInvalidoException("Jogo ja foi finalizado");
-        }
-        sala.get().adicionarJogador(jogadorService.saveJogador(jogador));
-        sala.get().setStatusEnum(JOGANDO);
-        return sala;
+    public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
+
+            if (jogador == null || hash == null) {
+                throw new JogoInvalidoException("Parametros nulos");
+            }
+
+            Optional<Sala> sala = salaService.findSalaByHash(hash);
+
+             if(sala.isPresent()){
+
+                if (sala.get().getStatusEnum() == FINALIZADO) {
+                throw new JogoInvalidoException("Jogo ja foi finalizado");
+                }
+
+                sala.get().adicionarJogador(jogadorService.saveJogador(jogador));
+
+                sala.get().setStatusEnum(JOGANDO);
+            }
+
+            return sala;
     }
 }

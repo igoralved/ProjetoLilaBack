@@ -20,12 +20,9 @@ public class BaralhoServiceImpl implements BaralhoService {
 	}
 	
 	@Override
-	public Baralho findById(String id) throws DataAccessException {
-		Optional<Baralho> baralho = this.baralhoRepository.findById(id);
-		if(baralho == null) {
-			return null;
-		}
-		return baralho.get();
+	public Optional<Baralho> findByCodigo(String codigo) throws DataAccessException {
+		Optional<Baralho> baralho = this.baralhoRepository.findByCodigo(codigo);
+		return baralho;
 	}
 	
 	@Override

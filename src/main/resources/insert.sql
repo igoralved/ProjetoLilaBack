@@ -1,7 +1,7 @@
 INSERT INTO admin(id, senha)
 VALUES('d1516d33-ff6f-4dc9-aedf-9316421096cb','Lil@123') ON CONFLICT(id) DO NOTHING;
 
-INSERT INTO public.baralho(id_codigo, descricao, titulo)
+INSERT INTO public.baralho(codigo, descricao, titulo)
 	VALUES ('lila1' , 'primeiro Baralho', 'baralho01') ON CONFLICT(id_codigo) DO NOTHING;
 
 INSERT INTO public.categoria_de_carta(

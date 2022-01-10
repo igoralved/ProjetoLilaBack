@@ -1,12 +1,9 @@
 package com.db.jogo.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @ExtendWith(MockitoExtension.class)
 public class WebSocketServiceTest {
@@ -79,7 +77,6 @@ public class WebSocketServiceTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
-        jogador.setListaDeCartas(new HashSet<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -90,7 +87,6 @@ public class WebSocketServiceTest {
         jogador2.setBonusCoracaoPeq(2);
         jogador2.setCoracaoGra(5);
         jogador2.setCoracaoPeq(3);
-        jogador2.setListaDeCartas(new HashSet<>());
         jogador2.adicionaCarta(carta);
         jogador2.adicionaObjetivo(cartaObjetivo);
 
@@ -100,8 +96,6 @@ public class WebSocketServiceTest {
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
-
-
     }
 
     @Test
@@ -113,8 +107,16 @@ public class WebSocketServiceTest {
             Sala salaTarget = webSocketService.conectarJogo(jogador2, sala.getHash()).get();
             assertEquals(sala, salaTarget);
         } catch (JogoInvalidoException e) {
-            fail("jogo inválido");
+            fail("Parametros nulos");
         }
+    }
+
+    @Test
+    @DisplayName("Teste para conectar ao jogo com jogador nulo")
+    void testConectarJogoComJogadorNull() throws JogoInvalidoException {
+
+        when(webSocketService.conectarJogo(null, sala.getHash())).thenReturn(Optional.ofNullable(sala));
+        assertEquals(sala, webSocketService.conectarJogo(null, sala.getHash()).get());
     }
 
     @Test
@@ -125,7 +127,7 @@ public class WebSocketServiceTest {
     }
 
     @Test
-    @DisplayName("Teste para criar um jogo com erro")
+    @DisplayName("Teste para não criar jogo com parametro null")
     void testCriarJogoComErro() {
         when(webSocketService.criarJogo(null)).thenReturn(null);;
         assertNull(webSocketService.criarJogo(null));
