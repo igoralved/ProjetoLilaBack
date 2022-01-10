@@ -10,8 +10,8 @@ import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +29,16 @@ public class WebSocketService {
     private JogadorService jogadorService;
 
     @Autowired
-    private WebSocketService ( SalaService salaService, BaralhoService baralhoService, JogadorService jogadorService){
+    private WebSocketService (
+        SalaService salaService,
+        BaralhoService baralhoService,
+        JogadorService jogadorService,
+        SimpMessagingTemplate template)
+    {
         this.salaService = salaService;
         this.baralhoService = baralhoService;
         this.jogadorService = jogadorService;
+        this.template = template;
     }
 
     public Sala criarJogo (Jogador jogador){
@@ -48,24 +54,40 @@ public class WebSocketService {
     }
 
     public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
-
             if (jogador == null || hash == null) {
                 throw new JogoInvalidoException("Parametros nulos");
             }
-
             Optional<Sala> sala = salaService.findSalaByHash(hash);
-
              if(sala.isPresent()){
-
                 if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
                 }
-
                 sala.get().adicionarJogador(jogadorService.saveJogador(jogador));
-
                 sala.get().setStatusEnum(JOGANDO);
             }
-
             return sala;
     }
+
+    @Async
+    public void receberJogada(Sala sala) {
+        String URLresposta = "/topic" + sala.getHash();
+        try {
+            template.convertAndSend(URLresposta, sala);
+        } catch (Exception e) {
+            log.error("Erro durante o procesamento.", e);
+        }
+    }
+
+    @Async
+    public Sala criarSala(Jogador jogador) {
+        Sala sala = criarJogo(jogador);
+        String URLresposta = "/topic/" + sala.getHash();
+        try {
+            template.convertAndSend(URLresposta, sala);
+        } catch (Exception e) {
+            log.error("Erro durante o procesamento.", e);
+        }
+        return sala;
+    }
+
 }
