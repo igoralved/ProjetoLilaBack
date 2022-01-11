@@ -29,12 +29,12 @@ public class CartaInicioServiceTest {
         assertEquals(cartaInicio, cartaInicioService.saveCartaInicio(cartaInicio));
     }
 
-    @Test
+  /*  @Test
     void findAllCartaInicio() {
     }
 
     @Test
     void findByIdCartaInicio() {
-    }
+    }*/
 
 }

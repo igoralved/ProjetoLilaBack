@@ -25,7 +25,7 @@ public class CartaInicio {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
-    @ManyToOne
+   @ManyToOne
     @JoinColumn(name = "baralho_id_codigo")
     private Baralho baralho;
 }

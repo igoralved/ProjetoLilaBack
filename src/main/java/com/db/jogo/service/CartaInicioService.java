@@ -1,27 +1,16 @@
 package com.db.jogo.service;
 
+import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaInicio;
-import com.db.jogo.repository.CartaInicioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.dao.DataAccessException;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-@Service
-public class CartaInicioService {
-    private CartaInicioRepository cartaInicioRepository;
+public interface CartaInicioService {
 
-    @Autowired
-    public CartaInicioService(CartaInicioRepository cartaInicioRepository) {
-        this.cartaInicioRepository = cartaInicioRepository;
-    }
-
-    public CartaInicio findByIdCartaInicio(UUID id) {
-        return cartaInicioRepository.getById(id);
-    }
-    public CartaInicio saveCartaInicio(CartaInicio cartaInicio){
-        return cartaInicioRepository.save(cartaInicio);
-    }
-
+    Optional<CartaInicio> findById(UUID id) throws DataAccessException;
+    CartaInicio saveCartaInicio(CartaInicio cartaInicio) throws DataAccessException;
+   List<CartaInicio> findAllCartaInicio() throws DataAccessException;
 }
-
