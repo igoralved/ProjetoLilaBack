@@ -26,20 +26,19 @@ public class CartaObjetivoController {
         return new ResponseEntity<Iterable<CartaObjetivo>>(cartaObjetivoService.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Optional<CartaObjetivo>> findCartaObjetivoById(UUID Id) {
-        if (cartaObjetivoService.findById(Id).isPresent()) {
-            return ResponseEntity.ok(cartaObjetivoService.findById(Id));
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/{id}")
+    public ResponseEntity<CartaObjetivo> findCartaObjetivoById(@PathVariable UUID id) {
+        Optional<CartaObjetivo> cartaObjetivo = cartaObjetivoService.findById(id);
+        return cartaObjetivo
+                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<CartaObjetivo> saveCartaObjetivo(@RequestBody CartaObjetivo cartaObjetivo, BindingResult bindingResult){
-        if(bindingResult.hasErrors() || (cartaObjetivo.getPontos() == (null) || (cartaObjetivo.getCategoria() == null) || (cartaObjetivo.getDescricao() == null))) {
-            return new ResponseEntity<CartaObjetivo>(cartaObjetivo, HttpStatus.BAD_REQUEST);
+    @PostMapping
+    public ResponseEntity<CartaObjetivo> saveCartaObjetivo(@RequestBody CartaObjetivo cartaObjetivo, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(cartaObjetivo, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<CartaObjetivo>(cartaObjetivoService.saveCartaObjetivo(cartaObjetivo), HttpStatus.CREATED);
+        return new ResponseEntity<>(cartaObjetivoService.saveCartaObjetivo(cartaObjetivo), HttpStatus.CREATED);
     }
-
 }
