@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -17,15 +18,36 @@ import java.util.UUID;
 class CartaObjetivoServiceImplTest {
 
     @Mock
-    private CartaObjetivoServiceImpl cartaObjetivoServiceImpl;
+    private CartaObjetivoServiceImpl cartaObjetivoService;
 
-    CartaObjetivo cartaObjetivo = CartaObjetivo.builder().id(UUID.randomUUID()).categoria("Filme").classificacao("Deficiencia fisica").descricao("Lorem ipsum").pontos(3).build();
+    CartaObjetivo cartaObjetivo = CartaObjetivo.builder().id(UUID.randomUUID())
+            .categoria("Filme")
+            .classificacao("Deficiencia fisica")
+            .descricao("Lorem ipsum")
+            .pontos(3)
+            .build();
+
+    private final ArrayList<CartaObjetivo> cartaObjetivoArraylist = new ArrayList<>();
 
     @DisplayName("Teste do SAVE do Service de todas as cartas de objetivo")
+
     @Test
     void saveCartaObjetivo() {
-        when(cartaObjetivoServiceImpl.saveCartaObjetivo(cartaObjetivo)).thenReturn(cartaObjetivo);
-        assertEquals(cartaObjetivo, cartaObjetivoServiceImpl.saveCartaObjetivo(cartaObjetivo));
+        when(cartaObjetivoService.saveCartaObjetivo(cartaObjetivo)).thenReturn(cartaObjetivo);
+        assertEquals(cartaObjetivo, cartaObjetivoService.saveCartaObjetivo(cartaObjetivo));
+    }
+
+    @Test
+    void findCartaObjetivo() {
+        when(cartaObjetivoService.findAll()).thenReturn(cartaObjetivoArraylist);
+        assertEquals(cartaObjetivoArraylist, cartaObjetivoService.findAll());
+
+    }
+
+    @Test
+    void findCartaObjetivoById() {
+        when(cartaObjetivoService.findById(UUID.randomUUID())).thenReturn(cartaObjetivoService.findById(UUID.randomUUID()));
+        assertEquals(cartaObjetivoService.findById(UUID.randomUUID()), cartaObjetivoService.findById(UUID.randomUUID()));
     }
 
 }
