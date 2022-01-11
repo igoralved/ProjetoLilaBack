@@ -16,7 +16,7 @@ import com.db.jogo.model.CartaInicio;
 import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
-import com.db.jogo.service.WebSocketService;
+import com.db.jogo.service.WebSocketServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +44,7 @@ public class WebSocketControllerTest {
 
     @Autowired
     @MockBean
-    private WebSocketService webSocketService;
+    private WebSocketServiceImpl webSocketServiceImpl;
 
     CartaInicio cartaInicio = new CartaInicio();
     Baralho baralho = new Baralho();
@@ -125,7 +125,7 @@ public class WebSocketControllerTest {
     @DisplayName("Teste para iniciar o jogo")
     void testIniciarJogo() throws Exception {
 
-        given(webSocketService.criarJogo(jogador)).willReturn(new Sala());
+        given(webSocketServiceImpl.criarJogo(jogador)).willReturn(new Sala());
 
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(jogador);
@@ -141,7 +141,7 @@ public class WebSocketControllerTest {
     void testConectar() throws Exception{
         sala.adicionarJogador(jogador2);
 
-        given(webSocketService.conectarJogo( salaRequest.getJogador(), salaRequest.getHash())).willReturn(Optional.of(sala));
+        given(webSocketServiceImpl.conectarJogo( salaRequest.getJogador(), salaRequest.getHash())).willReturn(Optional.of(sala));
 
         ObjectMapper mapper = new ObjectMapper();
         String newConexaoAsJSON = mapper.writeValueAsString(salaRequest);
@@ -153,15 +153,10 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    @DisplayName("Teste da jogada")
-    void testJogada() throws Exception {
-    }
-
-    @Test
     @DisplayName("Teste de BadRequest para iniciar o jogo")
     void testIniciarJogoNull() throws Exception {
 
-        given(webSocketService.criarJogo(null)).willReturn(null);
+        given(webSocketServiceImpl.criarJogo(null)).willReturn(null);
 
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(null);
@@ -177,7 +172,7 @@ public class WebSocketControllerTest {
     void testConectarComErro() throws Exception{
         Jogador jogadorVazio = new Jogador();
         Sala salaVazia = new Sala();
-        given(webSocketService.conectarJogo( jogadorVazio, salaVazia.getHash())).willReturn(null);
+        given(webSocketServiceImpl.conectarJogo( jogadorVazio, salaVazia.getHash())).willReturn(null);
 
         ObjectMapper mapper = new ObjectMapper();
         String newConexaoAsJSON = mapper.writeValueAsString(null);

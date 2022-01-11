@@ -10,10 +10,9 @@ CREATE TABLE IF NOT EXISTS public.admin (
 CREATE TABLE IF NOT EXISTS public.baralho
 (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
-    codigo character varying(255) COLLATE pg_catalog."default",
+    codigo character varying(255) UNIQUE COLLATE pg_catalog."default",
     descricao character varying(255) COLLATE pg_catalog."default",
-    titulo character varying(255) COLLATE pg_catalog."default",
-    UNIQUE(codigo)
+    titulo character varying(255) COLLATE pg_catalog."default"
     
 );
 
