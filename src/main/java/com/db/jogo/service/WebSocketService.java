@@ -10,7 +10,10 @@ import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,16 +31,22 @@ public class WebSocketService {
     private JogadorService jogadorService;
 
     @Autowired
-    private WebSocketService ( SalaService salaService, BaralhoService baralhoService, JogadorService jogadorService){
+    private WebSocketService (
+        SalaService salaService,
+        BaralhoService baralhoService,
+        JogadorService jogadorService,
+        SimpMessagingTemplate template)
+    {
         this.salaService = salaService;
         this.baralhoService = baralhoService;
         this.jogadorService = jogadorService;
+        this.template = template;
     }
 
     public Sala criarJogo (Jogador jogador){
         Sala sala = new Sala();
         Jogador savedJogador = jogadorService.saveJogador(jogador);
-        Baralho baralho = baralhoService.findById("lila1");
+        Baralho baralho = baralhoService.findByCodigo("lila1").get();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setJogadores(new ArrayList<>());
@@ -46,13 +55,41 @@ public class WebSocketService {
         return salaService.saveSala(sala);
     }
 
-    public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException{
-        Optional<Sala> sala = salaService.findSalaByHash(hash);
-        if(sala.get().getStatusEnum() == FINALIZADO){
-            throw new JogoInvalidoException("Jogo ja foi finalizado");
+    public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
+            if (jogador == null || hash == null) {
+                throw new JogoInvalidoException("Parametros nulos");
+            }
+            Optional<Sala> sala = salaService.findSalaByHash(hash);
+             if(sala.isPresent()){
+                if (sala.get().getStatusEnum() == FINALIZADO) {
+                throw new JogoInvalidoException("Jogo ja foi finalizado");
+                }
+                sala.get().adicionarJogador(jogadorService.saveJogador(jogador));
+                sala.get().setStatusEnum(JOGANDO);
+            }
+            return sala;
+    }
+
+    @Async
+    public void receberJogada(Sala sala) {
+        String URLresposta = "/topic" + sala.getHash();
+        try {
+            template.convertAndSend(URLresposta, sala);
+        } catch (Exception e) {
+            log.error("Erro durante o procesamento.", e);
         }
-        sala.ifPresent(value -> value.adicionarJogador(jogador));
-        sala.get().setStatusEnum(JOGANDO);
+    }
+
+    @Async
+    public Sala criarSala(Jogador jogador) {
+        Sala sala = criarJogo(jogador);
+        String URLresposta = "/topic/" + sala.getHash();
+        try {
+            template.convertAndSend(URLresposta, sala);
+        } catch (Exception e) {
+            log.error("Erro durante o procesamento.", e);
+        }
         return sala;
     }
+
 }

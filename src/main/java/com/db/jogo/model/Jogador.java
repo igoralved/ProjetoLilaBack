@@ -29,6 +29,9 @@ public class Jogador {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @NonNull
+    @Column( name ="nome")
     private String nome;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -37,32 +40,27 @@ public class Jogador {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
-    private  Set<CartaDeObjetivo> listaDeObjetivos = new HashSet<>();
+    private  Set<CartaObjetivo> listaDeObjetivos = new HashSet<>();
 
     @NonNull
     @Column( name ="pontos")
-    @Builder.Default
-    private Integer pontos = 0;
+    private Integer pontos;
 
     @NonNull
-    @Builder.Default
     @Column( name ="coracaoPeq")
-    private Integer coracaoPeq = 2;
+    private Integer coracaoPeq;
 
     @NonNull
-    @Builder.Default
     @Column( name ="coracaoGra")
-    private Integer coracaoGra = 0;
+    private Integer coracaoGra;
 
     @NonNull
-    @Builder.Default
     @Column( name ="bonusCoracaoPeq")
-    private Integer bonusCoracaoPeq = 0;
+    private Integer bonusCoracaoPeq;
 
     @NonNull
-    @Builder.Default
     @Column( name ="bonusCoracaoGra")
-    private Integer bonusCoracaoGra = 0;
+    private Integer bonusCoracaoGra;
 
 
     public void adicionaCarta(CartaDoJogo carta) {
@@ -73,11 +71,11 @@ public class Jogador {
         this.listaDeCartas.remove(carta);
     }
 
-    public void adicionaObjetivo(CartaDeObjetivo carta) {
+    public void adicionaObjetivo(CartaObjetivo carta) {
         this.listaDeObjetivos.add(carta);
     }
 
-    public void removeObjetivo(CartaDeObjetivo carta) {
+    public void removeObjetivo(CartaObjetivo carta) {
         this.listaDeObjetivos.remove(carta);
     }
 }

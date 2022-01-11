@@ -1,15 +1,22 @@
 package com.db.jogo.model;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.lang.NonNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,15 +24,20 @@ import java.util.List;
 @Data
 @Entity
 public class Baralho {
-	
+
 	@Id
-	private  String id_codigo;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
+
+	@NonNull
+	@Column
+	private String codigo;
 
 	@OneToMany
 	private List<CartaDoJogo> cartasDoJogo= new ArrayList<>();
 
 	@OneToMany
-	private List<CartaDeObjetivo> cartasDeObjetivo = new ArrayList<>();
+	private List<CartaObjetivo> cartasDeObjetivo = new ArrayList<>();
 
 	@OneToMany
 	private List<CartaInicio> cartasInicio = new ArrayList<>();
@@ -45,11 +57,11 @@ public class Baralho {
 		return this.cartasDoJogo.remove(cartaDoJogo);
 	}
 
-	public void adicionarCartaDoObjetivo(CartaDeObjetivo cartaDeObjetivo){
-		this.cartasDeObjetivo.add(cartaDeObjetivo);
+	public void adicionarCartaDoObjetivo(CartaObjetivo cartaObjetivo){
+		this.cartasDeObjetivo.add(cartaObjetivo);
 	}
 
-	public boolean removerCartaDoObjetivo(CartaDeObjetivo cartaDoObjetivo){
+	public boolean removerCartaDoObjetivo(CartaObjetivo cartaDoObjetivo){
 		return this.cartasDeObjetivo.remove(cartaDoObjetivo);
 	}
 

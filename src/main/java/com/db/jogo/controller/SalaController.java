@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sala")
 public class SalaController {
 
-    private SalaService salaService;
+    private final SalaService salaService;
 
     @Autowired
     public SalaController(SalaService salaService){
@@ -40,9 +40,7 @@ public class SalaController {
     @GetMapping("/{hash}")
     public ResponseEntity<Sala> encontrarSalaPorHash(@PathVariable String hash) {
         Optional<Sala> sala = salaService.findSalaByHash(hash);
-        if (sala.isPresent()) {
-            return new ResponseEntity<>(sala.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return sala.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

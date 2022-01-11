@@ -49,6 +49,7 @@ public class Sala {
         return encoder.encodeToString(bytes);
     }
 
+    @NonNull
     public void adicionarJogador(Jogador jogador){
         this.jogadores.add(jogador);
     }
