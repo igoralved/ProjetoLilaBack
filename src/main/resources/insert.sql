@@ -1,6 +1,6 @@
 INSERT INTO public.baralho(codigo, descricao, titulo)
-	VALUES ('Clila' ,'primeiro Baralho', 'baralho01');
-	
+	VALUES ('Clila' ,'primeiro Baralho', 'baralho01') ON CONFLICT(codigo) DO NOTHING;
+
 INSERT INTO public.carta_do_jogo( bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
  Values ('false', 'visual',  'Wikipedia', 'Deficiência visual abrange pessoas cegas e pessoas com visão reduzida', 'Definição', '0', '1','1'),
  ('true', 'visual', ' www.deficienteonline.com.br', 'A deficiência visual pode ser congênita ou adquirida ao longo da vida.', 'Informação', '0','2' ,'1' ),

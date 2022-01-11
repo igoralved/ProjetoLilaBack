@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.lang.NonNull;
 
@@ -30,7 +31,6 @@ public class Baralho {
 	private UUID id;
 
 	@NonNull
-	@Column
 	private String codigo;
 
 	@OneToMany

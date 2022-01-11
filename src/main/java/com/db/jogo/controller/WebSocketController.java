@@ -29,8 +29,8 @@ public class WebSocketController {
     @PostMapping("/iniciar")
     public ResponseEntity<Sala> iniciarJogo(@RequestBody Jogador jogador) {
         log.info("Requisição para iniciar jogo {}", jogador);
-        Sala sala = this.webSocketService.criarSala(jogador);
-        return new ResponseEntity<>( sala, HttpStatus.OK);
+        Sala sala = this.webSocketService.criarJogo(jogador);
+        return new ResponseEntity<>(sala, HttpStatus.OK);
     }
 
     @PostMapping("/conectar")
@@ -39,13 +39,13 @@ public class WebSocketController {
         return ResponseEntity.ok(webSocketService.conectarJogo(request.getJogador(), request.getHash()).get());
     }
 
-//    @PostMapping("/jogo")
-//    public ResponseEntity<Sala> jogada(@RequestBody Sala request) {
-//        log.info("Jogada: {}", request);
-//        Sala sala = salaService.jogada(request);
-//        simpMessagingTemplate.convertAndSend("/topic/" + sala.getHash(), sala);
-//        return ResponseEntity.ok(sala);
-//    }
+    // @PostMapping("/jogo")
+    // public ResponseEntity<Sala> jogada(@RequestBody Sala request) {
+    // log.info("Jogada: {}", request);
+    // Sala sala = salaService.jogada(request);
+    // simpMessagingTemplate.convertAndSend("/topic/" + sala.getHash(), sala);
+    // return ResponseEntity.ok(sala);
+    // }
 
     @PutMapping
     public ResponseEntity<?> execute(@RequestBody Sala sala) {
