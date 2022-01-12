@@ -85,5 +85,63 @@ CREATE TABLE IF NOT EXISTS public.sala
         ON DELETE NO ACTION
 );
 
+CREATE TABLE IF NOT EXISTS public.baralho_carta_inicio
+(
+    baralho_id uuid NOT NULL,
+    carta_inicio_id uuid NOT NULL,
+    CONSTRAINT uk_goww9pcuinggp0a0kg5j45wgq UNIQUE (carta_inicio_id),
+    CONSTRAINT fki83n37ppk5njjxxa9gccr9tqk FOREIGN KEY (carta_inicio_id)
+        REFERENCES public.carta_inicio (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fksmb55ndh0ay6ey3ccby6hl9og FOREIGN KEY (baralho_id)
+        REFERENCES public.baralho (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.baralho_carta_inicio
+    OWNER to lila;
+
+CREATE TABLE IF NOT EXISTS public.baralho_cartas_do_jogo
+(
+    baralho_id uuid NOT NULL,
+    cartas_do_jogo_id uuid NOT NULL,
+    CONSTRAINT uk_9fid5vhq5mnt90la8kd43c3y2 UNIQUE (cartas_do_jogo_id),
+    CONSTRAINT fk1bydvfmk7acvd1xmstalxuv5k FOREIGN KEY (cartas_do_jogo_id)
+        REFERENCES public.carta_do_jogo (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkbvd6v2rm8l615o8spp0ml53qi FOREIGN KEY (baralho_id)
+        REFERENCES public.baralho (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.baralho_cartas_do_jogo
+    OWNER to lila;
+CREATE TABLE IF NOT EXISTS public.baralho_cartas_objetivo
+(
+    baralho_id uuid NOT NULL,
+    cartas_objetivo_id uuid NOT NULL,
+    CONSTRAINT uk_k4tyvy7nh83fh5qrno8w5fcea UNIQUE (cartas_objetivo_id),
+    CONSTRAINT fkeujodwim0fxw9abeiubrie1g8 FOREIGN KEY (cartas_objetivo_id)
+        REFERENCES public.carta_objetivo (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkpjuyetx6lssgpdrjd2ob1yyp6 FOREIGN KEY (baralho_id)
+        REFERENCES public.baralho (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.baralho_cartas_objetivo
+    OWNER to lila;
 
 

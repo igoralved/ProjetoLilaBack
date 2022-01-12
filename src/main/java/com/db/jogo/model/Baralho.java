@@ -32,16 +32,16 @@ public class Baralho {
     private UUID id;
 	
 	@OneToMany
-	@JoinColumn(name="id_baralho")
+	
 	private List<CartaDoJogo> cartasDoJogo= new ArrayList<>();
 	
 	@OneToMany
-	@JoinColumn(name="id_baralho")
+	
 	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 	
 	@OneToMany
-	@JoinColumn(name="id_baralho")
 	private List<CartaInicio> cartaInicio = new ArrayList<>();
+	
 	
 	
 	@NonNull
