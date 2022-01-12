@@ -1,13 +1,30 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS public.admin (
+
+DROP TABLE IF EXISTS jogador_lista_de_objetivos;
+DROP TABLE IF EXISTS jogador_lista_de_cartas;
+DROP TABLE IF EXISTS baralho_cartas_objetivo;
+DROP TABLE IF EXISTS baralho_cartas_do_jogo;
+DROP TABLE IF EXISTS baralho_carta_inicio;
+DROP TABLE IF EXISTS sala_jogadores;
+DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS sala; 
+DROP TABLE IF EXISTS jogador; 
+DROP TABLE IF EXISTS carta_inicio;  
+DROP TABLE IF EXISTS carta_do_jogo;
+DROP TABLE IF EXISTS carta_objetivo;
+DROP TABLE IF EXISTS baralho;
+
+ 
+
+CREATE TABLE IF NOT EXISTS admin (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     senha character varying(255)
 );
 
 
 
-CREATE TABLE IF NOT EXISTS public.baralho
+CREATE TABLE IF NOT EXISTS baralho
 (
     id uuid NOT NULL DEFAULT uuid_generate_v4(),
     codigo character varying(255) COLLATE pg_catalog."default",
@@ -19,10 +36,10 @@ CREATE TABLE IF NOT EXISTS public.baralho
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.baralho
+ALTER TABLE IF EXISTS baralho
     OWNER to lila;
 
-CREATE TABLE IF NOT EXISTS public.carta_do_jogo
+CREATE TABLE IF NOT EXISTS carta_do_jogo
 (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     bonus boolean,
@@ -40,7 +57,7 @@ CREATE TABLE IF NOT EXISTS public.carta_do_jogo
         ON DELETE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS public.carta_objetivo
+CREATE TABLE IF NOT EXISTS carta_objetivo
 (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     categoria character varying(255) COLLATE pg_catalog."default",
@@ -54,7 +71,7 @@ CREATE TABLE IF NOT EXISTS public.carta_objetivo
         ON DELETE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS public.carta_inicio
+CREATE TABLE IF NOT EXISTS carta_inicio
 (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     descricao character varying(255) COLLATE pg_catalog."default",
@@ -66,7 +83,7 @@ CREATE TABLE IF NOT EXISTS public.carta_inicio
         ON DELETE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS public.jogador
+CREATE TABLE IF NOT EXISTS jogador
 (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     bonus_coracao_gra integer,
@@ -78,7 +95,7 @@ CREATE TABLE IF NOT EXISTS public.jogador
     
 );
 
-CREATE TABLE IF NOT EXISTS public.sala
+CREATE TABLE IF NOT EXISTS sala
 (
     id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     hash character varying(255) COLLATE pg_catalog."default",
@@ -90,7 +107,7 @@ CREATE TABLE IF NOT EXISTS public.sala
         ON DELETE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS public.baralho_carta_inicio
+CREATE TABLE IF NOT EXISTS baralho_carta_inicio
 (
     baralho_id uuid NOT NULL,
     carta_inicio_id uuid NOT NULL,
@@ -107,10 +124,10 @@ CREATE TABLE IF NOT EXISTS public.baralho_carta_inicio
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.baralho_carta_inicio
+ALTER TABLE IF EXISTS baralho_carta_inicio
     OWNER to lila;
 
-CREATE TABLE IF NOT EXISTS public.baralho_cartas_do_jogo
+CREATE TABLE IF NOT EXISTS baralho_cartas_do_jogo
 (
     baralho_id uuid NOT NULL,
     cartas_do_jogo_id uuid NOT NULL,
@@ -127,9 +144,9 @@ CREATE TABLE IF NOT EXISTS public.baralho_cartas_do_jogo
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.baralho_cartas_do_jogo
+ALTER TABLE IF EXISTS baralho_cartas_do_jogo
     OWNER to lila;
-CREATE TABLE IF NOT EXISTS public.baralho_cartas_objetivo
+CREATE TABLE IF NOT EXISTS baralho_cartas_objetivo
 (
     baralho_id uuid NOT NULL,
     cartas_objetivo_id uuid NOT NULL,
@@ -146,10 +163,10 @@ CREATE TABLE IF NOT EXISTS public.baralho_cartas_objetivo
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.baralho_cartas_objetivo
+ALTER TABLE IF EXISTS baralho_cartas_objetivo
     OWNER to lila;
     
-CREATE TABLE IF NOT EXISTS public.jogador_lista_de_cartas
+CREATE TABLE IF NOT EXISTS jogador_lista_de_cartas
 (
     jogador_id uuid NOT NULL,
     lista_de_cartas_id uuid NOT NULL,
@@ -167,10 +184,10 @@ CREATE TABLE IF NOT EXISTS public.jogador_lista_de_cartas
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.jogador_lista_de_cartas
+ALTER TABLE IF EXISTS jogador_lista_de_cartas
     OWNER to lila;
     
-    CREATE TABLE IF NOT EXISTS public.jogador_lista_de_objetivos
+    CREATE TABLE IF NOT EXISTS jogador_lista_de_objetivos
 (
     jogador_id uuid NOT NULL,
     lista_de_objetivos_id uuid NOT NULL,
@@ -188,11 +205,11 @@ ALTER TABLE IF EXISTS public.jogador_lista_de_cartas
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.jogador_lista_de_objetivos
+ALTER TABLE IF EXISTS jogador_lista_de_objetivos
     OWNER to lila;
        
        
-       CREATE TABLE IF NOT EXISTS public.sala_jogadores
+       CREATE TABLE IF NOT EXISTS sala_jogadores
 (
     sala_id uuid NOT NULL,
     jogadores_id uuid NOT NULL,
@@ -209,7 +226,7 @@ ALTER TABLE IF EXISTS public.jogador_lista_de_objetivos
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.sala_jogadores
+ALTER TABLE IF EXISTS sala_jogadores
     OWNER to lila;
 
 
