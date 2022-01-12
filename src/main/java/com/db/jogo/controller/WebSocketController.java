@@ -1,5 +1,7 @@
 package com.db.jogo.controller;
 
+import javax.validation.Valid;
+
 import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Jogador;
@@ -27,7 +29,7 @@ public class WebSocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @PostMapping("/iniciar")
-    public ResponseEntity<Sala> iniciarJogo(@RequestBody Jogador jogador) {
+    public ResponseEntity<Sala> iniciarJogo(@RequestBody @Valid Jogador jogador) throws JogoInvalidoException {
         log.info("Requisição para iniciar jogo {}", jogador);
         Sala sala = this.webSocketServiceImpl.criarJogo(jogador);
         return new ResponseEntity<>(sala, HttpStatus.OK);

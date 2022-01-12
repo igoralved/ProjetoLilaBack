@@ -38,16 +38,30 @@ public class WebSocketServiceImpl implements WebSocketService{
         this.template = template;
     }
 
-    public Sala criarJogo (Jogador jogador){
-        Sala sala = new Sala();
-        Jogador savedJogador = jogadorService.saveJogador(jogador);
-        Baralho baralho = baralhoService.findByCodigo("Clila").get();
-        sala.setId(UUID.randomUUID());
-        sala.setBaralho(baralho);
-        sala.setJogadores(new ArrayList<>());
-        sala.adicionarJogador(savedJogador);
-        sala.setHash(sala.generateHash());
-        return salaService.saveSala(sala);
+    public Sala criarJogo (Jogador jogador) throws JogoInvalidoException{
+        if(jogador.getNome().isEmpty()){
+            throw new JogoInvalidoException("dados incorretos");
+        }
+            Sala sala = new Sala();
+            Jogador savedJogador = jogadorService.saveJogador(criaJogador(jogador));
+            Baralho baralho = baralhoService.findByCodigo("Clila").get();
+            sala.setId(UUID.randomUUID());
+            sala.setBaralho(baralho);
+            sala.setJogadores(new ArrayList<>());
+            sala.adicionarJogador(savedJogador);
+            sala.setHash(sala.generateHash());
+            return salaService.saveSala(sala);
+
+    }
+
+    public Jogador criaJogador(Jogador jogador) {
+            jogador.setBonusCoracaoPeq(0);
+            jogador.setBonusCoracaoGra(0);
+            jogador.setCoracaoPeq(2);
+            jogador.setCoracaoGra(2);
+            jogador.setPontos(0);
+            jogador.setNome(jogador.getNome());
+        return jogador;
     }
 
     public Optional<Sala> conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
