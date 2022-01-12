@@ -9,13 +9,18 @@ CREATE TABLE IF NOT EXISTS public.admin (
 
 CREATE TABLE IF NOT EXISTS public.baralho
 (
-    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    id uuid NOT NULL DEFAULT uuid_generate_v4(),
     codigo character varying(255) COLLATE pg_catalog."default",
     descricao character varying(255) COLLATE pg_catalog."default",
-    titulo character varying(255) COLLATE pg_catalog."default"
-    
-);
+    titulo character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT baralho_pkey PRIMARY KEY (id),
+    CONSTRAINT baralho_codigo_key UNIQUE (codigo)
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.baralho
+    OWNER to lila;
 
 CREATE TABLE IF NOT EXISTS public.carta_do_jogo
 (
