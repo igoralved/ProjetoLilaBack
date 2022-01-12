@@ -25,7 +25,6 @@ public class CartaDoJogoController {
 
 
     private  CartaDoJogoService cartaDoJogoService;
-    private ArrayList<CartaDoJogo> cartaDoJogoArraylist = new ArrayList<>();
 
     @Autowired
     public CartaDoJogoController(CartaDoJogoService cartaInicioService){
@@ -41,7 +40,7 @@ public class CartaDoJogoController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAllCartaInicio() {
+    public ResponseEntity<?> findAllCartaDoJogo() {
 
         List<CartaDoJogo> listaCartaDoJogo = cartaDoJogoService.findAll();
         if(!listaCartaDoJogo.isEmpty()){
@@ -51,7 +50,7 @@ public class CartaDoJogoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartaDoJogo> findByIdcartaInicio(@PathVariable UUID id) {
+    public ResponseEntity<CartaDoJogo> findByIdCartaDoJogo(@PathVariable UUID id) {
         Optional<CartaDoJogo> cartaInicio = Optional.empty();
         cartaInicio = cartaDoJogoService.findById(id);
         if (cartaInicio.isEmpty()){

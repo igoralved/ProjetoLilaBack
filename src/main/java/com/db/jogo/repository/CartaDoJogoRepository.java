@@ -11,6 +11,5 @@ import java.util.UUID;
 
 @Repository
 public interface CartaDoJogoRepository extends CrudRepository<CartaDoJogo, UUID> {
-    Optional<CartaDoJogo> findById(UUID id) throws DataAccessException;
-    CartaDoJogo saveCartaDoJogo(CartaDoJogo cartaDoJogo) throws DataAccessException;
+
 }
