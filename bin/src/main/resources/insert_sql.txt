@@ -1,0 +1,14 @@
+INSERT INTO public.admin(
+	id, senha)
+	VALUES (1, "123");
+
+INSERT INTO public.baralho(
+	id_codigo, descricao, titulo, admin_id_codigo)
+	VALUES ("lila1", "primeiro Baralho", "baralho01", "1");
+INSERT INTO public.categoria_de_carta(
+	id, bonus, nome)
+	VALUES (1, "true", "visual");
+
+INSERT INTO public.tipo_carta(
+	id, nome)
+	VALUES (1, "pessoa");

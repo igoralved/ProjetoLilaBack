@@ -14,6 +14,7 @@ services:
             - db-data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
+<<<<<<< HEAD
         networks:
             - my-network
 
@@ -42,3 +43,8 @@ networks:
 volumes:
     db-data:
     pgadmin-data:
+=======
+
+volumes:
+    db-data:
+>>>>>>> origin/US056-Carregarosdados

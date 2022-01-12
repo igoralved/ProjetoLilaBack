@@ -1,7 +1,10 @@
 # ProjetoLilaBack
+<<<<<<< HEAD
 Padrão usuario e senha do banco 
 user: lila 
 senha: corresponte a igualdade superior
+=======
+>>>>>>> origin/US056-Carregarosdados
 
 [![Java CI with Maven](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml)
 

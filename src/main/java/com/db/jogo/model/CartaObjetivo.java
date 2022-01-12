@@ -9,27 +9,33 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import lombok.NonNull;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 @Entity
+
 public class CartaObjetivo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
 
-    @Column ( name = "classificacao", nullable = false)
-    private String classificacao;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
-    @Column( name ="pontos", nullable = false)
-    private Integer pontos;
+	@NonNull
+	@Column(name = "classificacao")
+	private String classificacao;
 
-    @Column( name ="categoria", nullable = false)
-    private String categoria;
+	@NonNull
+	@Column(name = "pontos")
+	private Integer pontos;
 
-    @Column( name ="descricao", nullable = false)
-    private String descricao;
+	@NonNull
+	@Column(name = "categoria")
+	private String categoria;
 
+	@NonNull
+	@Column(name = "descricao")
+	private String descricao;
 }
-

@@ -27,58 +27,58 @@ import lombok.NonNull;
 public class Jogador {
 
 
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
-	private String nome;
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Builder.Default
-	private Set<CartaDoJogo> listaDeCartas =  new HashSet<>();
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Builder.Default
-	private  Set<CartaObjetivo> listaDeObjetivos = new HashSet<>();
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-	@NonNull
-	@Column( name ="pontos")
-	private Integer pontos;
-	
-	@NonNull
-	@Column( name ="coracaoPeq")
-	private Integer coracaoPeq;
-	
-	@NonNull
-	@Column( name ="coracaoGra")
-	private Integer coracaoGra;
-	
-	@NonNull
-	@Column( name ="bonusCoracaoPeq")
-	private Integer bonusCoracaoPeq;
-	
-	@NonNull
-	@Column( name ="bonusCoracaoGra")
-	private Integer bonusCoracaoGra;
-	
-	
-	public void adicionaCarta(CartaDoJogo carta) {
-		this.listaDeCartas.add(carta);
-	}
-	
-	public void removeCarta(CartaDoJogo carta) {
-		this.listaDeCartas.remove(carta);
-	}
-	
-	public void adicionaObjetivo(CartaObjetivo cartaObjetivo) {
-		this.listaDeObjetivos.add(cartaObjetivo);
-	}
-	
-	public void removeObjetivo(CartaObjetivo carta) {
-		this.listaDeObjetivos.remove(carta);
-	}
+    @NonNull
+    @Column( name ="nome")
+    private String nome;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Builder.Default
+    private Set<CartaDoJogo> listaDeCartas =  new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Builder.Default
+    private  Set<CartaObjetivo> listaDeObjetivos = new HashSet<>();
+
+    @NonNull
+    @Column( name ="pontos")
+    private Integer pontos;
+
+    @NonNull
+    @Column( name ="coracaoPeq")
+    private Integer coracaoPeq;
+
+    @NonNull
+    @Column( name ="coracaoGra")
+    private Integer coracaoGra;
+
+    @NonNull
+    @Column( name ="bonusCoracaoPeq")
+    private Integer bonusCoracaoPeq;
+
+    @NonNull
+    @Column( name ="bonusCoracaoGra")
+    private Integer bonusCoracaoGra;
+
+
+    public void adicionaCarta(CartaDoJogo carta) {
+        this.listaDeCartas.add(carta);
+    }
+
+    public void removeCarta(CartaDoJogo carta) {
+        this.listaDeCartas.remove(carta);
+    }
+
+    public void adicionaObjetivo(CartaObjetivo carta) {
+        this.listaDeObjetivos.add(carta);
+    }
+
+    public void removeObjetivo(CartaObjetivo carta) {
+        this.listaDeObjetivos.remove(carta);
+    }
 }
 
 

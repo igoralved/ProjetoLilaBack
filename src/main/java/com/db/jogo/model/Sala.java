@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Sala {
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
@@ -71,5 +72,6 @@ public class Sala {
 	public void setStatusEnum(@NonNull StatusEnum statusEnum) {
 		this.statusEnum = statusEnum;
 	}
+
 
 }
