@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface BaralhoRepository extends CrudRepository<Baralho, String> {
 
     Optional<Baralho> findByCodigo(String codigo);
+
 }

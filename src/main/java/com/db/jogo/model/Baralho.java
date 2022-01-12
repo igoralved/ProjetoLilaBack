@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
 
 import org.springframework.lang.NonNull;
 
@@ -31,45 +30,50 @@ public class Baralho {
 	private UUID id;
 
 	@NonNull
+	@Column
+
 	private String codigo;
 
 	@OneToMany
-	private List<CartaDoJogo> cartasDoJogo= new ArrayList<>();
+	@Builder.Default
+	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
 
 	@OneToMany
+	@Builder.Default
 	private List<CartaObjetivo> cartasDeObjetivo = new ArrayList<>();
 
 	@OneToMany
+	@Builder.Default
 	private List<CartaInicio> cartasInicio = new ArrayList<>();
 
 	@NonNull
-	@Column( name ="titulo", nullable = false)
+	@Column(name = "titulo", nullable = false)
 	private String titulo;
-	
-	@Column( name ="descricao", nullable = false)
+
+	@Column(name = "descricao", nullable = false)
 	private String descricao;
 
-	public void adicionarCartadoJogo(CartaDoJogo cartaDoJogo){
+	public void adicionarCartadoJogo(CartaDoJogo cartaDoJogo) {
 		this.cartasDoJogo.add(cartaDoJogo);
 	}
 
-	public boolean removerCartaDoJogo(CartaDoJogo cartaDoJogo){
+	public boolean removerCartaDoJogo(CartaDoJogo cartaDoJogo) {
 		return this.cartasDoJogo.remove(cartaDoJogo);
 	}
 
-	public void adicionarCartaDoObjetivo(CartaObjetivo cartaObjetivo){
+	public void adicionarCartaDoObjetivo(CartaObjetivo cartaObjetivo) {
 		this.cartasDeObjetivo.add(cartaObjetivo);
 	}
 
-	public boolean removerCartaDoObjetivo(CartaObjetivo cartaDoObjetivo){
+	public boolean removerCartaDoObjetivo(CartaObjetivo cartaDoObjetivo) {
 		return this.cartasDeObjetivo.remove(cartaDoObjetivo);
 	}
 
-	public void adicionarCartaDoInicio(CartaInicio cartaInicio){
+	public void adicionarCartaDoInicio(CartaInicio cartaInicio) {
 		this.cartasInicio.add(cartaInicio);
 	}
 
-	public boolean removerCartaDoInicio(CartaInicio cartaInicio){
+	public boolean removerCartaDoInicio(CartaInicio cartaInicio) {
 		return this.cartasInicio.remove(cartaInicio);
 	}
 

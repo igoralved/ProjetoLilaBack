@@ -17,7 +17,7 @@ import java.util.UUID;
 @DisplayName("Baralho Service Teste")
 class BaralhoServiceImplTest {
 
-	@Mock
+    @Mock
     private BaralhoServiceImpl baralhoServiceImpl;
 
     Baralho baralho = Baralho.builder().id(UUID.randomUUID()).codigo("LILA1").titulo("Corações de Lila").descricao("Jogo de cartas").build();
@@ -25,8 +25,8 @@ class BaralhoServiceImplTest {
     @DisplayName("Teste do SAVE do Service de um Baralho")
     @Test
     void saveBaralho() {
-       when(baralhoServiceImpl.saveBaralho(baralho)).thenReturn(baralho);
-       assertEquals(baralho, baralhoServiceImpl.saveBaralho(baralho));
+        when(baralhoServiceImpl.saveBaralho(baralho)).thenReturn(baralho);
+        assertEquals(baralho, baralhoServiceImpl.saveBaralho(baralho));
     }
 
 }

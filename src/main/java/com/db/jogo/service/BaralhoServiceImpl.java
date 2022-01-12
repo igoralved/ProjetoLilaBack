@@ -13,28 +13,28 @@ import com.db.jogo.repository.BaralhoRepository;
 public class BaralhoServiceImpl implements BaralhoService {
 
 	private BaralhoRepository baralhoRepository;
-	
+
 	@Autowired
 	public BaralhoServiceImpl(BaralhoRepository baralhoRepository) {
 		this.baralhoRepository = baralhoRepository;
 	}
-	
+
 	@Override
 	public Optional<Baralho> findByCodigo(String codigo) throws DataAccessException {
 		Optional<Baralho> baralho = this.baralhoRepository.findByCodigo(codigo);
 		return baralho;
 	}
-	
+
 	@Override
 	public Baralho saveBaralho(Baralho baralho) throws DataAccessException {
 		return baralhoRepository.save(baralho);
 	}
-	
+
 	@Override
 	public Iterable<Baralho> findAll() throws DataAccessException {
 		return baralhoRepository.findAll();
 	}
-	
+
 }
 
 

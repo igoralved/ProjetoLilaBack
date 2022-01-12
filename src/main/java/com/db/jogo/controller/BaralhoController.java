@@ -20,7 +20,7 @@ public class BaralhoController {
 
 	@Autowired
 	private BaralhoService baralhoService;
-	
+
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Baralho> saveBaralho(@RequestBody Baralho baralho, BindingResult bindingResult){
 		if(bindingResult.hasErrors() || (baralho.getId() == null) || (baralho.getTitulo() == null) || (baralho.getDescricao() == null)) {
@@ -28,11 +28,10 @@ public class BaralhoController {
 		}
 		return new ResponseEntity<Baralho>(baralhoService.saveBaralho(baralho), HttpStatus.CREATED);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Iterable<Baralho>> findBaralho() {
 		return new ResponseEntity<Iterable<Baralho>>(baralhoService.findAll(), HttpStatus.OK);
 	}
 }
-
 

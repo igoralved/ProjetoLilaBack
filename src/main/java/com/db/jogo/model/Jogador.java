@@ -26,6 +26,7 @@ import lombok.NonNull;
 @Entity
 public class Jogador {
 
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -79,4 +80,5 @@ public class Jogador {
 	}
 
 }
+
 

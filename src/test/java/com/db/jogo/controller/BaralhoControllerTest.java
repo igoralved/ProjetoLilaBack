@@ -30,7 +30,7 @@ class BaralhoControllerTest {
 
 	@MockBean
 	BaralhoServiceImpl baralhoService;
-	
+
 	@Test
 	@DisplayName("Teste do POST do Controller do Baralho")
 	public void testCriacaoBaralho() throws Exception {

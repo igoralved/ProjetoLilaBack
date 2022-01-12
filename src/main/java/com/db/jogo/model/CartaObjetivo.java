@@ -1,4 +1,5 @@
 package com.db.jogo.model;
+
 import java.util.UUID;
 
 import javax.persistence.*;
@@ -29,4 +30,6 @@ public class CartaObjetivo {
 
     @Column( name ="descricao", nullable = false)
     private String descricao;
+
 }
+

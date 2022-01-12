@@ -21,55 +21,55 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 public class Sala {
-    
-    @Id
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-    @NonNull
-    @Column(name = "hash")
-    String hash;
+	@NonNull
+	@Column(name = "hash")
+	String hash;
 
-    @NonNull
-    @OneToMany
-    private List<Jogador> jogadores;
+	@NonNull
+	@OneToMany
+	private List<Jogador> jogadores;
 
-    @OneToOne
-    @NonNull
-    private Baralho baralho;
+	@OneToOne
+	@NonNull
+	private Baralho baralho;
 
-    @NonNull
-    private StatusEnum statusEnum = StatusEnum.NOVO;
+	@NonNull
+	@Builder.Default
+	private StatusEnum statusEnum = StatusEnum.NOVO;
 
-    public String generateHash() {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[6];
-        random.nextBytes(bytes);
-        Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-        return encoder.encodeToString(bytes);
-    }
+	public String generateHash() {
+		SecureRandom random = new SecureRandom();
+		byte[] bytes = new byte[6];
+		random.nextBytes(bytes);
+		Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+		return encoder.encodeToString(bytes);
+	}
 
-    @NonNull
-    public void adicionarJogador(Jogador jogador){
-        this.jogadores.add(jogador);
-    }
+	@NonNull
+	public void adicionarJogador(Jogador jogador) {
+		this.jogadores.add(jogador);
+	}
 
-    public boolean removerJogador(Jogador jogador){
-        return this.jogadores.remove(jogador);
-    }
+	public boolean removerJogador(Jogador jogador) {
+		return this.jogadores.remove(jogador);
+	}
 
-    public enum StatusEnum {
-        NOVO,
-        JOGANDO,
-        FINALIZADO
-    }
+	public enum StatusEnum {
+		NOVO, JOGANDO, FINALIZADO
+	}
 
-    @NonNull
-    public StatusEnum getStatusEnum() {
-        return this.statusEnum;
-    }
+	@NonNull
+	public StatusEnum getStatusEnum() {
+		return this.statusEnum;
+	}
 
-    public void setStatusEnum(@NonNull StatusEnum statusEnum) {
-        this.statusEnum = statusEnum;
-    }
+	public void setStatusEnum(@NonNull StatusEnum statusEnum) {
+		this.statusEnum = statusEnum;
+	}
+
 }
