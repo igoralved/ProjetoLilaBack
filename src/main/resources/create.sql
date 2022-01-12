@@ -148,5 +148,68 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.baralho_cartas_objetivo
     OWNER to lila;
+    
+CREATE TABLE IF NOT EXISTS public.jogador_lista_de_cartas
+(
+    jogador_id uuid NOT NULL,
+    lista_de_cartas_id uuid NOT NULL,
+    CONSTRAINT jogador_lista_de_cartas_pkey PRIMARY KEY (jogador_id, lista_de_cartas_id),
+    CONSTRAINT uk_gnqsqxth3nltmwxyyu7wpr664 UNIQUE (lista_de_cartas_id),
+    CONSTRAINT fk1u6cwmrqp83j8gxgu59ekt4nm FOREIGN KEY (jogador_id)
+        REFERENCES public.jogador (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkna4rgaoyn5hmnba4d9tg6bc4e FOREIGN KEY (lista_de_cartas_id)
+        REFERENCES public.carta_do_jogo (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.jogador_lista_de_cartas
+    OWNER to lila;
+    
+    CREATE TABLE IF NOT EXISTS public.jogador_lista_de_objetivos
+(
+    jogador_id uuid NOT NULL,
+    lista_de_objetivos_id uuid NOT NULL,
+    CONSTRAINT jogador_lista_de_objetivos_pkey PRIMARY KEY (jogador_id, lista_de_objetivos_id),
+    CONSTRAINT uk_on0nporhd2m2wst45g7vklwri UNIQUE (lista_de_objetivos_id),
+    CONSTRAINT fkhp5sm5ceotm2scqcb4ccyeqlv FOREIGN KEY (lista_de_objetivos_id)
+        REFERENCES public.carta_objetivo (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkslo440kgeappfqc8tlqcphe8p FOREIGN KEY (jogador_id)
+        REFERENCES public.jogador (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.jogador_lista_de_objetivos
+    OWNER to lila;
+       
+       
+       CREATE TABLE IF NOT EXISTS public.sala_jogadores
+(
+    sala_id uuid NOT NULL,
+    jogadores_id uuid NOT NULL,
+    CONSTRAINT uk_bk1b3pf8cwlwkfkxghisw1wi5 UNIQUE (jogadores_id),
+    CONSTRAINT fkd36481lgk5aqcsv7lpfp6855r FOREIGN KEY (sala_id)
+        REFERENCES public.sala (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkga0ia8yf0e58jjp50b0yrijpk FOREIGN KEY (jogadores_id)
+        REFERENCES public.jogador (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.sala_jogadores
+    OWNER to lila;
 
 
