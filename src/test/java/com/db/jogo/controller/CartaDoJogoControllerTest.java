@@ -76,7 +76,7 @@ public class CartaDoJogoControllerTest {
 
     }
     @Test
-    @DisplayName("Teste do GET do Controller do Jogador")
+    @DisplayName("Teste do GET do Controller Carta Do jogo")
     public void deveRetornarSucesso_QuandoBuscar() throws Exception {
 
         given(cartaDoJogoService.findById(newCartaDoJogo.getId())).willReturn(Optional.of(newCartaDoJogo));
