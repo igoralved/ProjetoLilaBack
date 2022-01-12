@@ -3,6 +3,8 @@ package com.db.jogo.controller;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.db.jogo.model.Jogador;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +13,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.db.jogo.model.Jogador;
 import com.db.jogo.service.JogadorServiceImpl;
 
 @RestController
@@ -61,14 +62,13 @@ public class JogadorController {
 
 			return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		Optional<Jogador> jogadorParaAtualizar = this.jogadorService.atualizarJogador(jogador);
-		
+
 		if (jogadorParaAtualizar.isPresent()) {
 			return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
 		}
 		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
 
 	}
-
 }

@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.UUID;
 
 import com.db.jogo.model.Admin;
-import com.db.jogo.service.AdminServiceImpl;
+import com.db.jogo.service.AdminService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ class AdminControllerTest {
 	MockMvc mockMvc;
 
 	@MockBean
-	AdminServiceImpl adminService;
+	AdminService adminService;
 	
 	@Test
 	@DisplayName("Teste do POST do Controller do Admin")

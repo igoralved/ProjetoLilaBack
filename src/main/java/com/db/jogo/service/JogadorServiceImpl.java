@@ -32,11 +32,11 @@ public class JogadorServiceImpl implements JogadorService {
 	}
 
 	public Optional<Jogador> atualizarJogador(Jogador jogador) throws IllegalArgumentException {
-		
+
 		Optional<Jogador> jogadorParaAtualizar = Optional.empty();
-		
+
 		try {
-			
+
 			jogadorParaAtualizar = jogadorRepository.findById(jogador.getId());
 
 			if (jogadorParaAtualizar.isPresent()) {
@@ -49,13 +49,13 @@ public class JogadorServiceImpl implements JogadorService {
 				jogadorParaAtualizar.get().setListaDeObjetivos(jogador.getListaDeObjetivos());
 				jogadorParaAtualizar.get().setNome(jogador.getNome());
 				jogadorParaAtualizar.get().setPontos(jogador.getPontos());
-				
+
 				jogadorRepository.save(jogadorParaAtualizar.get());
-				  return jogadorParaAtualizar;
+				return jogadorParaAtualizar;
 			}
-		}catch (Exception e) {
-	            throw new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);
-	        }
-     return jogadorParaAtualizar;
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);
+		}
+		return jogadorParaAtualizar;
 	}
 }

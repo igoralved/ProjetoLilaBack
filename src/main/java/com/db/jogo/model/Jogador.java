@@ -25,6 +25,7 @@ import lombok.NonNull;
 @Data
 @Entity
 public class Jogador {
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,7 +38,7 @@ public class Jogador {
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Builder.Default
-	private  Set<CartaDeObjetivo> listaDeObjetivos = new HashSet<>();
+	private  Set<CartaObjetivo> listaDeObjetivos = new HashSet<>();
 	
 
 	@NonNull
@@ -69,15 +70,13 @@ public class Jogador {
 		this.listaDeCartas.remove(carta);
 	}
 	
-	public void adicionaObjetivo(CartaDeObjetivo carta) {
-		this.listaDeObjetivos.add(carta);
+	public void adicionaObjetivo(CartaObjetivo cartaObjetivo) {
+		this.listaDeObjetivos.add(cartaObjetivo);
 	}
 	
-	public void removeObjetivo(CartaDeObjetivo carta) {
+	public void removeObjetivo(CartaObjetivo carta) {
 		this.listaDeObjetivos.remove(carta);
 	}
-	
-	
-	
+
 }
 
