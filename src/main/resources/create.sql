@@ -1,19 +1,19 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
-DROP TABLE IF EXISTS jogador_lista_de_objetivos;
-DROP TABLE IF EXISTS jogador_lista_de_cartas;
-DROP TABLE IF EXISTS baralho_cartas_objetivo;
-DROP TABLE IF EXISTS baralho_cartas_do_jogo;
-DROP TABLE IF EXISTS baralho_carta_inicio;
-DROP TABLE IF EXISTS sala_jogadores;
-DROP TABLE IF EXISTS admin;
-DROP TABLE IF EXISTS sala; 
-DROP TABLE IF EXISTS jogador; 
-DROP TABLE IF EXISTS carta_inicio;  
-DROP TABLE IF EXISTS carta_do_jogo;
-DROP TABLE IF EXISTS carta_objetivo;
-DROP TABLE IF EXISTS baralho;
+DROP TABLE IF EXISTS jogador_lista_de_objetivos CASCADE;
+DROP TABLE IF EXISTS jogador_lista_de_cartas CASCADE;
+DROP TABLE IF EXISTS baralho_cartas_objetivo CASCADE;
+DROP TABLE IF EXISTS baralho_cartas_do_jogo CASCADE;
+DROP TABLE IF EXISTS baralho_carta_inicio CASCADE;
+DROP TABLE IF EXISTS sala_jogadores CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
+DROP TABLE IF EXISTS sala CASCADE; 
+DROP TABLE IF EXISTS jogador CASCADE; 
+DROP TABLE IF EXISTS carta_inicio CASCADE;  
+DROP TABLE IF EXISTS carta_do_jogo CASCADE;
+DROP TABLE IF EXISTS carta_objetivo CASCADE;
+DROP TABLE IF EXISTS baralho CASCADE;
 
  
 

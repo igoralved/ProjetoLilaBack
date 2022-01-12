@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Generated;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,15 +42,15 @@ public class Baralho {
 
 	private String codigo;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<CartaObjetivo> cartasDeObjetivo = new ArrayList<>();
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<CartaInicio> cartasInicio = new ArrayList<>();
 
