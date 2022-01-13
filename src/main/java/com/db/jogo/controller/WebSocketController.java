@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
+import com.db.jogo.dto.SalaResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,21 +25,23 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSocketController {
 
     private final WebSocketServiceImpl webSocketServiceImpl;
-    private final SalaService salaService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @PostMapping("/iniciar")
-    public ResponseEntity<Sala> iniciarJogo(@RequestBody @Valid Jogador jogador) throws JogoInvalidoException {
+    public ResponseEntity<SalaResponse> iniciarJogo(@RequestBody @Valid Jogador jogador) throws JogoInvalidoException {
         log.info("Requisição para iniciar jogo {}", jogador);
-        Sala sala = this.webSocketServiceImpl.criarJogo(jogador);
+        SalaResponse sala = this.webSocketServiceImpl.criarJogo(jogador);
         return new ResponseEntity<>(sala, HttpStatus.OK);
     }
 
     @PostMapping("/conectar")
-    public ResponseEntity<Sala> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
+    public ResponseEntity<SalaResponse> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
         log.info("Requisição da conexão: {}", request);
-        return ResponseEntity.ok(webSocketServiceImpl.conectarJogo(request.getJogador(), request.getHash()).get());
+        SalaResponse sala = webSocketServiceImpl.conectarJogo(request.getJogador(), request.getHash());
+        
+        if (sala.getSala() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(sala, HttpStatus.OK);
     }
-
-
 }
