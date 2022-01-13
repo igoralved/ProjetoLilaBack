@@ -21,13 +21,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @ExtendWith(MockitoExtension.class)
 public class WebSocketServiceTest {
 
     @Mock
-    WebSocketService webSocketService;
+    WebSocketServiceImpl webSocketServiceImpl;
     
     CartaInicio cartaInicio = new CartaInicio();
     Baralho baralho = new Baralho();
@@ -103,8 +102,8 @@ public class WebSocketServiceTest {
     void testConectarJogo() {
         sala.adicionarJogador(jogador2);
         try {
-            when(webSocketService.conectarJogo(jogador2, sala.getHash())).thenReturn(Optional.of(sala));
-            Sala salaTarget = webSocketService.conectarJogo(jogador2, sala.getHash()).get();
+            when(webSocketServiceImpl.conectarJogo(jogador2, sala.getHash())).thenReturn(Optional.of(sala));
+            Sala salaTarget = webSocketServiceImpl.conectarJogo(jogador2, sala.getHash()).get();
             assertEquals(sala, salaTarget);
         } catch (JogoInvalidoException e) {
             fail("Parametros nulos");
@@ -115,22 +114,36 @@ public class WebSocketServiceTest {
     @DisplayName("Teste para conectar ao jogo com jogador nulo")
     void testConectarJogoComJogadorNull() throws JogoInvalidoException {
 
-        when(webSocketService.conectarJogo(null, sala.getHash())).thenReturn(Optional.ofNullable(sala));
-        assertEquals(sala, webSocketService.conectarJogo(null, sala.getHash()).get());
+        when(webSocketServiceImpl.conectarJogo(null, sala.getHash())).thenReturn(Optional.ofNullable(sala));
+        assertEquals(sala, webSocketServiceImpl.conectarJogo(null, sala.getHash()).get());
     }
 
     @Test
     @DisplayName("Teste para criar um jogo")
-    void testCriarJogo() {
-        when(webSocketService.criarJogo(jogador)).thenReturn(sala);;
-        assertEquals(sala, webSocketService.criarJogo(jogador));
+    void testCriarJogo() throws JogoInvalidoException {
+        when(webSocketServiceImpl.criarJogo(jogador)).thenReturn(sala);;
+        assertEquals(sala, webSocketServiceImpl.criarJogo(jogador));
     }
 
     @Test
     @DisplayName("Teste para não criar jogo com parametro null")
-    void testCriarJogoComErro() {
-        when(webSocketService.criarJogo(null)).thenReturn(null);;
-        assertNull(webSocketService.criarJogo(null));
+    void testCriarJogoComErro() throws JogoInvalidoException {
+        when(webSocketServiceImpl.criarJogo(null)).thenReturn(null);;
+        assertNull(webSocketServiceImpl.criarJogo(null));
+    }
+
+    @Test
+    @DisplayName("Teste para criar um jogador")
+    void testCriaJogador() {
+        when(webSocketServiceImpl.criaJogador(jogador)).thenReturn(jogador);;
+        assertEquals(jogador, webSocketServiceImpl.criaJogador(jogador));
+    }
+
+    @Test
+    @DisplayName("Teste para não criar jogador com parametro null")
+    void testCriaJogadorComErro()  {
+        when(webSocketServiceImpl.criaJogador(null)).thenReturn(null);;
+        assertNull(webSocketServiceImpl.criaJogador(null));
     }
 
 }
