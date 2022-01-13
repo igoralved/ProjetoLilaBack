@@ -8,12 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 
 @CrossOrigin(exposedHeaders = "errors, content-type")
-@RequestMapping("/CartaObjetivo")
+@RequestMapping("/cartaobjetivo")
 @RestController
 public class CartaObjetivoController {
 
@@ -21,9 +22,13 @@ public class CartaObjetivoController {
     private CartaObjetivoService cartaObjetivoService;
 
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Iterable<CartaObjetivo>> findCartaObjetivo() {
-        return new ResponseEntity<Iterable<CartaObjetivo>>(cartaObjetivoService.findAll(), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<?> findCartaObjetivo() {
+        List<CartaObjetivo> listaCartaObjetivo = cartaObjetivoService.findAll();
+        if(!listaCartaObjetivo.isEmpty()){
+            return new ResponseEntity<>(listaCartaObjetivo, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(cartaObjetivoService.findAll(), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/{id}")
@@ -36,8 +41,8 @@ public class CartaObjetivoController {
 
     @PostMapping
     public ResponseEntity<CartaObjetivo> saveCartaObjetivo(@RequestBody CartaObjetivo cartaObjetivo, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity<>(cartaObjetivo, HttpStatus.BAD_REQUEST);
+        if(bindingResult.hasErrors() || cartaObjetivo == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(cartaObjetivoService.saveCartaObjetivo(cartaObjetivo), HttpStatus.CREATED);
     }

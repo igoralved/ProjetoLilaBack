@@ -1,9 +1,9 @@
 package com.db.jogo.controller;
 
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -20,7 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -45,37 +46,41 @@ class CartaObjetivoControllerTest {
             .build();
 
     @Test
-    @DisplayName("Teste do POST do Controller do Carta Objetivo")
-    public void testCriacaoCartaObjetivo() throws Exception {
-        CartaObjetivoServiceImpl cartaObjetivoService;
+    @DisplayName("Teste do POST/Error do Controller da Carta Objetivo")
+    public void deveRetornarErro_QuandoCriarCartaObjetivoInvalido() throws Exception {
 
-        CartaObjetivo newCartaObjetivo = CartaObjetivo.builder().id(UUID.randomUUID())
-                .classificacao("Deficiencia Visual")
-                .categoria("Filmes")
-                .pontos(1)
-                .descricao("Exemplo descrição")
-                .build();
+        when(cartaObjetivoService.saveCartaObjetivo(any(CartaObjetivo.class))).thenReturn(newCartaObjetivo);
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        String newCartaObjetivoAsJSON = mapper.writeValueAsString(newCartaObjetivo);
-        this.mockMvc.perform(post("/CartaObjetivo").content(newCartaObjetivoAsJSON).accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isCreated());
+        mockMvc.perform(MockMvcRequestBuilders.post("/cartaobjetivo").accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("Teste do GET do Controller da Carta Objetivo")
-    public void deveRetornarSucesso_QuandoBuscar() throws Exception {
+    @DisplayName("Teste do POST/Sucesso do Controller Carta Objetivo")
+    public void deveRetornarSucesso_QuandoCriarCartaObjetivo() throws Exception {
+
+        when(cartaObjetivoService.saveCartaObjetivo(any(CartaObjetivo.class))).thenReturn(newCartaObjetivo);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String cartaObjetivoJSON = mapper.writeValueAsString(newCartaObjetivo);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/cartaobjetivo").content(cartaObjetivoJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isCreated()).andExpect(MockMvcResultMatchers.content().json(cartaObjetivoJSON));
+    }
+
+    @Test
+    @DisplayName("Teste do GET do Controller Carta Objetivo")
+    public void deveRetornarSucesso_QuandoBuscarCartaObjetivo() throws Exception {
 
         given(cartaObjetivoService.findById(newCartaObjetivo.getId())).willReturn(Optional.of(newCartaObjetivo));
 
         ObjectMapper mapper = new ObjectMapper();
-        String cartaComoJSON = mapper.writeValueAsString(newCartaObjetivo);
+        String cartaObjetivoJSON = mapper.writeValueAsString(newCartaObjetivo);
 
-        mockMvc.perform(get("/cartaObjetivo/" + cartaObjetivoService.findAll()).content(cartaComoJSON)
+        mockMvc.perform(get("/cartaobjetivo/" + newCartaObjetivo.getId()).content(cartaObjetivoJSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk()).andExpect((ResultMatcher) content().json(cartaComoJSON));
-
+                .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.content().json(cartaObjetivoJSON));
 
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,8 +26,8 @@ public class CartaObjetivoServiceImpl implements CartaObjetivoService {
     }
 
     @Override
-    public Iterable<CartaObjetivo> findAll() throws DataAccessException {
-        return cartaObjetivoRepository.findAll();
+    public List<CartaObjetivo> findAll() throws DataAccessException {
+        return (List<CartaObjetivo>) cartaObjetivoRepository.findAll();
     }
 
     @Override
