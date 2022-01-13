@@ -30,7 +30,7 @@ public class CartaInicioController {
     }
 
     @PostMapping
-    public ResponseEntity<CartaInicio> saveCartaInicio(@RequestBody CartaInicio cartaInicio, BindingResult bindingResult) {
+    public ResponseEntity<CartaInicio> salvarCartaInicio(@RequestBody CartaInicio cartaInicio, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>(cartaInicio, HttpStatus.BAD_REQUEST);
         }
@@ -38,17 +38,17 @@ public class CartaInicioController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAllCartaInicio() {
+    public ResponseEntity<?> listarTodasCartaInicio() {
 
        List<CartaInicio> listaCartaDoJogo = cartaInicoService.findAllCartaInicio();
         if(!listaCartaDoJogo.isEmpty()){
             return new ResponseEntity<>(listaCartaDoJogo, HttpStatus.FOUND);
         }
-        return new ResponseEntity<>(cartaInicoService.findAllCartaInicio(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartaInicio> findByIdcartaInicio(@PathVariable UUID id) {
+    public ResponseEntity<CartaInicio> buscarPorIdCartaInicio(@PathVariable UUID id) {
       Optional<CartaInicio> cartaInicio = Optional.empty();
       cartaInicio = cartaInicoService.findById(id);
       if (cartaInicio.isEmpty()){
