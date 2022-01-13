@@ -57,8 +57,8 @@ public class CartaDoJogoControllerTest {
             .build();
 
     @Test
-    @DisplayName("Teste do POST/Sucesso do Controller do Jogador")
-    public void deveRetornarSucesso_QuandoCriarJogador() throws Exception {
+    @DisplayName("Teste do POST/Sucesso do Controller Carta do Jogo")
+    public void deveRetornarSucesso_QuandoCriarCartaDoJogo() throws Exception {
 
         when(cartaDoJogoService.saveCartaDoJogo(any(CartaDoJogo.class))).thenReturn(newCartaDoJogo);
 
@@ -72,7 +72,7 @@ public class CartaDoJogoControllerTest {
 
     @Test
     @DisplayName("Teste do POST/Error do Controller da Carta Do Jogo")
-    public void deveRetornarErro_QuandoCriarJogadorInvalido() throws Exception {
+    public void deveRetornarErro_QuandoCriarCartaDoJogoInvalido() throws Exception {
 
         when(cartaDoJogoService.saveCartaDoJogo(any(CartaDoJogo.class))).thenReturn(newCartaDoJogo);
 
@@ -82,7 +82,7 @@ public class CartaDoJogoControllerTest {
     }
     @Test
     @DisplayName("Teste do GET do Controller Carta Do jogo")
-    public void deveRetornarSucesso_QuandoBuscar() throws Exception {
+    public void deveRetornarSucesso_QuandoBuscarCartaDoJogo() throws Exception {
 
         given(cartaDoJogoService.findById(newCartaDoJogo.getId())).willReturn(Optional.of(newCartaDoJogo));
 
