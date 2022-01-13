@@ -33,9 +33,11 @@ public class LoginControllerTest {
 
 	@Test
 	public void testVerificaSenhaSucesso() throws Exception {
+		
 		Admin admin = new Admin();
 		admin.setId(UUID.randomUUID());
 		admin.setSenha("123");
+		
 		given(adminService.findBySenha("123")).willReturn(admin);
 
 		this.mockMvc
