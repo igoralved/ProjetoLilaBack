@@ -32,7 +32,7 @@ public class CartaDoJogoController {
     }
 
     @PostMapping
-    public ResponseEntity<CartaDoJogo> saveCartaDoJogo(@RequestBody CartaDoJogo cartaDoJogo, BindingResult bindingResult) {
+    public ResponseEntity<CartaDoJogo> salvarCartaDoJogo(@RequestBody CartaDoJogo cartaDoJogo, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>(cartaDoJogo, HttpStatus.BAD_REQUEST);
         }
@@ -40,17 +40,17 @@ public class CartaDoJogoController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findAllCartaDoJogo() {
+    public ResponseEntity<?> listarTodasCartaDoJogo() {
 
         List<CartaDoJogo> listaCartaDoJogo = cartaDoJogoService.findAll();
         if(!listaCartaDoJogo.isEmpty()){
             return new ResponseEntity<>(listaCartaDoJogo, HttpStatus.FOUND);
         }
-        return new ResponseEntity<>(cartaDoJogoService.findAll(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartaDoJogo> findByIdCartaDoJogo(@PathVariable UUID id) {
+    public ResponseEntity<CartaDoJogo> buscarPorIdCartaDoJogo(@PathVariable UUID id) {
         Optional<CartaDoJogo> cartaInicio = Optional.empty();
         cartaInicio = cartaDoJogoService.findById(id);
         if (cartaInicio.isEmpty()){
