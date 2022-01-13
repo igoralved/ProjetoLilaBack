@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.db.jogo.model.CartaObjetivo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,6 +31,8 @@ class CartaObjetivoServiceImplTest {
 
     private final ArrayList<CartaObjetivo> cartaObjetivoArraylist = new ArrayList<>();
 
+    Optional<CartaObjetivo> cartaID;
+
     @DisplayName("Teste do SAVE do Service de todas as cartas de objetivo")
 
     @Test
@@ -46,8 +50,9 @@ class CartaObjetivoServiceImplTest {
 
     @Test
     void findCartaObjetivoById() {
-        when(cartaObjetivoService.findById(UUID.randomUUID())).thenReturn(cartaObjetivoService.findById(UUID.randomUUID()));
-        assertEquals(cartaObjetivoService.findById(UUID.randomUUID()), cartaObjetivoService.findById(UUID.randomUUID()));
+        UUID id = UUID.fromString("fd7b6723-77e2-4846-bd22-88df15ca150a");
+        when(cartaObjetivoService.findById(id)).thenReturn(Optional.ofNullable(cartaObjetivo));
+        Assertions.assertEquals(cartaObjetivoService.findById(id).get() , cartaObjetivo);
     }
 
 }
