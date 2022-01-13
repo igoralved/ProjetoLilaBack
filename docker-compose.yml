@@ -18,7 +18,7 @@ services:
             - my-network
 
     # Add Server -> Connection -> Hostname/address
-    # Set field to 172.17.0.1
+    # Set field to  172.17.0.1
     pgadmin:
             image: dpage/pgadmin4:latest
             restart: always

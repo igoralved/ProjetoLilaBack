@@ -1,6 +1,5 @@
 package com.db.jogo.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
 
 import org.springframework.lang.NonNull;
 
@@ -31,16 +29,17 @@ public class Baralho {
 	private UUID id;
 
 	@NonNull
+	@Column(unique=true)
 	private String codigo;
 
 	@OneToMany
-	private List<CartaDoJogo> cartasDoJogo= new ArrayList<>();
+	private List<CartaDoJogo> cartasDoJogo;
 
 	@OneToMany
-	private List<CartaObjetivo> cartasDeObjetivo = new ArrayList<>();
+	private List<CartaObjetivo> cartasDeObjetivo;
 
 	@OneToMany
-	private List<CartaInicio> cartasInicio = new ArrayList<>();
+	private List<CartaInicio> cartasInicio;
 
 	@NonNull
 	@Column( name ="titulo", nullable = false)

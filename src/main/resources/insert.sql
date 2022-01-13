@@ -1,7 +1,7 @@
-INSERT INTO public.baralho(codigo, descricao, titulo)
+INSERT INTO baralho(codigo, descricao, titulo)
 	VALUES ('Clila' ,'primeiro Baralho', 'baralho01') ON CONFLICT(codigo) DO NOTHING;
 
-INSERT INTO public.carta_do_jogo( bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
+INSERT INTO carta_do_jogo( bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
  Values ('false', 'visual',  'Wikipedia', 'Deficiência visual abrange pessoas cegas e pessoas com visão reduzida', 'Definição', '0', '1','1'),
  ('true', 'visual', ' www.deficienteonline.com.br', 'A deficiência visual pode ser congênita ou adquirida ao longo da vida.', 'Informação', '0','2' ,'1' ),
  ('true', 'visual', 'Wikipedia', 'Para apoio à pessoa com deficiência visual, softwares de leitura de tela  reproduzem a informação mostrada na tela do computador através de áudio.', 'Informação','0', '2', '1' ),
@@ -58,7 +58,7 @@ INSERT INTO public.carta_do_jogo( bonus, categoria, fonte, texto, tipo, valor_co
  ('false', 'Genérica', ' Programa de Inclusão DBServer', 'Antes da contratação, percorra as dependências da empresa com a pessoa para identificar pontos de dificuldades de acesso.', 'Ação', '2', '1', '3');
 
 
- INSERT INTO public.carta_objetivo( categoria, classificacao, descricao, pontos)
+INSERT INTO public.carta_objetivo( categoria, classificacao, descricao, pontos)
 	VALUES ( 'FISICA', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Física ao final da partida','Um dos seus
 funcionários passou a usar cadeira de rodas.','3'),
 
@@ -92,7 +92,7 @@ funcionários.', '1'),
 
 ( 'CARTA DE INFORMAÇÃO', 'Ganhe 2 pontos se você tiver alguma carta de informação ao final da partida', 'Você é responsável pelo newsletter da empresa', '2');
 
-INSERT INTO public.carta_inicio(
+INSERT INTO carta_inicio(
 	 descricao, nome)
 	VALUES ('Inicia o jogo quem tiver usado um recurso de acessibilidade mais recentemente', 'RECURSO DE ACESSIBILIDADE'),
 
