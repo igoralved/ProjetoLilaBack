@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-
 public class CartaObjetivo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

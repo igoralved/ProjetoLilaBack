@@ -20,12 +20,9 @@ public class Baralho {
 	@Id
 	private  String id_codigo;
 
-	@OneToMany(mappedBy = "baralho" )
+	@OneToMany
+	@Builder.Default
 	private List<CartaObjetivo> cartaObjetivo= new ArrayList<>();
-		
-	@ManyToOne
-	@JoinColumn(name="admin_id_codigo")
-	private Admin admin;
 
 	@Column( name ="titulo", nullable = false)
 	private String titulo;

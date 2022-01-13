@@ -26,7 +26,8 @@ public class Admin  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@OneToMany(mappedBy = "admin" )
+	@OneToMany
+	@Builder.Default
 	private List<Baralho> baralho= new ArrayList<>();
 	
 	@Column
