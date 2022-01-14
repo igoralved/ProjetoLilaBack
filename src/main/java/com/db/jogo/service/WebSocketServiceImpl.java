@@ -1,21 +1,23 @@
 package com.db.jogo.service;
 
-import com.db.jogo.dto.SalaResponse;
-import com.db.jogo.exception.JogoInvalidoException;
-import com.db.jogo.model.Baralho;
-import com.db.jogo.model.Jogador;
-import com.db.jogo.model.Sala;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Service;
+import static com.db.jogo.model.Sala.StatusEnum.FINALIZADO;
+import static com.db.jogo.model.Sala.StatusEnum.JOGANDO;
 
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.db.jogo.model.Sala.StatusEnum.FINALIZADO;
-import static com.db.jogo.model.Sala.StatusEnum.JOGANDO;
+import com.db.jogo.dto.SalaResponse;
+import com.db.jogo.exception.JogoInvalidoException;
+import com.db.jogo.model.Baralho;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -76,7 +78,7 @@ public class WebSocketServiceImpl implements WebSocketService {
             if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
             }
-            Jogador savedJogador = jogadorService.saveJogador(criaJogador(jogador));
+            Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
             sala.get().adicionarJogador(savedJogador);
             sala.get().setStatusEnum(JOGANDO);
             
