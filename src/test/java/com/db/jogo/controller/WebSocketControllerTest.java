@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
+import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
@@ -54,6 +55,7 @@ public class WebSocketControllerTest {
     Jogador jogador2 = new Jogador();
     Sala sala = new Sala();
     SalaRequest salaRequest = new SalaRequest();
+    SalaResponse salaResponse = new SalaResponse();
 
     @BeforeEach
     public void init(){
@@ -119,13 +121,16 @@ public class WebSocketControllerTest {
 
         salaRequest.setHash("hashpraentrar");
         salaRequest.setJogador(jogador2);
+
+        salaResponse.setSala(sala);
+        salaResponse.setJogador(jogador);
     }
 
     @Test
     @DisplayName("Teste para iniciar o jogo")
     void testIniciarJogo() throws Exception {
 
-        given(webSocketServiceImpl.criarJogo(jogador)).willReturn(new Sala());
+        given(webSocketServiceImpl.criarJogo(jogador)).willReturn(new SalaResponse());
 
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(jogador);
@@ -141,10 +146,10 @@ public class WebSocketControllerTest {
     void testConectar() throws Exception{
         sala.adicionarJogador(jogador2);
 
-        given(webSocketServiceImpl.conectarJogo( salaRequest.getJogador(), salaRequest.getHash())).willReturn(Optional.of(sala));
+        given(webSocketServiceImpl.conectarJogo( salaRequest.getJogador(), salaRequest.getHash())).willReturn(salaResponse);
 
         ObjectMapper mapper = new ObjectMapper();
-        String newConexaoAsJSON = mapper.writeValueAsString(salaRequest);
+        String newConexaoAsJSON = mapper.writeValueAsString(salaResponse);
         this.mockMvc.perform(post("/api/conectar")
                 .content(newConexaoAsJSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
