@@ -145,15 +145,15 @@ public class WebSocketServiceTest {
     @Test
     @DisplayName("Teste para criar um jogador")
     void testCriaJogador() {
-        when(webSocketServiceImpl.criaJogador(jogador)).thenReturn(jogador);;
-        assertEquals(jogador, webSocketServiceImpl.criaJogador(jogador));
+        when(webSocketServiceImpl.criarJogador(jogador)).thenReturn(jogador);;
+        assertEquals(jogador, webSocketServiceImpl.criarJogador(jogador));
     }
 
     @Test
     @DisplayName("Teste para não criar jogador com parametro null")
     void testCriaJogadorComErro()  {
-        when(webSocketServiceImpl.criaJogador(null)).thenReturn(null);;
-        assertNull(webSocketServiceImpl.criaJogador(null));
+        when(webSocketServiceImpl.criarJogador(null)).thenReturn(null);;
+        assertNull(webSocketServiceImpl.criarJogador(null));
     }
 
 }

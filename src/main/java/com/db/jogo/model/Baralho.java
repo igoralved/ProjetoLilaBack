@@ -32,7 +32,6 @@ public class Baralho {
 
 	@NonNull
 	@Column
-
 	private String codigo;
 
 	@OneToMany(cascade = CascadeType.ALL)
