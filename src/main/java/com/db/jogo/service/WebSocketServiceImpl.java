@@ -62,7 +62,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         jogador.setBonusCoracaoPeq(0);
         jogador.setBonusCoracaoGra(0);
         jogador.setCoracaoPeq(2);
-        jogador.setCoracaoGra(2);
+        jogador.setCoracaoGra(0);
         jogador.setPontos(0);
         jogador.setNome(jogador.getNome());
         return jogador;
