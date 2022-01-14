@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(BaralhoController.class)
@@ -28,11 +30,11 @@ class BaralhoControllerTest {
 
 	@MockBean
 	BaralhoServiceImpl baralhoService;
-	
+
 	@Test
 	@DisplayName("Teste do POST do Controller do Baralho")
 	public void testCriacaoBaralho() throws Exception {
-		Baralho newBaralho = Baralho.builder().id_codigo("LILA1")
+		Baralho newBaralho = Baralho.builder().id(UUID.randomUUID()).codigo("LILA1")
 				.titulo("Corações de Lila")
 				.descricao("Jogo de cartas.")
 				.build();
