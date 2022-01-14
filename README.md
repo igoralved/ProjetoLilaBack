@@ -1,5 +1,4 @@
-# ProjetoLilaBack
-# DBInclui 💭
+# ProjetoLilaBack💭
 
 ## Descrição do Projeto
 Aplicação que está sendo desenvolvida para o jogo de cartas Corações da Lila. O Corações da Lila tem o objetivo de educar pessoas sobre acessibilidade e inclusão.
