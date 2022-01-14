@@ -44,7 +44,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         Sala sala = new Sala();
         SalaResponse salaResp = new SalaResponse();
-        Jogador savedJogador = jogadorService.saveJogador(criaJogador(jogador));
+        Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
         Baralho baralho = baralhoService.findByCodigo("Clila").get();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
@@ -56,7 +56,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         return salaResp;
     }
 
-    public Jogador criaJogador(Jogador jogador) {
+    public Jogador criarJogador(Jogador jogador) {
         jogador.setBonusCoracaoPeq(0);
         jogador.setBonusCoracaoGra(0);
         jogador.setCoracaoPeq(2);

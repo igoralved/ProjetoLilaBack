@@ -9,5 +9,5 @@ public interface WebSocketService {
 
      SalaResponse conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException;
 
-     Jogador criaJogador(Jogador jogador);
+     Jogador criarJogador(Jogador jogador);
 }
