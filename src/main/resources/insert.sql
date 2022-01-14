@@ -195,3 +195,21 @@ INSERT INTO public.baralho_cartas_do_jogo(
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','3c16a975-e904-48f5-9557-816930cdafaf'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','c7f83c84-d8b1-454b-bdc4-526cebbd7972'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','04e501a8-e6a4-4ab5-84aa-1d76df1f62dc');
+
+INSERT INTO sala(id, hash, status_enum, baralho_id) values
+       ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '6g-Rg8V5', 0, 'a28ebdb0-d3bc-4220-9814-9a743a4d829e' );
+
+INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos  ) values
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 0, 0, 2, 3, 'João', 5);
+
+INSERT INTO sala_jogadores(sala_id, jogadores_id) values
+        ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '01fa2624-bc16-4d3b-a1d6-6e797b47e04d');
+
+INSERT INTO jogador_lista_de_cartas ( jogador_id, lista_de_cartas_id) values
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'd5c04bec-d0c0-414a-b160-6383c437267f'),
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', '72a75c88-eb6d-4907-8e56-9ade773be768'),
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'cbbac91b-f3f1-4780-b079-17fadb445cf9');
+
+INSERT INTO jogador_lista_de_objetivos( jogador_id, lista_de_objetivos_id) values
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261' ),
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', '5dc16976-9c0a-47f7-a3e4-00fa83de3c1d' );
