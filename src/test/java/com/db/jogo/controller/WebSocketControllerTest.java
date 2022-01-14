@@ -83,11 +83,11 @@ public class WebSocketControllerTest {
         baralho.setId(UUID.randomUUID());
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-        baralho.setCartasInicio(new ArrayList<>());
+        baralho.setCartaInicio(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
         baralho.setCartasDoJogo(new ArrayList<>());
         baralho.adicionarCartadoJogo(carta);
-        baralho.setCartasDeObjetivo(new ArrayList<>());
+        baralho.setCartasObjetivo(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
 
         jogador.setId(UUID.randomUUID());

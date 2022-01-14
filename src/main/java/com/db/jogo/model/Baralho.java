@@ -40,11 +40,11 @@ public class Baralho {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@Builder.Default
-	private List<CartaObjetivo> cartasDeObjetivo = new ArrayList<>();
+	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@Builder.Default
-	private List<CartaInicio> cartasInicio = new ArrayList<>();
+	private List<CartaInicio> cartaInicio = new ArrayList<>();
 
 	@NonNull
 	@Column(name = "titulo", nullable = false)
@@ -62,19 +62,19 @@ public class Baralho {
 	}
 
 	public void adicionarCartaDoObjetivo(CartaObjetivo cartaObjetivo) {
-		this.cartasDeObjetivo.add(cartaObjetivo);
+		this.cartasObjetivo.add(cartaObjetivo);
 	}
 
 	public boolean removerCartaDoObjetivo(CartaObjetivo cartaDoObjetivo) {
-		return this.cartasDeObjetivo.remove(cartaDoObjetivo);
+		return this.cartasObjetivo.remove(cartaDoObjetivo);
 	}
 
 	public void adicionarCartaDoInicio(CartaInicio cartaInicio) {
-		this.cartasInicio.add(cartaInicio);
+		this.cartaInicio.add(cartaInicio);
 	}
 
 	public boolean removerCartaDoInicio(CartaInicio cartaInicio) {
-		return this.cartasInicio.remove(cartaInicio);
+		return this.cartaInicio.remove(cartaInicio);
 	}
 
 }
