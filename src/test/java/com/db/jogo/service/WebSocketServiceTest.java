@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.db.jogo.dto.SalaRequest;
+import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaDoJogo;
@@ -35,6 +37,8 @@ public class WebSocketServiceTest {
     Jogador jogador = new Jogador();
     Jogador jogador2 = new Jogador();
     Sala sala = new Sala();
+    SalaRequest salaRequest = new SalaRequest();
+    SalaResponse salaResponse = new SalaResponse();
 
     @BeforeEach
     public void init(){
@@ -95,6 +99,12 @@ public class WebSocketServiceTest {
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
+
+        salaRequest.setHash("hashpraentrar");
+        salaRequest.setJogador(jogador2);
+
+        salaResponse.setSala(sala);
+        salaResponse.setJogador(jogador);
     }
 
     @Test
@@ -102,9 +112,9 @@ public class WebSocketServiceTest {
     void testConectarJogo() {
         sala.adicionarJogador(jogador2);
         try {
-            when(webSocketServiceImpl.conectarJogo(jogador2, sala.getHash())).thenReturn(Optional.of(sala));
-            Sala salaTarget = webSocketServiceImpl.conectarJogo(jogador2, sala.getHash()).get();
-            assertEquals(sala, salaTarget);
+            when(webSocketServiceImpl.conectarJogo(jogador2, sala.getHash())).thenReturn(salaResponse);
+            SalaResponse salaTarget = webSocketServiceImpl.conectarJogo(jogador2, sala.getHash());
+            assertEquals(salaResponse, salaTarget);
         } catch (JogoInvalidoException e) {
             fail("Parametros nulos");
         }
@@ -114,15 +124,15 @@ public class WebSocketServiceTest {
     @DisplayName("Teste para conectar ao jogo com jogador nulo")
     void testConectarJogoComJogadorNull() throws JogoInvalidoException {
 
-        when(webSocketServiceImpl.conectarJogo(null, sala.getHash())).thenReturn(Optional.ofNullable(sala));
-        assertEquals(sala, webSocketServiceImpl.conectarJogo(null, sala.getHash()).get());
+        when(webSocketServiceImpl.conectarJogo(null, sala.getHash())).thenReturn(salaResponse);
+        assertEquals(salaResponse, webSocketServiceImpl.conectarJogo(null, sala.getHash()));
     }
 
     @Test
     @DisplayName("Teste para criar um jogo")
     void testCriarJogo() throws JogoInvalidoException {
-        when(webSocketServiceImpl.criarJogo(jogador)).thenReturn(sala);;
-        assertEquals(sala, webSocketServiceImpl.criarJogo(jogador));
+        when(webSocketServiceImpl.criarJogo(jogador)).thenReturn(salaResponse);;
+        assertEquals(salaResponse, webSocketServiceImpl.criarJogo(jogador));
     }
 
     @Test
