@@ -45,7 +45,7 @@ public class CartaDoJogoController {
 
 		List<CartaDoJogo> listaCartaDoJogo = cartaDoJogoService.findAll();
 		if (!listaCartaDoJogo.isEmpty()) {
-			return new ResponseEntity<>(listaCartaDoJogo, HttpStatus.FOUND);
+			return new ResponseEntity<>(listaCartaDoJogo, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
