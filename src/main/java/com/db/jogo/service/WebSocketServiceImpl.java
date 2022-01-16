@@ -73,7 +73,10 @@ public class WebSocketServiceImpl implements WebSocketService {
             throw new JogoInvalidoException("Parametros nulos");
         }
         Optional<Sala> sala = salaService.findSalaByHash(hash);
+        
+        
         SalaResponse salaResp = new SalaResponse();
+        
         if (sala.isPresent()) {
             if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
@@ -84,6 +87,7 @@ public class WebSocketServiceImpl implements WebSocketService {
             
             salaResp.setJogador(savedJogador);
             salaResp.setSala(sala.get());
+            salaService.saveSala(sala.get());
         }
         return salaResp;
     }
