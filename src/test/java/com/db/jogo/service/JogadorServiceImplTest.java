@@ -72,7 +72,7 @@ class JogadorServiceImplTest {
 		
 	        when(jogadorService.saveJogador(null)).thenReturn(null);
 
-	        assertEquals(null, jogadorService.saveJogador(null));
+		    assertNull(jogadorService.saveJogador(null));
 
 	    }
 	

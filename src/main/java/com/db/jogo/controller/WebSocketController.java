@@ -39,11 +39,12 @@ public class WebSocketController {
     public ResponseEntity<SalaResponse> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
         log.info("Requisição da conexão: {}", request);
         SalaResponse sala = webSocketServiceImpl.conectarJogo(request.getJogador(), request.getHash());
-        
+
         if (sala.getSala() == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
+        Integer i = webSocketServiceImpl.getQuantidadeJogadores(request.getHash());
         return new ResponseEntity<>(sala, HttpStatus.OK);
     }
+
 }

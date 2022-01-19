@@ -1,5 +1,6 @@
 package com.db.jogo.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -55,6 +56,12 @@ public class JogadorController {
 		return new ResponseEntity<Jogador>(jogador.get(), HttpStatus.OK);
 	}
 
+	@GetMapping("/todos")
+	public Iterable<Jogador> listarTodos(){
+		return this.jogadorService.findAll();
+	}
+
+
 	@RequestMapping(method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Jogador> atualizar(@RequestBody Jogador jogador, BindingResult bindingResult) {
 
@@ -69,6 +76,20 @@ public class JogadorController {
 			return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
 		}
 		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
-
 	}
+
+	@GetMapping("/totaljogadores")
+	public Integer totalJogadores() {
+		return this.jogadorService.totalJogadores();
+	}
+
+	@GetMapping("/podeJogar")
+	public Boolean podeJogar() {
+		Integer numeroJogadores = this.totalJogadores();
+		if(numeroJogadores < 2 || numeroJogadores > 6) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -23,13 +23,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @ExtendWith(MockitoExtension.class)
 public class WebSocketServiceTest {
 
     @Mock
     WebSocketServiceImpl webSocketServiceImpl;
-    
+
     CartaInicio cartaInicio = new CartaInicio();
     Baralho baralho = new Baralho();
     CartaDoJogo carta = new CartaDoJogo();
@@ -39,6 +41,7 @@ public class WebSocketServiceTest {
     Sala sala = new Sala();
     SalaRequest salaRequest = new SalaRequest();
     SalaResponse salaResponse = new SalaResponse();
+    Integer numero = 0;
 
     @BeforeEach
     public void init(){
@@ -131,7 +134,7 @@ public class WebSocketServiceTest {
     @Test
     @DisplayName("Teste para criar um jogo")
     void testCriarJogo() throws JogoInvalidoException {
-        when(webSocketServiceImpl.criarJogo(jogador)).thenReturn(salaResponse);;
+        when(webSocketServiceImpl.criarJogo(jogador)).thenReturn(salaResponse);
         assertEquals(salaResponse, webSocketServiceImpl.criarJogo(jogador));
     }
 
@@ -145,15 +148,23 @@ public class WebSocketServiceTest {
     @Test
     @DisplayName("Teste para criar um jogador")
     void testCriaJogador() {
-        when(webSocketServiceImpl.criarJogador(jogador)).thenReturn(jogador);;
+        when(webSocketServiceImpl.criarJogador(jogador)).thenReturn(jogador);
         assertEquals(jogador, webSocketServiceImpl.criarJogador(jogador));
     }
 
     @Test
     @DisplayName("Teste para não criar jogador com parametro null")
     void testCriaJogadorComErro()  {
-        when(webSocketServiceImpl.criarJogador(null)).thenReturn(null);;
+        when(webSocketServiceImpl.criarJogador(null)).thenReturn(null);
         assertNull(webSocketServiceImpl.criarJogador(null));
     }
 
+    @Test
+    @DisplayName("Teste para ver número jogadores na sala")
+    void testaNumeroJogadores() {
+
+        when(webSocketServiceImpl.getQuantidadeJogadores(sala.getHash())).thenReturn(numero);
+        assertEquals(numero, webSocketServiceImpl.getQuantidadeJogadores(sala.getHash()));
+
+    }
 }

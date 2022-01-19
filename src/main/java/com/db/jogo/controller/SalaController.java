@@ -2,6 +2,7 @@ package com.db.jogo.controller;
 
 import java.util.Optional;
 
+import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.SalaService;
 
@@ -37,10 +38,24 @@ public class SalaController {
         return new ResponseEntity<>(salaService.saveSala(sala), HttpStatus.CREATED);
     }
 
+    @RequestMapping("/numeroJogadores")
+    public Integer totalJogadores(String hash) {
+        return this.salaService.totalJogadores(hash);
+    }
+
     @GetMapping("/{hash}")
     public ResponseEntity<Sala> encontrarSalaPorHash(@PathVariable String hash) {
         Optional<Sala> sala = salaService.findSalaByHash(hash);
         return sala.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+    @GetMapping("/host")
+    public ResponseEntity<Jogador> primeiroAJogar(String hash) {
+        Jogador j = salaService.findFirst(hash);
+        if(j == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }return new ResponseEntity<>(j, HttpStatus.FOUND);
     }
 }

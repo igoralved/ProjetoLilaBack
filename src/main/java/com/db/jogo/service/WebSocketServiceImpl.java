@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.db.jogo.controller.SalaController;
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
@@ -73,10 +74,10 @@ public class WebSocketServiceImpl implements WebSocketService {
             throw new JogoInvalidoException("Parametros nulos");
         }
         Optional<Sala> sala = salaService.findSalaByHash(hash);
-        
-        
+
+
         SalaResponse salaResp = new SalaResponse();
-        
+
         if (sala.isPresent()) {
             if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
@@ -84,12 +85,21 @@ public class WebSocketServiceImpl implements WebSocketService {
             Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
             sala.get().adicionarJogador(savedJogador);
             sala.get().setStatusEnum(JOGANDO);
-            
+
             salaResp.setJogador(savedJogador);
             salaResp.setSala(sala.get());
             salaService.saveSala(sala.get());
         }
         return salaResp;
+    }
+
+    public Integer getQuantidadeJogadores(String hash) {
+
+        Integer numero = salaService.totalJogadores(hash);
+        String url = "/gameplay/" + hash;
+        template.convertAndSend(url, numero);
+
+        return numero;
     }
 
 }

@@ -1,12 +1,17 @@
 package com.db.jogo.service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
 import com.db.jogo.repository.JogadorRepository;
 
 @Service
@@ -30,6 +35,8 @@ public class JogadorServiceImpl implements JogadorService {
 		return jogadorRepository.save(jogador);
 
 	}
+
+
 
 	public Optional<Jogador> atualizarJogador(Jogador jogador) throws IllegalArgumentException {
 
@@ -58,4 +65,21 @@ public class JogadorServiceImpl implements JogadorService {
 		}
 		return jogadorParaAtualizar;
 	}
+
+	@Override
+	public int totalJogadores() {
+		List<Jogador> lista = (List<Jogador>) this.jogadorRepository.findAll();
+		if(lista.size() == 0) {
+			return 0;
+		}
+		return lista.size();
+	}
+
+	@Override
+	public Iterable<Jogador> findAll() {
+		// TODO Auto-generated method stub
+		return this.jogadorRepository.findAll();
+	}
+
+
 }
