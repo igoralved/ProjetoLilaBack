@@ -60,15 +60,19 @@ public class JogadorController {
 
 		if (bindingResult.hasErrors() || jogador == null || jogador.getId() == null) {
 
+			return new ResponseEntity<Jogador>(HttpStatus.BAD_REQUEST);
+		}
+
+		try {
+			Optional<Jogador> jogadorParaAtualizar = this.jogadorService.atualizarJogador(jogador);
+			if (jogadorParaAtualizar.isPresent()) {
+				return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
+			}
 			return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
-		}
 
-		Optional<Jogador> jogadorParaAtualizar = this.jogadorService.atualizarJogador(jogador);
-
-		if (jogadorParaAtualizar.isPresent()) {
-			return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<Jogador>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
 
 	}
 }
