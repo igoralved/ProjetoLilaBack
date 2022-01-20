@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
@@ -27,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -170,6 +171,22 @@ public class WebSocketControllerTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    @DisplayName("Teste para sucesso na conexão")
+    void tesaConexaoComSucesso() throws Exception {
+        Jogador jogador = new Jogador();
+        Sala sala = new Sala();
+        given(webSocketServiceImpl.conectarJogo(jogador, sala.getHash())).willReturn(salaResponse);
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJson = mapper.writeValueAsString(salaResponse);
+        this.mockMvc.perform(post("/api/conectar")
+                .content(newConexaoAsJson)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.db.jogo.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,15 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
-import com.db.jogo.model.Sala;
 import com.db.jogo.repository.JogadorRepository;
 
 @Service
 public class JogadorServiceImpl implements JogadorService {
 
-	private JogadorRepository jogadorRepository;
+	private final JogadorRepository jogadorRepository;
 
 	@Autowired
 	public JogadorServiceImpl(JogadorRepository jogadorRepository) {
@@ -80,6 +77,7 @@ public class JogadorServiceImpl implements JogadorService {
 		return this.jogadorRepository.findAll();
 	}
 
+	@Override
 	public Boolean podeJogar() {
 		int numeroJogadores = this.totalJogadores();
 		return numeroJogadores >= 2 && numeroJogadores <= 6;

@@ -51,12 +51,12 @@ public class SalaController {
     }
 
 
-    @GetMapping("/host")
-    public ResponseEntity<Jogador> primeiroAJogar(String hash) {
-        Jogador j = salaService.findFirst(hash);
-        if(j == null) {
+    @GetMapping("/{hash}/host")
+    public ResponseEntity<Jogador> primeiroAJogar(@PathVariable String hash) {
+        Jogador jogador = salaService.findFirst(hash);
+        if(jogador == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(j, HttpStatus.FOUND);
+        return new ResponseEntity<>(jogador, HttpStatus.FOUND);
     }
 }
