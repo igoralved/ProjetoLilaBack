@@ -60,7 +60,7 @@ public class JogadorController {
 
 		if (bindingResult.hasErrors() || jogador == null || jogador.getId() == null) {
 
-			return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Jogador>(HttpStatus.BAD_REQUEST);
 		}
 
 		Optional<Jogador> jogadorParaAtualizar = this.jogadorService.atualizarJogador(jogador);
@@ -68,7 +68,7 @@ public class JogadorController {
 		if (jogadorParaAtualizar.isPresent()) {
 			return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
 		}
-		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Jogador>(HttpStatus.BAD_REQUEST);
 
 	}
 }
