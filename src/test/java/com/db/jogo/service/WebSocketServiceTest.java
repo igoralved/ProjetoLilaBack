@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
@@ -161,7 +160,7 @@ public class WebSocketServiceTest {
 
     @Test
     @DisplayName("Teste para ver número jogadores na sala")
-    void testaNumeroJogadores() {
+    void testQuantidadeJogadores() {
 
         when(webSocketServiceImpl.getQuantidadeJogadores(sala.getHash())).thenReturn(numero);
         assertEquals(numero, webSocketServiceImpl.getQuantidadeJogadores(sala.getHash()));

@@ -56,6 +56,7 @@ public class SalaController {
         Jogador j = salaService.findFirst(hash);
         if(j == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }return new ResponseEntity<>(j, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(j, HttpStatus.FOUND);
     }
 }

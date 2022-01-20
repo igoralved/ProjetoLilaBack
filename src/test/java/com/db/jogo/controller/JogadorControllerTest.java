@@ -155,4 +155,52 @@ class JogadorControllerTest {
 
 	}
 
+	@Test
+	@DisplayName("Teste totaljogadores do controller do jogador")
+	public void deveRetornarSucesso_QuandoBuscartotaljogadores() throws Exception {
+
+		given(jogadorService.totalJogadores()).willReturn(jogadorService.totalJogadores());
+
+		ObjectMapper mapper = new ObjectMapper();
+		String totalJogadoresComoJSON = mapper.writeValueAsString(jogadorService.totalJogadores());
+
+		mockMvc.perform(get("/totaljogadores")
+				.content(totalJogadoresComoJSON)
+				.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk()).andExpect(content().json(totalJogadoresComoJSON));
+
+	}
+
+	@Test
+	@DisplayName("Teste podeJogar do controller do jogador")
+	public void deveRetornarSucesso_QuandoBuscarPodeJogar() throws Exception {
+
+		given(jogadorService.podeJogar()).willReturn(true);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String podeJogarComoJSON = mapper.writeValueAsString(true);
+
+		mockMvc.perform(get("/totaljogadores")
+				.content(podeJogarComoJSON)
+				.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk()).andExpect(content().json(podeJogarComoJSON));
+
+	}
+
+	@Test
+	@DisplayName("Teste listarTodos do controller do jogador")
+	public void deveRetornarSucesso_QuandoBuscarlistarTodos() throws Exception {
+
+		given(jogadorService.findAll()).willReturn(jogadorService.findAll());
+
+		ObjectMapper mapper = new ObjectMapper();
+		String listarTodosComoJSON = mapper.writeValueAsString(jogadorService.findAll());
+
+		mockMvc.perform(get("/todos")
+				.content(listarTodosComoJSON)
+				.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().isOk()).andExpect(content().json(listarTodosComoJSON));
+
+	}
+
 }

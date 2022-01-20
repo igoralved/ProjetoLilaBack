@@ -51,16 +51,16 @@ public class SalaServiceImpl implements SalaService {
 		if(optsala.isEmpty()) {
 			return 0;
 		}
-		Sala s = optsala.get();
-		List<Jogador> lista = s.getJogadores();
+		Sala sala = optsala.get();
+		List<Jogador> lista = sala.getJogadores();
 		return lista.size();
 	}
 
 
 	@Override
 	public Jogador findFirst(String hash) {
-		Optional<Sala> s = salaRepository.findSalaByHash(hash);
-		List<Jogador> lista = s.get().getJogadores();
+		Optional<Sala> sala = salaRepository.findSalaByHash(hash);
+		List<Jogador> lista = sala.get().getJogadores();
 		if(lista.isEmpty()) {
 			return null;
 		}return lista.get(0);

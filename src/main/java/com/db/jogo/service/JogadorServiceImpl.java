@@ -77,9 +77,12 @@ public class JogadorServiceImpl implements JogadorService {
 
 	@Override
 	public Iterable<Jogador> findAll() {
-		// TODO Auto-generated method stub
 		return this.jogadorRepository.findAll();
 	}
 
+	public Boolean podeJogar() {
+		int numeroJogadores = this.totalJogadores();
+		return numeroJogadores >= 2 && numeroJogadores <= 6;
+	}
 
 }

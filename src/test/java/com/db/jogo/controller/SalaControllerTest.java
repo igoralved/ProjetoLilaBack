@@ -94,6 +94,7 @@ class SalaControllerTest {
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
+        sala.getJogadores();
     }
 
     @Test
@@ -162,5 +163,35 @@ class SalaControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Teste totalJogadores do Controller")
+    void totalJogadores() throws Exception{
+
+        given(salaService.totalJogadores(sala.getHash())).willReturn(salaService.totalJogadores(sala.getHash()));
+
+        ObjectMapper mapper = new ObjectMapper();
+        String totalJogadoresAsJSON = mapper.writeValueAsString(salaService.totalJogadores(sala.getHash()));
+        this.mockMvc.perform(get("/numeroJogadores")
+                .content(totalJogadoresAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Teste primeiroAJogar do Controller")
+    void primeiroAJogar() throws Exception{
+
+        given(salaService.findFirst(sala.getHash())).willReturn(salaService.findFirst(sala.getHash()));
+
+        ObjectMapper mapper = new ObjectMapper();
+        String primeiroAJogarAsJSON = mapper.writeValueAsString(salaService.findFirst(sala.getHash()));
+        this.mockMvc.perform(get("/host")
+                .content(primeiroAJogarAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
 }
