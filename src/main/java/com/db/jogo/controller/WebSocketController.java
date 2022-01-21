@@ -1,15 +1,22 @@
 package com.db.jogo.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
+import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
 import com.db.jogo.service.WebSocketServiceImpl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,4 +53,12 @@ public class WebSocketController {
 
         return new ResponseEntity<>(sala, HttpStatus.OK);
     }
+    
+    @MessageMapping("/play-card")
+	@SendTo("/game-play/game-update/{hashSala}")
+	public Sala comprarCartaDoJogo(Sala sala, @DestinationVariable String hashSala) throws Exception {
+   
+		
+		return sala;
+	}
 }

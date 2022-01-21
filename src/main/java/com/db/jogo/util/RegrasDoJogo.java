@@ -1,6 +1,7 @@
 package com.db.jogo.util;
 
 import com.db.jogo.model.CartaDoJogo;
+import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 
 public class RegrasDoJogo {
@@ -24,5 +25,17 @@ public class RegrasDoJogo {
 		return true;
 
 	}
+	
+	
+	public static boolean validaCompraCartaObjetivo(Jogador jogador) {
+
+		if (jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() + jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() < 1) {
+				return false;
+			}
+
+		return true;
+
+	}
+	
 
 }
