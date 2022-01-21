@@ -1,9 +1,10 @@
 package com.db.jogo.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +12,18 @@ import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
 
 class RegrasDoJogoTest {
-
-	@Test
-	@DisplayName("Teste valida coracoes VERDADEIRO")
-	void testValidaCoracaoVerdadeiro() {
+	
+	private CartaDoJogo carta;	
+	private Jogador jogador;
+	
+	@BeforeEach 
+	void criaCarta () {
+		carta = CartaDoJogo.builder()
+				.valorCorGrande(1)
+				.valorCorPequeno(2)
+				.build();
 		
-		Jogador jogador = Jogador.builder()
+		 jogador = Jogador.builder()
 				.id(UUID.randomUUID())
 				.nome("joão")
 				.bonusCoracaoGra(1)
@@ -25,39 +32,40 @@ class RegrasDoJogoTest {
 				.pontos(1)
 				.coracaoPeq(2)
 				.build();
-		
-		CartaDoJogo carta = CartaDoJogo.builder()
-				.valorCorGrande(1)
-				.valorCorPequeno(2)
-				.build();
+	}
+	@Test
+	@DisplayName("Teste valida coracoes VERDADEIRO")
+	void testValidaCoracoesVerdadeiro() {
 		
 			boolean valida =  
-				RegrasDoJogo.validaCompraCarta(jogador, carta);
+				RegrasDoJogo.validaCompraCarta(jogador, this.carta);
 		assertEquals(valida, true);
 	}
 
 	@Test
 	@DisplayName("Teste valida coracoes FALSO")
-	void testValidaCoracaoFalso() {
-		
-		Jogador jogador = Jogador.builder()
-				.id(UUID.randomUUID())
-				.nome("joão")
-				.bonusCoracaoGra(0)
-				.bonusCoracaoPeq(0)
-				.coracaoGra(1)
-				.pontos(1)
-				.coracaoPeq(1)
-				.build();
-		
-		CartaDoJogo carta = CartaDoJogo.builder()
-				.valorCorGrande(1)
-				.valorCorPequeno(2)
-				.build();
-		
+	void testValidaCoracoesFalso() {
+		jogador.setBonusCoracaoGra(0);
+		jogador.setBonusCoracaoPeq(0);
+		jogador.setCoracaoPeq(1);	
+			
 			boolean valida =  
 				RegrasDoJogo.validaCompraCarta(jogador, carta);
 		assertEquals(valida, false);
 	}
+	
+	@Test
+	@DisplayName("Teste valida coracoes FALSO")
+	void testValidaCoracoes() {
+		
+		jogador.setBonusCoracaoGra(0);
+		jogador.setBonusCoracaoPeq(2);
+		jogador.setCoracaoPeq(0);	
+		jogador.setCoracaoGra(0);
+					
+			boolean valida =  
+				RegrasDoJogo.validaCompraCarta(jogador, carta);
+		assertEquals(valida, false);
 
+	}
 }
