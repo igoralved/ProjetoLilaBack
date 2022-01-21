@@ -34,7 +34,7 @@ class RegrasDoJogoTest {
 				.build();
 	}
 	@Test
-	@DisplayName("Teste valida coracoes VERDADEIRO")
+	@DisplayName("Teste valida coracoes Falso")
 	void testValidaCoracoesVerdadeiro() {
 		
 			boolean valida =  
@@ -72,6 +72,9 @@ class RegrasDoJogoTest {
 	@DisplayName("Teste Compra CartaObjetivo coracoes VERDADEIRO")
 	void testValidaCompraCartaObjetivoVerdadeiro() {
 		
+		boolean valida =  
+				RegrasDoJogo.validaCompraCartaObjetivo(jogador);
+		assertEquals(valida, true);
 		
 	}
 }
