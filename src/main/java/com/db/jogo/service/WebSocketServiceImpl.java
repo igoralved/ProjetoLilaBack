@@ -39,7 +39,61 @@ public class WebSocketServiceImpl implements WebSocketService {
         this.jogadorService = jogadorService;
         this.template = template;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    public Optional<Sala> comprarCartaDoJogo(Sala salaFront){
+    	Optional<Sala> salaParaAtualizar =  this.salaService.findSalaByHash(salaFront.getHash());
+    	try {
+    		
+    		if(salaParaAtualizar.isPresent()) {
+        		//fazer lógica do jogo e atualizar os status da sala
+    	    	
+    	    	Optional<Sala> salaRetornoDoSaveNoBanco = 	 Optional.ofNullable(
+    	    			this.salaService.saveSala(salaParaAtualizar.get()));
+    	    	
+    	    	//envia a sala para todos os jogadores conectados a sala
+    	    	this.template.convertAndSend(
+    	    			"URL/"+salaRetornoDoSaveNoBanco
+    	    			.get().getHash(), salaParaAtualizar);
+    	    	return salaRetornoDoSaveNoBanco;
+        	}
+    		
+    	} catch (Exception e) {
+			throw new IllegalArgumentException("Jogada Não pode ser processada!! ", e);
+		}
+    	
+    	
+    	return Optional.of(salaFront);
+    }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public SalaResponse criarJogo(Jogador jogador) throws JogoInvalidoException {
         if (jogador.getNome().isEmpty()) {
             throw new JogoInvalidoException("dados incorretos");
