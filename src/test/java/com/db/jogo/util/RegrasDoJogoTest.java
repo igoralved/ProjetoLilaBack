@@ -68,4 +68,10 @@ class RegrasDoJogoTest {
 		assertEquals(valida, false);
 
 	}
+	@Test
+	@DisplayName("Teste Compra CartaObjetivo coracoes VERDADEIRO")
+	void testValidaCompraCartaObjetivoVerdadeiro() {
+		
+		
+	}
 }
