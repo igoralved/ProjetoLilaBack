@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
@@ -51,6 +52,7 @@ public class WebSocketServiceImpl implements WebSocketService {
  
     
     @Async
+    @Transactional
     public Optional<Sala> comprarCartaDoJogo(Sala salaFront){
     	
     	Optional<Sala> salaParaAtualizar =  this.salaService.findSalaByHash(salaFront.getHash());
@@ -125,7 +127,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     				
     					
     					
-    					/*---*------------*----*/
+    					/*---*Fim da Lógica para Adicionar a Carta*----*/
     				}
     			}
     			
@@ -134,11 +136,15 @@ public class WebSocketServiceImpl implements WebSocketService {
     	    			this.salaService.saveSala(salaParaAtualizar.get()));
     	    	
     	    	//envia a sala para todos os jogadores conectados a sala
-    	    	this.template.convertAndSend(
-    	    			"URL/"+salaRetornoDoSaveNoBanco
-    	    			.get().getHash(), salaParaAtualizar);
-    	    	//retorna sala que foi salva no banco
-    	    	return salaRetornoDoSaveNoBanco;
+    	    	if(salaRetornoDoSaveNoBanco.isPresent()) {
+    	    		this.template.convertAndSend(
+        	    			"URL/"+salaRetornoDoSaveNoBanco
+        	    			.get().getHash(), salaRetornoDoSaveNoBanco.get());
+    	    		//retorna sala que foi salva no banco
+        	    	return salaRetornoDoSaveNoBanco;
+    	    		
+    	    	}
+    	    	
         	}
     		
     	} catch (Exception e) {
@@ -148,6 +154,8 @@ public class WebSocketServiceImpl implements WebSocketService {
     	
     	return salaParaAtualizar;
     }
+    
+    
 
     
     public SalaResponse criarJogo(Jogador jogador) throws JogoInvalidoException {
