@@ -46,7 +46,9 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         Sala sala = new Sala();
         SalaResponse salaResp = new SalaResponse();
-        Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
+        Jogador savedJogador = criarJogador(jogador); //cria o jogador
+        savedJogador.setIshost(true); // seta ele como host
+        savedJogador = jogadorService.saveJogador(savedJogador); // salva o jogador no banco
         Baralho baralho = baralhoService.findByCodigo("Clila").get();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
@@ -81,7 +83,9 @@ public class WebSocketServiceImpl implements WebSocketService {
             if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
             }
-            Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
+            Jogador savedJogador = criarJogador(jogador); //cria o jogador
+            savedJogador.setIshost(false); //seta este jogador como participante (não host)
+            savedJogador = jogadorService.saveJogador(savedJogador); //salva o jogador no banco
             sala.get().adicionarJogador(savedJogador);
             sala.get().setStatusEnum(JOGANDO);
             
