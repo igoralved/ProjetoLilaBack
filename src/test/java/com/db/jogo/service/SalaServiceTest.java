@@ -143,22 +143,22 @@ public class SalaServiceTest {
     @Test
     @DisplayName("Teste de quem é o primeiro jogador (host)")
     void testarPrimeiroJogador() {
-        when(salaService.findFirst("ertfvygbhnj")).thenReturn(jogador);
-        assertEquals(jogador, salaService.findFirst("ertfvygbhnj"));
+        when(salaService.EncontrarPrimeiroJogador("ertfvygbhnj")).thenReturn(jogador);
+        assertEquals(jogador, salaService.EncontrarPrimeiroJogador("ertfvygbhnj"));
     }
 
     @Test
     @DisplayName("Testa quem é o primeiro jogador quando a sala está vazia")
     void testaPrimeiroEmSalaVazia() {
-        when(salaVazia.findFirst(sala.getHash())).thenReturn(jogador);
-        assertEquals(jogador, salaVazia.findFirst(sala.getHash()));
+        when(salaVazia.EncontrarPrimeiroJogador(sala.getHash())).thenReturn(jogador);
+        assertEquals(jogador, salaVazia.EncontrarPrimeiroJogador(sala.getHash()));
     }
 
     @Test
     @DisplayName("Teste de encontrar sala vazia")
     void testaSalaNula() {
-        when(salaService.findFirst(null)).thenReturn(null);
-        assertNull(salaService.findFirst(null));
+        when(salaService.EncontrarPrimeiroJogador(null)).thenReturn(null);
+        assertNull(salaService.EncontrarPrimeiroJogador(null));
     }
 
 }

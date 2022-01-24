@@ -53,7 +53,7 @@ public class SalaController {
 
     @GetMapping("/{hash}/host")
     public ResponseEntity<Jogador> primeiroAJogar(@PathVariable String hash) {
-        Jogador jogador = salaService.findFirst(hash);
+        Jogador jogador = salaService.EncontrarPrimeiroJogador(hash);
         if(jogador == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

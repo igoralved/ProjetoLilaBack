@@ -12,5 +12,5 @@ public interface SalaService {
     Sala saveSala(Sala sala) throws DataAccessException;
     Sala jogada(Sala sala) throws DataAccessException;
     Integer totalJogadores(String hash);
-    Jogador findFirst(String hash);
+    Jogador EncontrarPrimeiroJogador(String hash);
 }

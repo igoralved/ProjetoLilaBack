@@ -204,7 +204,7 @@ class SalaControllerTest {
 
 
 
-        given(salaService.findFirst(sala.getHash())).willReturn(jogador);
+        given(salaService.EncontrarPrimeiroJogador(sala.getHash())).willReturn(jogador);
 
         ObjectMapper mapper = new ObjectMapper();
         String primeiroAJogarAsJSON = mapper.writeValueAsString(jogador);
