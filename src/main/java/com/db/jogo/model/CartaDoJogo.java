@@ -33,10 +33,10 @@ public class CartaDoJogo {
 	@Column(name = "texto", length = 255,nullable = false)
 	private String texto;
 
-	@Column(name = "valorCorPequeno", length = 10 ,nullable = true)
+	@Column(name = "valor_cor_pequeno", length = 10 ,nullable = true)
 	private Integer valorCorPequeno;
 
-	@Column(name = "valorCorGrande", length = 10, nullable = true)
+	@Column(name = "valor_cor_grande", length = 10, nullable = true)
 	private Integer valorCorGrande;
 
 	@Column(name = "fonte",length = 80, nullable = false)

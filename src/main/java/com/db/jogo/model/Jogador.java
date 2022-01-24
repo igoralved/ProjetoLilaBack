@@ -53,19 +53,19 @@ public class Jogador {
 	@Column(name = "pontos", length = 20, nullable = false)
 	private Integer pontos;
 
-	@Column(name = "coracaoPeq", length = 20, nullable = false)
+	@Column(name = "coracao_peq", length = 20, nullable = false)
 	private Integer coracaoPeq;
 
-	@Column(name = "coracaoGra", length = 20, nullable = false)
+	@Column(name = "coracao_gra", length = 20, nullable = false)
 	private Integer coracaoGra;
 
-	@Column(name = "bonusCoracaoPeq", length = 10, nullable = false)
+	@Column(name = "bonus_coracao_peq", length = 10, nullable = false)
 	private Integer bonusCoracaoPeq;
 
-	@Column(name = "bonusCoracaoGra", length = 10, nullable = false)
+	@Column(name = "bonus_coracao_gra", length = 10, nullable = false)
 	private Integer bonusCoracaoGra;
 
-	@Column(name="isHost", nullable = false)
+	@Column(name="is_host", nullable = false)
 	private Boolean ishost;
 	
 	@Column(name = "status")
