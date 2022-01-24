@@ -23,8 +23,10 @@ import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
 import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
-import com.db.jogo.model.Jogador.StatusEnum;
+import com.db.jogo.model.Jogador.StatusEnumJogador;
 import com.db.jogo.model.Sala;
+
+import io.restassured.internal.http.Status;
 
 @ExtendWith(MockitoExtension.class)
 public class SalaServiceTest {
@@ -82,7 +84,7 @@ public class SalaServiceTest {
         jogador.setCartasDoJogo(new ArrayList<CartaDoJogo>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
-        jogador.setStatus(StatusEnum.AGUARDANDO);
+        jogador.setStatus(StatusEnumJogador.AGUARDANDO);
 
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
