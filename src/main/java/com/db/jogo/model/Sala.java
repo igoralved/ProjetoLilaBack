@@ -7,6 +7,7 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.NonNull;
 
@@ -20,28 +21,34 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
+@Table(name="sala")
 public class Sala {
 
-
+    
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-
-	@NonNull
-	@Column(name = "hash")
-	String hash;
-
-	@NonNull
-	@OneToMany
-	private List<Jogador> jogadores;
+	
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Jogador> jogadores ;
 
 	@OneToOne
-	@NonNull
+	
 	private Baralho baralho;
-
+	
 	@NonNull
+	@Column(name = "hash" , nullable =false )
+	String hash;
+    
+	@NonNull
+	@Column(name="dado" , length =1 , nullable = false)
+	private Integer dado;
+	
+	@NotNull
+	@Column(name="status")
 	@Builder.Default
-	private StatusEnum statusEnum = StatusEnum.NOVO;
+	private StatusEnum status = StatusEnum.NOVO;
 
 	public String generateHash() {
 		SecureRandom random = new SecureRandom();
@@ -61,16 +68,16 @@ public class Sala {
 	}
 
 	public enum StatusEnum {
-		NOVO, JOGANDO, FINALIZADO
+		NOVO, JOGANDO, FINALIZADO,AGUARDANDO 
 	}
 
 	@NonNull
 	public StatusEnum getStatusEnum() {
-		return this.statusEnum;
+		return this.status;
 	}
 
-	public void setStatusEnum(@NonNull StatusEnum statusEnum) {
-		this.statusEnum = statusEnum;
+	public void setStatusEnum(@NonNull StatusEnum status) {
+		this.status= status;
 	}
 
 

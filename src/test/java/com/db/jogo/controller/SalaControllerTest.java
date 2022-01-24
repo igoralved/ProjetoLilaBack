@@ -84,7 +84,7 @@ class SalaControllerTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
-        jogador.setListaDeCartas(new HashSet<>());
+        jogador.setCartasDoJogo(new ArrayList());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 

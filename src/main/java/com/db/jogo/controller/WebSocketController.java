@@ -52,22 +52,9 @@ public class WebSocketController {
 		return new ResponseEntity<>(sala, HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@PutMapping("/jogada/comprarcarta")
-	public ResponseEntity<?> comprarCartaDoJogo(@RequestBody Sala sala, BindingResult bindingResult) throws JogoInvalidoException {
+	public ResponseEntity<Sala> comprarCartaDoJogo(@RequestBody Sala sala, BindingResult bindingResult) throws JogoInvalidoException {
 
 		if (bindingResult.hasErrors() || sala == null || sala.getHash() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -77,7 +64,7 @@ public class WebSocketController {
 			Optional<Sala> salaParaAtualizar = this.webSocketServiceImpl.comprarCartaDoJogo(sala);
 			
 			if(salaParaAtualizar.isPresent()) {
-				return new ResponseEntity<>("salaParaAtualizar.get().getdado()", HttpStatus.OK);
+				return new ResponseEntity<Sala>(salaParaAtualizar.get(), HttpStatus.OK);
 			}
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			
