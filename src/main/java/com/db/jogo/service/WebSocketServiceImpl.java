@@ -48,11 +48,15 @@ public class WebSocketServiceImpl implements WebSocketService {
     
     
     public Optional<Sala> comprarCartaDoJogo(Sala salaFront){
+    	
     	Optional<Sala> salaParaAtualizar =  this.salaService.findSalaByHash(salaFront.getHash());
+    	
     	try {
     		
     		if(salaParaAtualizar.isPresent()) {
         		//fazer lógica do jogo e atualizar os status da sala
+    		
+    	
     	    	
     	    	Optional<Sala> salaRetornoDoSaveNoBanco = 	 Optional.ofNullable(
     	    			this.salaService.saveSala(salaParaAtualizar.get()));
@@ -69,7 +73,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		}
     	
     	
-    	return Optional.of(salaFront);
+    	return salaParaAtualizar;
     }
 
     
