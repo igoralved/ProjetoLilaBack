@@ -1,5 +1,9 @@
 package com.db.jogo.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+
 import com.db.jogo.model.*;
 import com.db.jogo.service.SalaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +47,7 @@ class SalaControllerTest {
     CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
     Sala sala = new Sala();
-
+    Integer i = 0;
     @BeforeEach
     public void init(){
         cartaInicio.setId(UUID.randomUUID());
@@ -84,7 +88,7 @@ class SalaControllerTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
-        jogador.setCartasDoJogo(new ArrayList<CartaDoJogo>());
+        jogador.setCartasDoJogo(new ArrayList<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -93,7 +97,6 @@ class SalaControllerTest {
         sala.setHash("hashpraentrar");
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
-        sala.setDado(2);
         sala.adicionarJogador(jogador);
     }
 
@@ -159,9 +162,56 @@ class SalaControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String encontrarSalaAsJSON = mapper.writeValueAsString(sala);
         this.mockMvc.perform(get("/sala/" + sala.getHash())
-                        .content(encontrarSalaAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .content(encontrarSalaAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
+    }
+
+
+
+    @Test
+    @DisplayName("Teste total Jogadores do Controller")
+    void totalJogadores() throws Exception{
+
+        Sala sala = new Sala();
+        sala.setId(UUID.randomUUID());
+        sala.setBaralho(baralho);
+        sala.setHash("hashpraentrar");
+        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+        sala.adicionarJogador(jogador);
+
+        Integer i = 0;
+        when(salaService.totalJogadores(sala.getHash())).thenReturn(i);
+        assertEquals(i, salaService.totalJogadores(sala.getHash()));
+    }
+
+
+    @Test
+    @DisplayName("Teste primeiroAJogar do Controller")
+    void primeiroAJogar() throws Exception{
+
+        Jogador jogador = new Jogador();
+
+        Sala sala = new Sala();
+        sala.setId(UUID.randomUUID());
+        sala.setBaralho(baralho);
+        sala.setHash("hashpraentrar");
+        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+        sala.adicionarJogador(jogador);
+
+
+
+        given(salaService.findFirst(sala.getHash())).willReturn(jogador);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String primeiroAJogarAsJSON = mapper.writeValueAsString(jogador);
+        this.mockMvc.perform(get("/sala/" + sala.getHash() + "/host")
+                .content(primeiroAJogarAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isFound());
     }
 }

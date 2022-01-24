@@ -1,11 +1,12 @@
 package com.db.jogo.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.repository.SalaRepository;
 
-import org.hibernate.dialect.DataDirectOracle9Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SalaServiceImpl implements SalaService {
 
-	private SalaRepository salaRepository;
+	private final SalaRepository salaRepository;
 
 	@Autowired
 	public SalaServiceImpl(SalaRepository salaRepository) {
@@ -40,12 +41,29 @@ public class SalaServiceImpl implements SalaService {
 	@Override
 	public Sala jogada(Sala sala) throws DataAccessException {
 		/*TODO: AQUI VAI A LÓGICA DO JOGO*/
-		
-		 
-		
-		
-		
 		return sala;
+	}
+
+
+	@Override
+	public Integer totalJogadores(String hash) {
+		Optional<Sala> optsala = salaRepository.findSalaByHash(hash);
+		if(optsala.isEmpty()) {
+			return 0;
+		}
+		Sala sala = optsala.get();
+		List<Jogador> lista = sala.getJogadores();
+		return lista.size();
+	}
+
+
+	@Override
+	public Jogador findFirst(String hash) {
+		Optional<Sala> sala = salaRepository.findSalaByHash(hash);
+		List<Jogador> lista = sala.get().getJogadores();
+		if(lista.isEmpty()) {
+			return null;
+		}return lista.get(0);
 	}
 }
 

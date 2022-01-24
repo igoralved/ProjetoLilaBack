@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.db.jogo.controller.SalaController;
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
@@ -46,9 +47,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         Sala sala = new Sala();
         SalaResponse salaResp = new SalaResponse();
-        Jogador savedJogador = criarJogador(jogador); //cria o jogador
-        savedJogador.setIshost(true); // seta ele como host
-        savedJogador = jogadorService.saveJogador(savedJogador); // salva o jogador no banco
+        Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
         Baralho baralho = baralhoService.findByCodigo("Clila").get();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
@@ -75,25 +74,32 @@ public class WebSocketServiceImpl implements WebSocketService {
             throw new JogoInvalidoException("Parametros nulos");
         }
         Optional<Sala> sala = salaService.findSalaByHash(hash);
-        
-        
+
+
         SalaResponse salaResp = new SalaResponse();
-        
+
         if (sala.isPresent()) {
             if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
             }
-            Jogador savedJogador = criarJogador(jogador); //cria o jogador
-            savedJogador.setIshost(false); //seta este jogador como participante (não host)
-            savedJogador = jogadorService.saveJogador(savedJogador); //salva o jogador no banco
+            Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
             sala.get().adicionarJogador(savedJogador);
             sala.get().setStatusEnum(JOGANDO);
-            
+
             salaResp.setJogador(savedJogador);
             salaResp.setSala(sala.get());
             salaService.saveSala(sala.get());
         }
         return salaResp;
+    }
+
+    public Integer getQuantidadeJogadores(String hash) {
+
+        Integer numero = salaService.totalJogadores(hash);
+        String url = "/gameplay/" + hash;
+        template.convertAndSend(url, numero);
+
+        return numero;
     }
 
 }
