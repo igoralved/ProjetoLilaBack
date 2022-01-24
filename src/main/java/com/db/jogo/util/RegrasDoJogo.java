@@ -1,10 +1,9 @@
 package com.db.jogo.util;
 
 import com.db.jogo.model.CartaDoJogo;
-import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 
-public class RegrasDoJogo {
+public abstract class RegrasDoJogo {
 
 	public static boolean validaCompraCarta(Jogador jogador, CartaDoJogo carta) {
 
