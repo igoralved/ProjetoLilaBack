@@ -38,9 +38,9 @@ public class SalaController {
         return new ResponseEntity<>(salaService.saveSala(sala), HttpStatus.CREATED);
     }
 
-    @RequestMapping("/numeroJogadores")
-    public Integer totalJogadores(String hash) {
-        return this.salaService.totalJogadores(hash);
+    @GetMapping("numeroJogadores/{hash}/")
+    public ResponseEntity<Integer> totalJogadores(@PathVariable String hash) {
+        return new ResponseEntity<>(this.salaService.totalJogadores(hash), HttpStatus.OK);
     }
 
     @GetMapping("/{hash}")
