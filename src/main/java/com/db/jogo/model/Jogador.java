@@ -35,15 +35,15 @@ public class Jogador {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "jogador_cartadojogo", joinColumns = {
-			@JoinColumn(name = "jogador_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "cartadojogo_id", referencedColumnName = "id") })
+			@JoinColumn(name = "jog_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "car_id", referencedColumnName = "id") })
 	@Builder.Default
 	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "jogador_cartaobjetivo", joinColumns = {
-			@JoinColumn(name = "jogador_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "cartaobjtivo_id", referencedColumnName = "id") })
+			@JoinColumn(name = "jog_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "car_id", referencedColumnName = "id") })
 	@Builder.Default
 	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 
@@ -65,8 +65,8 @@ public class Jogador {
 	@Column(name = "bonusCoracaoGra", length = 10, nullable = false)
 	private Integer bonusCoracaoGra;
 
-	@Column(name="isHost", nullable = false)
-	private Boolean ishost;
+	@Column(name="is_host", nullable = false)
+	private Boolean isHost;
 	
 	@Column(name = "status")
 	@Builder.Default

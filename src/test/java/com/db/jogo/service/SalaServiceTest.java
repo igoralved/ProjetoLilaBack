@@ -1,9 +1,20 @@
 package com.db.jogo.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-import com.db.jogo.model.*;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.UUID;
+
+import com.db.jogo.model.Baralho;
+import com.db.jogo.model.CartaDoJogo;
+import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.CartaObjetivo;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class SalaServiceTest {
@@ -61,7 +67,7 @@ public class SalaServiceTest {
         baralho.setCodigo("LILA");
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-        baralho.setCartaInicio(new ArrayList<>());
+        baralho.setCartasInicio(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
         baralho.setCartasDoJogo(new ArrayList<>());
         baralho.adicionarCartadoJogo(carta);
@@ -76,7 +82,7 @@ public class SalaServiceTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
-        jogador.setListaDeCartas(new HashSet<>());
+        jogador.setCartasDoJogo(new ArrayList<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -88,7 +94,7 @@ public class SalaServiceTest {
         jogador2.setBonusCoracaoPeq(1);
         jogador2.setCoracaoGra(1);
         jogador2.setCoracaoPeq(1);
-        jogador2.setListaDeCartas(new HashSet<>());
+        jogador2.setCartasDoJogo(new ArrayList<>());
         jogador2.adicionaCarta(carta);
         jogador2.adicionaObjetivo(cartaObjetivo);
 

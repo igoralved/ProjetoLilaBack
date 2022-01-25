@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.UUID;
 
 import com.db.jogo.dto.SalaRequest;
@@ -26,9 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -84,7 +81,7 @@ public class WebSocketControllerTest {
         baralho.setId(UUID.randomUUID());
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-        baralho.setCartaInicio(new ArrayList<>());
+        baralho.setCartasInicio(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
         baralho.setCartasDoJogo(new ArrayList<>());
         baralho.adicionarCartadoJogo(carta);
@@ -98,7 +95,7 @@ public class WebSocketControllerTest {
         jogador.setBonusCoracaoPeq(2);
         jogador.setCoracaoGra(5);
         jogador.setCoracaoPeq(3);
-        jogador.setListaDeCartas(new HashSet<>());
+        jogador.setCartasDoJogo(new ArrayList<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -109,7 +106,7 @@ public class WebSocketControllerTest {
         jogador2.setBonusCoracaoPeq(2);
         jogador2.setCoracaoGra(5);
         jogador2.setCoracaoPeq(3);
-        jogador2.setListaDeCartas(new HashSet<>());
+        jogador2.setCartasDoJogo(new ArrayList<>());
         jogador2.adicionaCarta(carta);
         jogador2.adicionaObjetivo(cartaObjetivo);
 

@@ -2,8 +2,6 @@ package com.db.jogo.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -36,15 +34,10 @@ public class Baralho {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-
-
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "baralho_cartadojogo", joinColumns = {
-			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "cartadojogo_id", referencedColumnName = "id") })
+	@JoinTable(name = "baralho_cartadojogo", joinColumns = @JoinColumn(name = "baralho_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "cartadojogo_id", referencedColumnName = "id"))
 	@Builder.Default
 	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
-
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "baralho_cartaobjetivo", joinColumns = {
@@ -53,7 +46,6 @@ public class Baralho {
 	@Builder.Default
 	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 
-	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "baralho_cartainicio", joinColumns = {
 			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
@@ -64,11 +56,11 @@ public class Baralho {
 	@NonNull
 	@Column(name = "codigo", length = 20, nullable = false, unique = true)
 	private String codigo;
-    
+
 	@NonNull
 	@Column(name = "titulo", length = 20, nullable = false)
 	private String titulo;
-     
+
 	@NonNull
 	@Column(name = "descricao", length = 255, nullable = false)
 	private String descricao;

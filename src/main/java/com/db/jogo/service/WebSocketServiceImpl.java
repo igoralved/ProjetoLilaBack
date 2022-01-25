@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.db.jogo.controller.SalaController;
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
+import com.db.jogo.exception.JsonInvalidoException;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -47,13 +49,17 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         Sala sala = new Sala();
         SalaResponse salaResp = new SalaResponse();
-        Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
+        Jogador savedJogador = criarJogador(jogador); // cria o jogador
+        savedJogador.setIsHost(true); // seta ele como host
+        savedJogador = jogadorService.saveJogador(savedJogador); // salva o jogador no banco
         Baralho baralho = baralhoService.findByCodigo("Clila").get();
         sala.setId(UUID.randomUUID());
+        sala.setDado(0);
         sala.setBaralho(baralho);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(savedJogador);
         sala.setHash(sala.generateHash());
+        sala.setStatus(Sala.StatusEnum.AGUARDANDO);
         salaResp.setJogador(savedJogador);
         salaResp.setSala(salaService.saveSala(sala));
         return salaResp;
@@ -75,14 +81,15 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         Optional<Sala> sala = salaService.findSalaByHash(hash);
 
-
         SalaResponse salaResp = new SalaResponse();
 
         if (sala.isPresent()) {
             if (sala.get().getStatusEnum() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
             }
-            Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
+            Jogador savedJogador = criarJogador(jogador); // cria o jogador
+            savedJogador.setIsHost(false); // seta ele como NÃO HOST
+            savedJogador = jogadorService.saveJogador(savedJogador); // salva o jogador no banco
             sala.get().adicionarJogador(savedJogador);
             sala.get().setStatusEnum(JOGANDO);
 
@@ -102,4 +109,16 @@ public class WebSocketServiceImpl implements WebSocketService {
         return numero;
     }
 
+    public void sendSala(Sala sala) throws JsonInvalidoException{
+        ObjectMapper mapper = new ObjectMapper();
+        String salaAsJSON;
+        String url = "/gameplay/game-update/" + sala.getHash();
+        try{
+            salaAsJSON = mapper.writeValueAsString(sala);
+        } catch (JsonProcessingException e){
+            throw new JsonInvalidoException("Não foi possível construir o JSON da sala.");
+        }
+        
+        template.convertAndSend(url,salaAsJSON);
+    }
 }
