@@ -21,32 +21,30 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-@Table(name="sala")
+@Table(name = "sala")
 public class Sala {
 
-    
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-	
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Jogador> jogadores ;
+	private List<Jogador> jogadores;
 
 	@OneToOne
-	
+
 	private Baralho baralho;
-	
+
 	@NonNull
-	@Column(name = "hash" , nullable =false )
+	@Column(name = "hash", nullable = false)
 	String hash;
-    
+
 	@NonNull
-	@Column(name="dado" , length =1 , nullable = false)
+	@Column(name = "dado", length = 1, nullable = false)
 	private Integer dado;
-	
+
 	@NotNull
-	@Column(name="status")
+	@Column(name = "status")
 	@Builder.Default
 	private StatusEnum status = StatusEnum.NOVO;
 
@@ -68,17 +66,7 @@ public class Sala {
 	}
 
 	public enum StatusEnum {
-		NOVO, JOGANDO, FINALIZADO,AGUARDANDO 
+		NOVO, JOGANDO, FINALIZADO, AGUARDANDO
 	}
-
-	@NonNull
-	public StatusEnum getStatusEnum() {
-		return this.status;
-	}
-
-	public void setStatusEnum(@NonNull StatusEnum status) {
-		this.status= status;
-	}
-
 
 }

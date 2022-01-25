@@ -21,7 +21,6 @@ public class SalaServiceImpl implements SalaService {
 		this.salaRepository = salaRepository;
 	}
 
-
 	@Override
 	public Optional<Sala> findSalaByHash(String hash) throws DataAccessException {
 		return salaRepository.findSalaByHash(hash);
@@ -34,21 +33,21 @@ public class SalaServiceImpl implements SalaService {
 
 	/**
 	 * Este método executa a jogada
+	 * 
 	 * @param sala - essa sala é o estado inicial do jogo
 	 * @return retorna um novo estado do jogo após a jogada computada
 	 * @throws DataAccessException
 	 */
 	@Override
 	public Sala jogada(Sala sala) throws DataAccessException {
-		/*TODO: AQUI VAI A LÓGICA DO JOGO*/
+		/* TODO: AQUI VAI A LÓGICA DO JOGO */
 		return sala;
 	}
-
 
 	@Override
 	public Integer totalJogadores(String hash) {
 		Optional<Sala> optsala = salaRepository.findSalaByHash(hash);
-		if(optsala.isEmpty()) {
+		if (optsala.isEmpty()) {
 			return 0;
 		}
 		Sala sala = optsala.get();
@@ -56,15 +55,26 @@ public class SalaServiceImpl implements SalaService {
 		return lista.size();
 	}
 
-
 	@Override
 	public Jogador findFirst(String hash) {
 		Optional<Sala> sala = salaRepository.findSalaByHash(hash);
 		List<Jogador> lista = sala.get().getJogadores();
-		if(lista.isEmpty()) {
+		if (lista.isEmpty()) {
 			return null;
-		}return lista.get(0);
+		}
+		return lista.get(0);
+	}
+
+	@Override
+	public Optional<Sala> updateSala(Sala sala) {
+		Optional<Sala> salaToUpdate = salaRepository.findSalaByHash(sala.getHash());
+
+		if (salaToUpdate.isPresent()) {
+			salaToUpdate.get().setBaralho(sala.getBaralho());
+			salaToUpdate.get().setDado(sala.getDado());
+			salaToUpdate.get().setJogadores(sala.getJogadores());
+			salaToUpdate.get().setStatus(sala.getStatus());
+		}
+		return salaToUpdate;
 	}
 }
-
-

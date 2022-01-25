@@ -13,4 +13,5 @@ public interface SalaService {
     Sala jogada(Sala sala) throws DataAccessException;
     Integer totalJogadores(String hash);
     Jogador findFirst(String hash);
+    Optional<Sala> updateSala(Sala sala);
 }

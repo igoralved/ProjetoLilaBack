@@ -84,15 +84,13 @@ public class WebSocketServiceImpl implements WebSocketService {
         SalaResponse salaResp = new SalaResponse();
 
         if (sala.isPresent()) {
-            if (sala.get().getStatusEnum() == FINALIZADO) {
+            if (sala.get().getStatus() == FINALIZADO) {
                 throw new JogoInvalidoException("Jogo ja foi finalizado");
             }
             Jogador savedJogador = criarJogador(jogador); // cria o jogador
             savedJogador.setIsHost(false); // seta ele como NÃO HOST
             savedJogador = jogadorService.saveJogador(savedJogador); // salva o jogador no banco
             sala.get().adicionarJogador(savedJogador);
-            sala.get().setStatusEnum(JOGANDO);
-
             salaResp.setJogador(savedJogador);
             salaResp.setSala(sala.get());
             salaService.saveSala(sala.get());
@@ -113,12 +111,14 @@ public class WebSocketServiceImpl implements WebSocketService {
         ObjectMapper mapper = new ObjectMapper();
         String salaAsJSON;
         String url = "/gameplay/game-update/" + sala.getHash();
+        Sala salaParaEscrever = salaService.updateSala(sala).get();
         try{
-            salaAsJSON = mapper.writeValueAsString(sala);
+            salaAsJSON = mapper.writeValueAsString(salaParaEscrever);
         } catch (JsonProcessingException e){
             throw new JsonInvalidoException("Não foi possível construir o JSON da sala.");
         }
         
         template.convertAndSend(url,salaAsJSON);
+        System.err.println("ENVIADO PARA "+url+"\n"+salaAsJSON);
     }
 }

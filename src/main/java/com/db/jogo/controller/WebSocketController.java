@@ -47,7 +47,16 @@ public class WebSocketController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Integer i = webSocketServiceImpl.getQuantidadeJogadores(request.getHash());
-        return new ResponseEntity<>(sala, HttpStatus.OK);
+        
+        try {
+            webSocketServiceImpl.sendSala(sala.getSala()); // envia a sala para o websocket
+            return new ResponseEntity<>(sala,HttpStatus.OK);
+        } catch (JsonInvalidoException e) {
+            System.err.println("Não foi possível criar o JSON da sala.");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        // return new ResponseEntity<>(sala, HttpStatus.OK);
     }
 
     @PutMapping("/iniciarPartida")
