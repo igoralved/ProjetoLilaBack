@@ -54,7 +54,7 @@ public class WebSocketController {
 	
 
 	@PutMapping("/jogada/comprarcarta")
-	public ResponseEntity<Sala> comprarCartaDoJogo(@RequestBody Sala sala, BindingResult bindingResult) throws JogoInvalidoException {
+	public ResponseEntity<?> comprarCartaDoJogo(@RequestBody Sala sala, BindingResult bindingResult) throws JogoInvalidoException {
 
 		if (bindingResult.hasErrors() || sala == null || sala.getHash() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

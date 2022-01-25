@@ -6,9 +6,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
@@ -47,12 +45,6 @@ public class WebSocketServiceImpl implements WebSocketService {
     }
     
     
-    
-    
- 
-    
-    @Async
-    @Transactional
     public Optional<Sala> comprarCartaDoJogo(Sala salaFront){
     	
     	Optional<Sala> salaParaAtualizar =  this.salaService.findSalaByHash(salaFront.getHash());
@@ -95,7 +87,8 @@ public class WebSocketServiceImpl implements WebSocketService {
     						
     						//jogador joga o dado 
     						Dado dado = new Dado();
-    						Jogador jogadorGirouDado = dado.girarDado(cartaComprada, jogadorParaAtualizar.get(), salaParaAtualizar.get() );
+    						Jogador jogadorGirouDado = 
+    								dado.girarDado(cartaComprada, jogadorParaAtualizar.get(), salaParaAtualizar.get() );
     						//jogador é atualizado conforme resultado do dado
     						jogadorParaAtualizar.get().setBonusCoracaoGra(jogadorGirouDado.getBonusCoracaoGra());
     						jogadorParaAtualizar.get().setBonusCoracaoPeq(jogadorGirouDado.getBonusCoracaoPeq());    						
@@ -114,6 +107,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     						
     						
     						salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+    						salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
     					}
     				
     					

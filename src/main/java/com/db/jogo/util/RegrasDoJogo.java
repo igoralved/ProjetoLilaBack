@@ -6,8 +6,6 @@ import com.db.jogo.model.Jogador;
 
 public abstract class RegrasDoJogo {
 	
-	
-
 
     public static Jogador descontaCoracoes(Jogador jogador, CartaDoJogo carta) {
     	

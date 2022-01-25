@@ -40,7 +40,7 @@ public  class Dado {
 		return jogadorAtualizado;
 	}
 	
-	private  static void calculaCoracao(Jogador jogador, Integer bonusCoracao){
+	private  void calculaCoracao(Jogador jogador, Integer bonusCoracao){
 		Integer totalCoracoes = validaQuantidadeCoracoes(jogador);
 		switch(bonusCoracao){
 			case -1:{
@@ -68,7 +68,7 @@ public  class Dado {
 		}
 	}
 
-	private static Jogador resultadoDoDado(String tipo, Integer dado, Jogador jogador) {
+	private Jogador resultadoDoDado(String tipo, Integer dado, Jogador jogador) {
 				// -1 = perde um coração bonus 
 			   // 0 = igual não ganha e nem perde
 			   // 1 = ganha um coração pequena 	
@@ -104,7 +104,7 @@ public  class Dado {
 		}
 			return jogador;
 	}
-	 private static Integer validaQuantidadeCoracoes( Jogador jogador){
+	 private Integer validaQuantidadeCoracoes( Jogador jogador){
 		return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
 	}
 }
