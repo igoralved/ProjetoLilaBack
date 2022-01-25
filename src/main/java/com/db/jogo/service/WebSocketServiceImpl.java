@@ -67,6 +67,10 @@ public class WebSocketServiceImpl implements WebSocketService {
     	    			if(salaParaAtualizar.get().getJogadores().get(index).getCartasDoJogo().size() < salaFront.getJogadores().get(index).getCartasDoJogo().size() ) {	
     	    				//captura qual carta o jogador comprou
     	    					cartaComprada = procuraCartaComprada(salaFront);
+    	    					
+    	    					if(cartaComprada.getTipo().equals("")) {
+    	    						return salaParaAtualizar;
+    	    					}
     	    			}
     					//fazer lógica do jogo e atualizar os status da sala
     					
@@ -99,6 +103,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     						jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO );
     						
     						this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+    						
     						if(index >= 5) {
     							salaParaAtualizar.get().getJogadores().get(0).setStatus(StatusEnumJogador.JOGANDO);
     						}else {
@@ -149,7 +154,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         Sala sala = new Sala();
         SalaResponse salaResp = new SalaResponse();
-        Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
+        Jogador savedJogador = jogadorService.saveJogador(criarPrimeiroJogador(jogador));
         Baralho baralho = baralhoService.findByCodigo("Clila").get();
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
@@ -167,23 +172,43 @@ public class WebSocketServiceImpl implements WebSocketService {
     	
     	for(Jogador jogador : sala.getJogadores()) {
 			if(jogador.getStatus() == StatusEnumJogador.JOGANDO) {
-				
-				Integer numCartaComprada = jogador.getCartasDoJogo().size() -1;
-			  cartaComprada = jogador.getCartasDoJogo().get(numCartaComprada);
+				try {
+					Integer numCartaComprada = jogador.getCartasDoJogo().size() -1;
+					if(numCartaComprada >= 0) {
+						cartaComprada = jogador.getCartasDoJogo().get(numCartaComprada);
+					}
+					return cartaComprada;
+				}catch(Exception e) {
+					return cartaComprada;
+				}
 			}
 		}
-    	
     	return cartaComprada;
+
     }
     
 
+    public Jogador criarPrimeiroJogador(Jogador jogador) {
+        jogador.setBonusCoracaoPeq(0);
+        jogador.setBonusCoracaoGra(0);
+        jogador.setCoracaoPeq(2);
+        jogador.setCoracaoGra(0);
+        jogador.setPontos(0);
+        jogador.setIshost(true);
+        jogador.setNome(jogador.getNome());
+        jogador.setStatus(StatusEnumJogador.JOGANDO);
+        return jogador;
+    }
+    
     public Jogador criarJogador(Jogador jogador) {
         jogador.setBonusCoracaoPeq(0);
         jogador.setBonusCoracaoGra(0);
         jogador.setCoracaoPeq(2);
         jogador.setCoracaoGra(0);
         jogador.setPontos(0);
+        jogador.setIshost(false);
         jogador.setNome(jogador.getNome());
+        jogador.setStatus(StatusEnumJogador.ESPERANDO);
         return jogador;
     }
     
