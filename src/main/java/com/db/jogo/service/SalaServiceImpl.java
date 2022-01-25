@@ -58,7 +58,7 @@ public class SalaServiceImpl implements SalaService {
 
 
 	@Override
-	public Jogador EncontrarPrimeiroJogador(String hash) {
+	public Jogador encontrarPrimeiro(String hash) {
 		Optional<Sala> sala = salaRepository.findSalaByHash(hash);
 		List<Jogador> lista = sala.get().getJogadores();
 		if(lista.isEmpty()) {
