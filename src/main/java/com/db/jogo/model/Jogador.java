@@ -70,10 +70,10 @@ public class Jogador {
 	
 	@Column(name = "status")
 	@Builder.Default
-	private StatusEnumJogador status = StatusEnumJogador.AGUARDANDO;
+	private StatusEnumJogador status = StatusEnumJogador.ESPERANDO ;
 
 	public enum StatusEnumJogador {
-		JOGANDO, AGUARDANDO
+		JOGANDO, ESPERANDO 
 	}
 
 	public void adicionaCarta(CartaDoJogo carta) {

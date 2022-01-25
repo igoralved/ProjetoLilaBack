@@ -5,8 +5,29 @@ import com.db.jogo.model.Jogador;
 
 
 public abstract class RegrasDoJogo {
+	
+	
 
 
+    public static Jogador descontaCoracoes(Jogador jogador, CartaDoJogo carta) {
+    	
+    	int numCoracoesGraDaCarta = carta.getValorCorGrande();
+		int numCoracoesPeqDaCarta = carta.getValorCorGrande();
+		
+		if(jogador.getBonusCoracaoPeq() > 0) {
+			numCoracoesPeqDaCarta -= jogador.getBonusCoracaoPeq();
+		}
+		if(jogador.getBonusCoracaoGra() > 0) {
+			numCoracoesGraDaCarta -= jogador.getBonusCoracaoGra();
+		}
+		if(numCoracoesGraDaCarta > 0) {
+			jogador.setCoracaoGra(jogador.getBonusCoracaoGra() - numCoracoesGraDaCarta);
+		}
+		if(numCoracoesPeqDaCarta > 0) {
+			jogador.setCoracaoPeq(jogador.getBonusCoracaoPeq() - numCoracoesPeqDaCarta);
+		}
+    	return jogador ;
+    }
     
 	public static boolean validaCompraCarta(Jogador jogador, CartaDoJogo carta) {
 		if (carta.getValorCorPequeno() >= 0) {

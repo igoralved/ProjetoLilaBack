@@ -69,12 +69,12 @@ public class WebSocketServiceImpl implements WebSocketService {
     				if(jogador.getStatus() == StatusEnumJogador.JOGANDO) {
     					
     					
-    					CartaDoJogo cartaComprada = CartaDoJogo.builder().build();
+    					CartaDoJogo cartaComprada = criarCartaDoJogo();
     					
     					//compara se a lista de carta do jogador no banco é menor que a lista que veio do front para verificar se ele comrpou uma carta
     	    			if(salaParaAtualizar.get().getJogadores().get(index).getCartasDoJogo().size() < salaFront.getJogadores().get(index).getCartasDoJogo().size() ) {	
     	    				//captura qual carta o jogador comprou
-    	    				cartaComprada = procuraCartaComprada(salaFront);
+    	    					cartaComprada = procuraCartaComprada(salaFront);
     	    			}
     					//fazer lógica do jogo e atualizar os status da sala
     					
@@ -88,41 +88,32 @@ public class WebSocketServiceImpl implements WebSocketService {
     						jogadorParaAtualizar.get().setPontos(jogadorParaAtualizar.get().getPontos()+cartaComprada.getPontos());
     						
     						//Retira os corações da carta do jogador
-    						//implementar desconto dos corações do jogador
-    						int numCoracoesGraDaCarta = cartaComprada.getValorCorGrande();
-    						int numCoracoesPeqDaCarta = cartaComprada.getValorCorGrande();
-    						
-    						if(jogador.getBonusCoracaoPeq() > 0) {
-    							numCoracoesPeqDaCarta -= jogador.getBonusCoracaoPeq();
-    						}
-    						if(jogador.getBonusCoracaoGra() > 0) {
-    							numCoracoesGraDaCarta -= jogador.getBonusCoracaoGra();
-    						}
-    						if(numCoracoesGraDaCarta > 0) {
-    							jogador.setCoracaoGra(jogador.getBonusCoracaoGra() - numCoracoesGraDaCarta);
-    						}
-    						if(numCoracoesPeqDaCarta > 0) {
-    							jogador.setCoracaoPeq(jogador.getBonusCoracaoPeq() - numCoracoesPeqDaCarta);
-    						}
+    						jogador = RegrasDoJogo.descontaCoracoes(jogador, cartaComprada);
     						
     						jogadorParaAtualizar.get().setCoracaoGra(jogador.getBonusCoracaoGra());
     						jogadorParaAtualizar.get().setCoracaoPeq(jogador.getBonusCoracaoPeq());
     						
     						//jogador joga o dado 
     						Dado dado = new Dado();
-    						Jogador jogadorDado = dado.girarDado(cartaComprada, jogadorParaAtualizar.get(), salaParaAtualizar.get() );
+    						Jogador jogadorGirouDado = dado.girarDado(cartaComprada, jogadorParaAtualizar.get(), salaParaAtualizar.get() );
     						//jogador é atualizado conforme resultado do dado
-    						jogadorParaAtualizar.get().setBonusCoracaoGra(jogadorDado.getBonusCoracaoGra());
-    						jogadorParaAtualizar.get().setBonusCoracaoPeq(jogadorDado.getBonusCoracaoPeq());    						
+    						jogadorParaAtualizar.get().setBonusCoracaoGra(jogadorGirouDado.getBonusCoracaoGra());
+    						jogadorParaAtualizar.get().setBonusCoracaoPeq(jogadorGirouDado.getBonusCoracaoPeq());    						
     						
     						//Salva a carta no jogador 
     						Optional<CartaDoJogo> cartaParaAtualizarNoJogador = this.cartaService.findById(cartaComprada.getId());
     						jogadorParaAtualizar.get().adicionaCarta(cartaParaAtualizarNoJogador.get());
-    						jogadorParaAtualizar.get().setStatus(StatusEnumJogador.AGUARDANDO);
+    						jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO );
     						
     						this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+    						if(index >= 5) {
+    							salaParaAtualizar.get().getJogadores().get(0).setStatus(StatusEnumJogador.JOGANDO);
+    						}else {
+    							salaParaAtualizar.get().getJogadores().get(index + 1).setStatus(StatusEnumJogador.JOGANDO);
+    						}
     						
-    						salaParaAtualizar.get().getJogadores().add(index, jogadorParaAtualizar.get());
+    						
+    						salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
     					}
     				
     					
@@ -200,6 +191,20 @@ public class WebSocketServiceImpl implements WebSocketService {
         jogador.setPontos(0);
         jogador.setNome(jogador.getNome());
         return jogador;
+    }
+    
+    public CartaDoJogo criarCartaDoJogo() {
+    	CartaDoJogo	carta = CartaDoJogo.builder()
+    			.bonus(false)
+    			.categoria("")
+    			.fonte("")
+    			.pontos(0)
+    			.valorCorGrande(0)
+    			.valorCorPequeno(0)
+    			.tipo("")
+    			.build();
+    	
+    	return carta;
     }
 
     public SalaResponse conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
