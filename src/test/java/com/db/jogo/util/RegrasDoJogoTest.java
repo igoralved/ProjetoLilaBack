@@ -34,7 +34,7 @@ class RegrasDoJogoTest {
 				.build();
 	}
 	@Test
-	@DisplayName("Teste valida coracoes Falso")
+	@DisplayName("Teste valida compra CartaDoJogo VERDADEIRO")
 	void testValidaCoracoesVerdadeiro() {
 		
 			boolean valida =  
@@ -43,7 +43,7 @@ class RegrasDoJogoTest {
 	}
 
 	@Test
-	@DisplayName("Teste valida coracoes FALSO")
+	@DisplayName("Teste valida compra CartaDoJogo FALSO")
 	void testValidaCoracoesFalso() {
 		jogador.setBonusCoracaoGra(0);
 		jogador.setBonusCoracaoPeq(0);
@@ -55,7 +55,7 @@ class RegrasDoJogoTest {
 	}
 	
 	@Test
-	@DisplayName("Teste valida coracoes FALSO")
+	@DisplayName("Teste valida compra CartaDoJogo FALSO")
 	void testValidaCoracoes() {
 		
 		jogador.setBonusCoracaoGra(0);
@@ -77,4 +77,19 @@ class RegrasDoJogoTest {
 		assertEquals(valida, true);
 		
 	}
+	
+	@Test
+	@DisplayName("Teste Compra CartaObjetivo coracoes FALSO")
+	void testValidaCompraCartaObjetivoFalso() {
+		jogador.setBonusCoracaoGra(0);
+		jogador.setBonusCoracaoPeq(0);
+		jogador.setCoracaoPeq(0);	
+		jogador.setCoracaoGra(0);
+		boolean valida =  
+				RegrasDoJogo.validaCompraCartaObjetivo(jogador);
+		assertEquals(valida, false);
+		
+	}
+	
+	
 }
