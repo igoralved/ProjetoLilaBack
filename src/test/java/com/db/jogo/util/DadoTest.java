@@ -1,36 +1,25 @@
 package com.db.jogo.util;
 
-import com.db.jogo.controller.BaralhoController;
-import org.junit.jupiter.api.DisplayName;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@WebAppConfiguration
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@WebMvcTest(Dado.class)
-@DisplayName("Baralho Controller Teste")
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@ExtendWith(MockitoExtension.class)
 public class DadoTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    Dado  dado = new Dado();
-    int dadoUm;
-    int dadoDois;
-    int dadoTrês;
-    int dadoQuatro;
-    int dadoCinco;
-    int dadoSeis;
+    @Mock
+    private Dado dado;
 
     @Test
-    @DisplayName("teste")
-    public void resultadoDoDado(){
-
-
+    public void verificaResultadoDoDado() throws Exception {
+        Jogador jogador = new Jogador();
+        Jogador dado = Dado.resultadoDoDado("Ação", 3, jogador);
+         assertEquals(dado, Dado.resultadoDoDado("Ação",3,jogador));
 
     }
 

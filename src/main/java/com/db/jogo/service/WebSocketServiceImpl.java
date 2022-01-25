@@ -13,6 +13,7 @@ import com.db.jogo.model.Baralho;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
+import com.db.jogo.util.Dado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     private BaralhoService baralhoService;
     private JogadorService jogadorService;
 
+
     @Autowired
     private WebSocketServiceImpl(
             SalaService salaService,
@@ -42,6 +44,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     public SalaResponse criarJogo(Jogador jogador) throws JogoInvalidoException {
         if (jogador.getNome().isEmpty()) {
+
             throw new JogoInvalidoException("dados incorretos");
         }
         Sala sala = new Sala();
