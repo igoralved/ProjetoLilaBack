@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.db.jogo.dto.SalaResponse;
+import com.db.jogo.exception.CartaCompradaInvalidaException;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaDoJogo;
@@ -52,44 +53,43 @@ public class WebSocketServiceImpl implements WebSocketService {
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
 		this.indexDoPoximoJogador = 0;
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
+		 //list<Jogador> jogadores = salaParaAtualizar.get().getJogadores();
 		
 		
 		
-		System.out.println("Aqui vai mostrar o tamanho da sala: " + salaParaAtualizar.get().getJogadores().size());
 		try {
 			// verifico se a sala existe no banco
 			if (salaParaAtualizar.isPresent()) {
 				
 				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++ ) {
-			
+					
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
 					
-
 					// verifica qual o jogador da vez
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
+						
 
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
 
 						// compara se a lista de carta do jogador no banco é menor que a lista que veio
 						// do front para verificar se ele comrpou uma carta
 						//colocar tam da lista carta do jogador == Tam Lista Carta Front -1 
-						if (salaParaAtualizar.get().getJogadores().get(index).getCartasDoJogo().size() < salaFront
-								.getJogadores().get(index).getCartasDoJogo().size()) {
+						
 							// captura qual carta o jogador comprou
 							cartaComprada = procuraCartaComprada(salaFront);
-
-							if (cartaComprada.getTipo().equals("")) {
+							System.out.println("\nAQUI MOSTRA O carta jogando: " +cartaComprada.toString() +" ::\n");
+							if (cartaComprada.getId()==null) {
 								return salaParaAtualizar;
 							}
-						}
+						
 						// fazer lógica do jogo e atualizar os status da sala
 
 						// mapeia o jogador do banco de dados
 						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
+						
 
 						// valida se o jogador pode comprar a carta
 						if (RegrasDoJogo.validaCompraCarta(this.jogador, cartaComprada)) {
-
 							// Seta os pontos da carta no jogador
 							jogadorParaAtualizar.get()
 									.setPontos(jogadorParaAtualizar.get().getPontos() + cartaComprada.getPontos());
@@ -111,20 +111,26 @@ public class WebSocketServiceImpl implements WebSocketService {
 							} else {
 								salaParaAtualizar.get().setDado(0);
 							}
+							
 							// Salva a carta no jogador
 							Optional<CartaDoJogo> cartaParaAtualizarNoJogador = this.cartaService
 									.findById(cartaComprada.getId());
+							
+			
 							jogadorParaAtualizar.get().adicionaCarta(cartaParaAtualizarNoJogador.get());
 							jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
 
 							this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
-							if(index >= salaParaAtualizar.get().getJogadores().size()){
+							
+							
+							
+							if(index >= salaParaAtualizar.get().getJogadores().size()-1){
 								this.indexDoPoximoJogador = 0;
 							}else{								
 								this.indexDoPoximoJogador = index+1;
 							}
-
+							
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
 						}
@@ -177,7 +183,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		return salaResp;
 	}
 
-	private CartaDoJogo procuraCartaComprada(Sala sala) {
+	private CartaDoJogo procuraCartaComprada(Sala sala) throws CartaCompradaInvalidaException {
 
 		CartaDoJogo cartaComprada = new CartaDoJogo();
 
@@ -190,7 +196,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 					}
 					return cartaComprada;
 				} catch (Exception e) {
-					return cartaComprada;
+				throw new CartaCompradaInvalidaException("Carta Não encontrada na base de dados");
 				}
 			}
 		}

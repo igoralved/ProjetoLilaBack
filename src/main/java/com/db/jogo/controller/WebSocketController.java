@@ -3,6 +3,7 @@ package com.db.jogo.controller;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import com.db.jogo.exception.CartaCompradaInvalidaException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.dto.SalaResponse;
+import com.db.jogo.exception.CartaCompradaInvalidaException;
 import com.db.jogo.exception.JogoInvalidoException;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
