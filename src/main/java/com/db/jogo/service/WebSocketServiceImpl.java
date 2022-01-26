@@ -66,7 +66,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		try {
 			// verifico se a sala existe no banco
 			if (salaParaAtualizar.isPresent()) {
-				
+				//AQUI  verificar status da sala, se for JOGANDO continua
 				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++ ) {
 					
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
@@ -76,15 +76,11 @@ public class WebSocketServiceImpl implements WebSocketService {
 						
 
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
-
-						// compara se a lista de carta do jogador no banco é menor que a lista que veio
-						// do front para verificar se ele comrpou uma carta
-						//colocar tam da lista carta do jogador == Tam Lista Carta Front -1 
 						
-							// captura qual carta o jogador comprou
-							cartaComprada = procuraCartaComprada(salaFront);
-							System.out.println("\nAQUI MOSTRA O carta jogando: " +cartaComprada.toString() +" ::\n");
-							if (cartaComprada.getId()==null) {
+						// captura qual carta o jogador comprou
+						cartaComprada = procuraCartaComprada(salaFront);
+						
+						if (cartaComprada.getId()==null) {
 								return salaParaAtualizar;
 							}
 						
@@ -129,8 +125,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 							this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
 							
-							
-							
 							if(index >= salaParaAtualizar.get().getJogadores().size()-1){
 								this.indexDoPoximoJogador = 0;
 							}else{								
@@ -140,7 +134,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
 						}
-
+						//AQUI add método para alterar status da sala para finalizada caso seja ultimo jogador da rodada
+						//AQUI Add método verificar pontos totais do jogador e setar status da sala para ULTIMA_RODADA "se" status da sala for JOGANDO
 						/*---*Fim da Lógica para Adicionar a Carta*----*/
 					}
 				}
