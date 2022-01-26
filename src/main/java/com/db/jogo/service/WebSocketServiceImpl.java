@@ -111,9 +111,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 							this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
 							if(index >= salaParaAtualizar.get().getJogadores().size()){
-								salaParaAtualizar.get().getJogadores().get(0).setStatus(StatusEnumJogador.JOGANDO);
-							}else{
-								salaParaAtualizar.get().getJogadores().get(index + 1).setStatus(StatusEnumJogador.JOGANDO);
+								numero = 0;
+							}else{								
+								numero = index;
 							}
 
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
@@ -124,7 +124,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 					}
 				}
 				
-			
+				salaParaAtualizar.get().getJogadores().get(numero).setStatus(StatusEnumJogador.JOGANDO);
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
 						this.salaService.saveSala(salaParaAtualizar.get()));
 
