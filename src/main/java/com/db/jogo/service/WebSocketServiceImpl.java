@@ -52,7 +52,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
 		this.indexDoPoximoJogador = 0;
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
-
+		
+		
+		
+		System.out.println("Aqui vai mostrar o tamanho da sala: " + salaParaAtualizar.get().getJogadores().size());
 		try {
 			// verifico se a sala existe no banco
 			if (salaParaAtualizar.isPresent()) {
