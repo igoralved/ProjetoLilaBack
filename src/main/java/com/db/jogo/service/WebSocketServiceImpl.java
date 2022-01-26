@@ -119,6 +119,5 @@ public class WebSocketServiceImpl implements WebSocketService {
         }
         
         template.convertAndSend(url,salaAsJSON);
-        System.err.println("ENVIADO PARA "+url+"\n"+salaAsJSON);
     }
 }
