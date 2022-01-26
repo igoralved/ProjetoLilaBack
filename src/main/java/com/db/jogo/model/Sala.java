@@ -3,6 +3,7 @@ package com.db.jogo.model;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
@@ -31,7 +32,8 @@ public class Sala {
 	
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Jogador> jogadores ;
+	@Builder.Default
+	private List<Jogador> jogadores = new ArrayList();
 
 	@OneToOne
 	

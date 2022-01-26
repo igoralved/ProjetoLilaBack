@@ -30,7 +30,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 	private BaralhoService baralhoService;
 	private JogadorService jogadorService;
 	private CartaDoJogoService cartaService;
-
+	private int indexDoPoximoJogador;
+	Jogador jogador;
+	
 	@Autowired
 	private WebSocketServiceImpl(
 			SalaService salaService,
@@ -43,27 +45,31 @@ public class WebSocketServiceImpl implements WebSocketService {
 		this.jogadorService = jogadorService;
 		this.template = template;
 		this.cartaService = cartaService;
+		this.jogador = new Jogador();
+		this.indexDoPoximoJogador = 0;
 	}
 
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
-
+		this.indexDoPoximoJogador = 0;
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
-		int numero = 0;
+
 		try {
 			// verifico se a sala existe no banco
 			if (salaParaAtualizar.isPresent()) {
-				for (int index = 0; index <= salaParaAtualizar.get().getJogadores().size(); index++ ) {
-					Jogador jogador=new Jogador();
-					jogador = salaParaAtualizar.get().getJogadores().get(index);
+				
+				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++ ) {
+			
+					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
 					
 
 					// verifica qual o jogador da vez
-					if (jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
+					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
 
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
 
 						// compara se a lista de carta do jogador no banco é menor que a lista que veio
 						// do front para verificar se ele comrpou uma carta
+						//colocar tam da lista carta do jogador == Tam Lista Carta Front -1 
 						if (salaParaAtualizar.get().getJogadores().get(index).getCartasDoJogo().size() < salaFront
 								.getJogadores().get(index).getCartasDoJogo().size()) {
 							// captura qual carta o jogador comprou
@@ -76,20 +82,20 @@ public class WebSocketServiceImpl implements WebSocketService {
 						// fazer lógica do jogo e atualizar os status da sala
 
 						// mapeia o jogador do banco de dados
-						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(jogador.getId());
+						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 
 						// valida se o jogador pode comprar a carta
-						if (RegrasDoJogo.validaCompraCarta(jogador, cartaComprada)) {
+						if (RegrasDoJogo.validaCompraCarta(this.jogador, cartaComprada)) {
 
 							// Seta os pontos da carta no jogador
 							jogadorParaAtualizar.get()
 									.setPontos(jogadorParaAtualizar.get().getPontos() + cartaComprada.getPontos());
 
 							// Retira os corações da carta do jogador
-							jogador = RegrasDoJogo.descontaCoracoes(jogador, cartaComprada);
+							this.jogador = RegrasDoJogo.descontaCoracoes(this.jogador, cartaComprada);
 
-							jogadorParaAtualizar.get().setCoracaoGra(jogador.getBonusCoracaoGra());
-							jogadorParaAtualizar.get().setCoracaoPeq(jogador.getBonusCoracaoPeq());
+							jogadorParaAtualizar.get().setCoracaoGra(this.jogador.getCoracaoGra());
+							jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
 
 							if (cartaComprada.getBonus()) {
 								// jogador joga o dado
@@ -111,9 +117,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 							this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
 							if(index >= salaParaAtualizar.get().getJogadores().size()){
-								numero = 0;
+								this.indexDoPoximoJogador = 0;
 							}else{								
-								numero = index+1;
+								this.indexDoPoximoJogador = index+1;
 							}
 
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
@@ -124,7 +130,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 					}
 				}
 				
-				salaParaAtualizar.get().getJogadores().get(numero).setStatus(StatusEnumJogador.JOGANDO);
+				salaParaAtualizar.get().getJogadores().get(this.indexDoPoximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+				
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
 						this.salaService.saveSala(salaParaAtualizar.get()));
 

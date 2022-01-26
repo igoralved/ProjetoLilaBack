@@ -10,7 +10,7 @@ public abstract class RegrasDoJogo {
     public static Jogador descontaCoracoes(Jogador jogador, CartaDoJogo carta) {
     	
     	int numCoracoesGraDaCarta = carta.getValorCorGrande();
-		int numCoracoesPeqDaCarta = carta.getValorCorGrande();
+		int numCoracoesPeqDaCarta = carta.getValorCorPequeno();
 		
 		if(jogador.getBonusCoracaoPeq() > 0) {
 			numCoracoesPeqDaCarta -= jogador.getBonusCoracaoPeq();
@@ -19,10 +19,10 @@ public abstract class RegrasDoJogo {
 			numCoracoesGraDaCarta -= jogador.getBonusCoracaoGra();
 		}
 		if(numCoracoesGraDaCarta > 0) {
-			jogador.setCoracaoGra(jogador.getBonusCoracaoGra() - numCoracoesGraDaCarta);
+			jogador.setCoracaoGra(jogador.getCoracaoGra() - numCoracoesGraDaCarta);
 		}
 		if(numCoracoesPeqDaCarta > 0) {
-			jogador.setCoracaoPeq(jogador.getBonusCoracaoPeq() - numCoracoesPeqDaCarta);
+			jogador.setCoracaoPeq(jogador.getCoracaoPeq() - numCoracoesPeqDaCarta);
 		}
     	return jogador ;
     }
