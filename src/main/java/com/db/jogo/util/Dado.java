@@ -6,14 +6,15 @@ import java.util.Random;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
-import com.db.jogo.service.JogadorService;
 import com.db.jogo.service.SalaService;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@NoArgsConstructor
 public class Dado {
 	private SalaService salaService;
 
-
+	@Autowired
 	public Dado(SalaService salaService){
 		this.salaService = salaService;
 	}
@@ -24,12 +25,11 @@ public class Dado {
 
 		Random ran = new Random();
 		if (cartaDoJogo.getBonus()) {
-			Integer dado = ran.nextInt(6) + 1;
-			jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(), sala.getDado(), jogador);
-
+			salaAdicionarDado.get().setDado(ran.nextInt(6) + 1);
+			jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(), salaAdicionarDado.get().getDado(), jogador);
+			this.salaService.saveSala(salaAdicionarDado.get());
 		}
 		return jogadorAtualizado;
-
 	}
 
 	private   static void discontaCoracao(Jogador jogador, Integer bonusCoracao) {
@@ -94,7 +94,7 @@ public class Dado {
 		}
 			return jogador;
 	}
-	 private static Integer validaQuantidadeCoracoes( Jogador jogador){
+	 public static Integer validaQuantidadeCoracoes( Jogador jogador){
 		return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
 	}
 }
