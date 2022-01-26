@@ -52,7 +52,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		try {
 			// verifico se a sala existe no banco
 			if (salaParaAtualizar.isPresent()) {
-				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++ ) {
+				for (int index = 0; index <= salaParaAtualizar.get().getJogadores().size(); index++ ) {
 					Jogador jogador=new Jogador();
 					jogador = salaParaAtualizar.get().getJogadores().get(index);
 					
@@ -113,7 +113,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							if(index >= salaParaAtualizar.get().getJogadores().size()){
 								numero = 0;
 							}else{								
-								numero = index;
+								numero = index+1;
 							}
 
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
