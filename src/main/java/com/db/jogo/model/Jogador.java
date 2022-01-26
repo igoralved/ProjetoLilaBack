@@ -65,7 +65,7 @@ public class Jogador {
 	@Column(name = "bonusCoracaoGra", length = 10, nullable = false)
 	private Integer bonusCoracaoGra;
 
-	@Column(name="isHost", nullable = false)
+	@Column(name="is_host", nullable = false)
 	private Boolean ishost;
 	
 	@Column(name = "status")

@@ -1,7 +1,8 @@
-INSERT INTO public.baralho(
+INSERT INTO baralho(
 	id, codigo, descricao, titulo)
 	VALUES ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'Clila', 'Primeiro Baralho','Corações da Lila');
-	INSERT INTO public.carta_do_jogo(id, bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
+	
+	INSERT INTO carta_do_jogo(id, bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
  Values ('d5c04bec-d0c0-414a-b160-6383c437267f','false', 'visual',  'Wikipedia', 'Deficiência visual abrange pessoas cegas e pessoas com visão reduzida', 'Definição', '0', '1','1') ,
  ('bb1ebadf-50c8-463c-8eb3-6f3998a466f3','true', 'visual', ' www.deficienteonline.com.br', 'A deficiência visual pode ser congênita ou adquirida ao longo da vida.', 'Informação', '0','2' ,'1' ),
  ('72a75c88-eb6d-4907-8e56-9ade773be768','true', 'visual', 'Wikipedia', 'Para apoio à pessoa com deficiência visual, softwares de leitura de tela  reproduzem a informação mostrada na tela do computador através de áudio.', 'Informação','0', '2', '1' ),
@@ -57,7 +58,7 @@ INSERT INTO public.baralho(
  ('fd039d09-d5d4-4eed-9a24-a6e6acff67f3','false', 'Genérica','Joyce C. S. Bastos (TCC)', 'Promova a interação e convivência de pessoas com e sem deficiência.', 'Ação', '1', '2', '3'),
  ('cbbac91b-f3f1-4780-b079-17fadb445cf9','false', 'Genérica', ' Programa de Inclusão DBServer', 'Antes da contratação, percorra as dependências da empresa com a pessoa para identificar pontos de dificuldades de acesso.', 'Ação', '2', '1', '3');
   
-  INSERT INTO public.carta_objetivo( id,categoria, classificacao, descricao, pontos)
+  INSERT INTO carta_objetivo( id,categoria, classificacao, descricao, pontos)
 	VALUES ( 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261','FISICA', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Física ao final da partida','Um dos seus
 funcionários passou a usar cadeira de rodas.','3') ,
 
@@ -92,7 +93,7 @@ funcionários.', '1'),
 ('04e501a8-e6a4-4ab5-84aa-1d76df1f62dc', 'CARTA DE INFORMAÇÃO', 'Ganhe 2 pontos se você tiver alguma carta de informação ao final da partida', 'Você é responsável pelo newsletter da empresa', '2');
   
   
-INSERT INTO public.carta_inicio(id, descricao, nome)
+INSERT INTO carta_inicio(id, descricao, nome)
 
 VALUES ('5c425302-96e8-4c79-b576-8641aed0196e','Inicia o jogo quem tiver usado um recurso de acessibilidade mais recentemente', 'RECURSO DE ACESSIBILIDADE'),
 
@@ -113,8 +114,8 @@ mais recentemente', 'CONVERSA COM DEFICIENTE RECENTE'),
 
 ('03b52ad9-474a-4499-bd8e-6a9cb9581a43','Inicia o jogo quem conversou mais recentemente com uma pessoa com deficiência, sobre algo SEM relação com deficiência', 'CONVERSA COM DEFICIENTE');
 
-  INSERT INTO public.baralho_carta_inicio(
-	baralho_id, carta_inicio_id)
+  INSERT INTO baralho_cartainicio(
+	baralho_id, cartainicio_id)
 	VALUES('a28ebdb0-d3bc-4220-9814-9a743a4d829e','5c425302-96e8-4c79-b576-8641aed0196e'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','09eb905b-2be5-4bfd-95b6-3ea1f3c4e356'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','b354be94-dc3a-445b-a981-b09bb3cef252'),
@@ -123,8 +124,9 @@ mais recentemente', 'CONVERSA COM DEFICIENTE RECENTE'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','583429a1-f727-481f-8bb0-8fd6365180b7'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','26b36506-6351-48f8-b2e3-bbb729f1e790'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','03b52ad9-474a-4499-bd8e-6a9cb9581a43');
-INSERT INTO public.baralho_cartas_do_jogo(
-	baralho_id, cartas_do_jogo_id)
+
+INSERT INTO baralho_cartadojogo(
+	baralho_id, cartadojogo_id)
 	VALUES ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'd5c04bec-d0c0-414a-b160-6383c437267f'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'bb1ebadf-50c8-463c-8eb3-6f3998a466f3'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '72a75c88-eb6d-4907-8e56-9ade773be768'),
@@ -180,8 +182,8 @@ INSERT INTO public.baralho_cartas_do_jogo(
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'fd039d09-d5d4-4eed-9a24-a6e6acff67f3'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'cbbac91b-f3f1-4780-b079-17fadb445cf9');
  
-  INSERT INTO public.baralho_cartas_objetivo(
-	baralho_id, cartas_objetivo_id)
+  INSERT INTO baralho_cartaobjetivo(
+	baralho_id, cartaobjetivo_id)
 	VALUES ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','28230274-13a0-48ac-a393-188cf38cd5e8'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','fc863629-7ee2-4bcf-b855-ef12b858bf02'),
@@ -196,20 +198,20 @@ INSERT INTO public.baralho_cartas_do_jogo(
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','c7f83c84-d8b1-454b-bdc4-526cebbd7972'),
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','04e501a8-e6a4-4ab5-84aa-1d76df1f62dc');
 
-INSERT INTO sala(id, hash, status_enum, baralho_id) values
-       ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '6g-Rg8V5', 0, 'a28ebdb0-d3bc-4220-9814-9a743a4d829e' );
+INSERT INTO sala(id, hash, status, dado,baralho_id) values
+       ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '6g-Rg8V5', 0,2, 'a28ebdb0-d3bc-4220-9814-9a743a4d829e' );
 
-INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos  ) values
-        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 0, 0, 2, 3, 'João', 5);
+INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos,status,is_host  ) values
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 0, 0, 2, 3, 'João', 5,0,'true');
 
 INSERT INTO sala_jogadores(sala_id, jogadores_id) values
         ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '01fa2624-bc16-4d3b-a1d6-6e797b47e04d');
 
-INSERT INTO jogador_lista_de_cartas ( jogador_id, lista_de_cartas_id) values
+INSERT INTO jogador_cartadojogo ( jogador_id, cartadojogo_id) values
         ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'd5c04bec-d0c0-414a-b160-6383c437267f'),
         ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', '72a75c88-eb6d-4907-8e56-9ade773be768'),
         ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'cbbac91b-f3f1-4780-b079-17fadb445cf9');
 
-INSERT INTO jogador_lista_de_objetivos( jogador_id, lista_de_objetivos_id) values
+INSERT INTO jogador_cartaobjetivo( jogador_id,cartaobjtivo_id) values
         ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261' ),
         ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', '5dc16976-9c0a-47f7-a3e4-00fa83de3c1d' );
