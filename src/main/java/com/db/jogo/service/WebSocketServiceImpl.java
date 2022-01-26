@@ -26,17 +26,18 @@ import lombok.extern.slf4j.Slf4j;
 public class WebSocketServiceImpl implements WebSocketService {
 
     private SimpMessagingTemplate template;
-    private SalaService salaService;
-    private BaralhoService baralhoService;
-    private JogadorService jogadorService;
-    private CartaDoJogoService cartaService;
+    private SalaServiceImpl salaService;
+    private BaralhoServiceImpl baralhoService;
+    private JogadorServiceImpl jogadorService;
+    private CartaDoJogoServiceImpl cartaService;
     
     @Autowired
     private WebSocketServiceImpl(
-            SalaService salaService,
-            BaralhoService baralhoService,
-            JogadorService jogadorService,
-            SimpMessagingTemplate template, CartaDoJogoService cartaService) {
+            SalaServiceImpl salaService,
+            BaralhoServiceImpl baralhoService,
+            JogadorServiceImpl jogadorService,
+            SimpMessagingTemplate template, 
+            CartaDoJogoServiceImpl cartaService) {
         this.salaService = salaService;
         this.baralhoService = baralhoService;
         this.jogadorService = jogadorService;

@@ -9,6 +9,7 @@ import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.SalaService;
+import com.db.jogo.service.SalaServiceImpl;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -17,10 +18,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public  class Dado {
 
-	private SalaService salaService;
+	private SalaServiceImpl salaService;
 	
 	 @Autowired
-	public Dado(SalaService salaService) {
+	public Dado(SalaServiceImpl salaService) {
 		this.salaService = salaService;
 	}
 	
