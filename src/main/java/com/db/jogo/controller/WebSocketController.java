@@ -69,7 +69,7 @@ public class WebSocketController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			throw new IllegalArgumentException("Jogada Não pode ser processada!! ", e);
 		}
 
 	}

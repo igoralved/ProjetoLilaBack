@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public  class Dado {
 
-	private SalaServiceImpl salaService;
+	private SalaService salaService;
 	
 	 @Autowired
-	public Dado(SalaServiceImpl salaService) {
+	public Dado(SalaService salaService) {
 		this.salaService = salaService;
 	}
 	
@@ -32,9 +32,9 @@ public  class Dado {
 		
 		Random ran = new Random();
 		if (cartaDoJogo.getBonus()) {
-			sala.setDado(ran.nextInt(6) + 1); 
+			salaAdicionarDado.get().setDado(ran.nextInt(6) + 1); 
 			
-			 jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(), sala.getDado(), jogador);
+			 jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(),salaAdicionarDado.get().getDado(), jogador);
 			 this.salaService.saveSala(salaAdicionarDado.get());
 		}
 		
