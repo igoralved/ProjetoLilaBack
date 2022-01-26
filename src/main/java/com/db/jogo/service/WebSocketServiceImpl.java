@@ -53,9 +53,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
 		this.indexDoPoximoJogador = 0;
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
-		 //list<Jogador> jogadores = salaParaAtualizar.get().getJogadores();
 		
-		
+		/*FALTA
+		 * Contar numero de pontos jogador e mudar status da sala para ultima rodada
+		 * 
+		 * Verificar Status Da Sala como JOGANDO ou última rodada
+		 * 
+		 * Refatorar para criar metodos que possam ser reutilizados
+		 * 
+		 * */
 		
 		try {
 			// verifico se a sala existe no banco
