@@ -83,7 +83,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							
 							return salaParaAtualizar;
 							
-						}else if(salaParaAtualizar.get()
+						}/*else if(salaParaAtualizar.get()
 								.getBaralho()
 								.getCartasDoJogo()
 								.contains(salaFront
@@ -93,7 +93,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 											.get(this.jogador.getCartasDoJogo().size()))) {
 							
 							return salaParaAtualizar;
-						}
+						}*/
 						// captura qual carta o jogador comprou
 						cartaComprada = procuraCartaComprada(salaFront);
 						
