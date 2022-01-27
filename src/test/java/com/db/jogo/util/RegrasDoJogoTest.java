@@ -129,7 +129,7 @@ class RegrasDoJogoTest {
 	}
 
 	@Test
-	@DisplayName("Teste jogador com oito pontos, jogo ULTIMA_RODADA")
+	@DisplayName("Teste jogador com oito pontos, status do jogo ULTIMA_RODADA")
 	void testValidaJogadorComOitoPontos() {
 		jogador.setPontos(8);
 		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
@@ -137,7 +137,7 @@ class RegrasDoJogoTest {
 	}
 	
 	@Test
-	@DisplayName("Teste jogador com menos de oito pontos, jogo NOVO")
+	@DisplayName("Teste jogador com menos de oito pontos, status do jogo NOVO")
 	void testValidaJogadorComMenosDeOitoPontos() {
 		jogador.setPontos(6);
 		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
