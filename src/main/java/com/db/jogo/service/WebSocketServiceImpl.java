@@ -31,8 +31,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 	private BaralhoService baralhoService;
 	private JogadorService jogadorService;
 	private CartaDoJogoService cartaService;
-	private int indexDoPoximoJogador;
-	Jogador jogador;
+	private int indexDoProximoJogador;
+	private Jogador jogador;
 	
 	@Autowired
 	private WebSocketServiceImpl(
@@ -47,18 +47,17 @@ public class WebSocketServiceImpl implements WebSocketService {
 		this.template = template;
 		this.cartaService = cartaService;
 		this.jogador = new Jogador();
-		this.indexDoPoximoJogador = 0;
+		this.indexDoProximoJogador = 0;
 	}
 
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
-		this.indexDoPoximoJogador = 0;
+	
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
 		
 		/*FALTA
-		 * Contar numero de pontos jogador e mudar status da sala para ultima rodada
 		 * 
-		 * Verificar Status Da Sala como JOGANDO ou última rodada
-		 * 
+		 * Verificar Status Da Sala como JOGANDO ou última rodada ou finalizado
+		 * Se for Ultima_Rodada, e o próximo jogador for ishost= true, sala deve ser finalizada
 		 * Refatorar para criar metodos que possam ser reutilizados
 		 * 
 		 * */
@@ -126,21 +125,22 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 							
 							if(index >= salaParaAtualizar.get().getJogadores().size()-1){
-								this.indexDoPoximoJogador = 0;
+								this.indexDoProximoJogador = 0;
 							}else{								
-								this.indexDoPoximoJogador = index+1;
+								this.indexDoProximoJogador = index+1;
 							}
 							
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
 						}
+						RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador,salaParaAtualizar.get());	
 						//AQUI add método para alterar status da sala para finalizada caso seja ultimo jogador da rodada
 						//AQUI Add método verificar pontos totais do jogador e setar status da sala para ULTIMA_RODADA "se" status da sala for JOGANDO
 						/*---*Fim da Lógica para Adicionar a Carta*----*/
 					}
 				}
 				
-				salaParaAtualizar.get().getJogadores().get(this.indexDoPoximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+				salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
 				
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
 						this.salaService.saveSala(salaParaAtualizar.get()));

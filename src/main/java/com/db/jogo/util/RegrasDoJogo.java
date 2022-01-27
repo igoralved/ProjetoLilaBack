@@ -2,9 +2,17 @@ package com.db.jogo.util;
 
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
+import com.db.jogo.model.Sala.StatusEnum;
 
 
 public abstract class RegrasDoJogo {
+	
+	public static void verificaJogadorSeTemOitoPontos(Jogador jogador, Sala sala) {
+        if(jogador.getPontos() >= 8) {
+            sala.setStatus(StatusEnum.ULTIMA_RODADA);
+        }
+    }
 	
 
     public static Jogador descontaCoracoes(Jogador jogador, CartaDoJogo carta) {
