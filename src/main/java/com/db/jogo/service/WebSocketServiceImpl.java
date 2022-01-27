@@ -72,7 +72,13 @@ public class WebSocketServiceImpl implements WebSocketService {
 						
 
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
-						
+						if(this.jogador.getCartasDoJogo().size() 
+								== 
+								salaFront.getJogadores().get(index).getCartasDoJogo().size()) 
+						{
+							
+							return salaParaAtualizar;
+						}
 						// captura qual carta o jogador comprou
 						cartaComprada = procuraCartaComprada(salaFront);
 						
