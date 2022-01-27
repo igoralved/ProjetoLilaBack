@@ -48,12 +48,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 	}
 
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
-	
+
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
 		
+		if(salaParaAtualizar.get().getStatus().equals(StatusEnum.FINALIZADO)) {
+			return salaParaAtualizar;
+		}
 		/*FALTA
 		 * 
-		 * Verificar Status Da Sala como JOGANDO ou última rodada ou finalizado
+		 * 
 		 * Se for Ultima_Rodada, e o próximo jogador for ishost= true, sala deve ser finalizada
 		 * Refatorar para criar metodos que possam ser reutilizados
 		 * 
@@ -79,6 +82,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 																	.get(index).getCartasDoJogo().size()) {
 							
 							return salaParaAtualizar;
+							
 						}else if(salaParaAtualizar.get()
 								.getBaralho()
 								.getCartasDoJogo()
@@ -156,6 +160,11 @@ public class WebSocketServiceImpl implements WebSocketService {
 				
 				salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
 				
+				if(salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
+					if(salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
+						salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+					}
+				}
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
 						this.salaService.saveSala(salaParaAtualizar.get()));
 
