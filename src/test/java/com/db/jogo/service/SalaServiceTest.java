@@ -84,7 +84,7 @@ public class SalaServiceTest {
         jogador.setCartasDoJogo(new ArrayList<CartaDoJogo>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
-        jogador.setStatus(StatusEnumJogador.AGUARDANDO);
+        jogador.setStatusEnum(StatusEnumJogador.AGUARDANDO);
 
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);

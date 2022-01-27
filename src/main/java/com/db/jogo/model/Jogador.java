@@ -70,7 +70,7 @@ public class Jogador {
 	
 	@Column(name = "status")
 	@Builder.Default
-	private StatusEnumJogador status = StatusEnumJogador.AGUARDANDO;
+	private StatusEnumJogador statusJ = StatusEnumJogador.AGUARDANDO;
 
 	public enum StatusEnumJogador {
 		JOGANDO, AGUARDANDO
@@ -94,11 +94,11 @@ public class Jogador {
 
 	@NonNull
 	public StatusEnumJogador getStatusEnum() {
-		return this.status;
+		return this.statusJ;
 	}
 
 	public void setStatusEnum(@NonNull StatusEnumJogador status) {
-		this.status = status;
+		this.statusJ = status;
 	}
 
 }
