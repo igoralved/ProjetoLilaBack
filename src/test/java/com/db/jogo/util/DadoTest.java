@@ -1,21 +1,19 @@
 package com.db.jogo.util;
 
+import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.mockito.Mockito.when;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.db.jogo.model.CartaDoJogo;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@DisplayName("Teste do Dado")
 class DadoTest {
 
     @MockBean
@@ -30,7 +28,6 @@ class DadoTest {
         jogador.setCoracaoPeq(2);
         jogador.setCoracaoGra(0);
 
-
         CartaDoJogo	carta = CartaDoJogo.builder()
                 .bonus(true)
                 .categoria("Ação")
@@ -41,22 +38,18 @@ class DadoTest {
                 .tipo("Ação")
                 .build();
 
-
         Sala sala = Sala.builder()
                 .hash("IZHW")
                 .dado(0)
                 .build();
 
-
-        when(dado.girarDado(carta, jogador, sala ))
-                .thenReturn(jogador);
+        when(dado.girarDado(carta, jogador, sala )).thenReturn(jogador);
         assertThat(dado.girarDado(carta, jogador, sala)).isNotNull();
         assertEquals(jogador, dado.girarDado(carta, jogador, sala));
     }
 
     @Test
-    public void  validaQuantidadeCoracoes() throws Exception{
-
+    public void  verificaQuantidaDeCoracoes() throws Exception{
 
         Jogador jogador = new Jogador();
         jogador.setBonusCoracaoGra(1);
@@ -64,9 +57,10 @@ class DadoTest {
         jogador.setCoracaoGra(1);
         jogador.setCoracaoPeq(1);
 
-        Integer resultado =Dado.validaQuantidadeCoracoes(jogador);
+        Integer resultado =Dado.quantidaDeCoracoes(jogador);
         assertEquals(4,resultado);
     }
 }
+
 
 

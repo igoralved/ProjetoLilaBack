@@ -32,9 +32,9 @@ public class Dado {
 		return jogadorAtualizado;
 	}
 
-	private   static void discontaCoracao(Jogador jogador, Integer bonusCoracao) {
+	private   static void descontaCoracao(Jogador jogador, Integer bonusCoracao) {
 
-		Integer totalCoracoes = validaQuantidadeCoracoes(jogador);
+		Integer totalCoracoes = quantidaDeCoracoes(jogador);
 		switch (bonusCoracao) {
 			case -1: {
 				if (jogador.getBonusCoracaoPeq() > 0) {
@@ -67,17 +67,17 @@ public class Dado {
 		switch (tipo) {
 			case "Ação": {
 				 if(dado==1){
-					 discontaCoracao(jogador, -1);
+					 descontaCoracao(jogador, -1);
 					return jogador;
 				 }else if (dado<=3) {
 
 			return jogador;
 				 }else if (dado==4) {
-					 discontaCoracao(jogador, 2);
+					 descontaCoracao(jogador, 2);
 				return jogador;
 				}
 				else if(dado>=5){
-					 discontaCoracao(jogador, 1);
+					 descontaCoracao(jogador, 1);
 					return jogador;
 				}
 			}
@@ -87,14 +87,14 @@ public class Dado {
 				return jogador;
 				}
 				else if(dado>=5){
-					discontaCoracao(jogador, 1);
+					descontaCoracao(jogador, 1);
 					return jogador;
 				}
 			}
 		}
 			return jogador;
 	}
-	 public static Integer validaQuantidadeCoracoes( Jogador jogador){
+	 public static Integer quantidaDeCoracoes( Jogador jogador){
 		return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
 	}
 }
