@@ -52,7 +52,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
 		
 		if(salaParaAtualizar.get().getStatus().equals(StatusEnum.FINALIZADO)) {
-			return salaParaAtualizar;
+			salaParaAtualizar.get().setDado(0);
+			return Optional.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
 		}
 		/*FALTA
 		 * 
@@ -83,7 +84,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 							
 							return salaParaAtualizar;
 							
-						}/*else if(salaParaAtualizar.get()
+						}
+						
+						/*else if(salaParaAtualizar.get()
 								.getBaralho()
 								.getCartasDoJogo()
 								.contains(salaFront
