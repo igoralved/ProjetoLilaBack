@@ -2,8 +2,9 @@ package com.db.jogo.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.UUID;
-
+import com.db.jogo.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,10 @@ class RegrasDoJogoTest {
 	
 	private CartaDoJogo carta;	
 	private Jogador jogador;
+	private CartaInicio cartaInicio = new CartaInicio();
+    private Baralho baralho = new Baralho();
+    private CartaObjetivo cartaObjetivo = new CartaObjetivo();
+    private Sala sala = new Sala();
 	
 	@BeforeEach 
 	void criaCarta () {
@@ -33,6 +38,38 @@ class RegrasDoJogoTest {
 				.coracaoPeq(2)
 				.build();
 	}
+
+	@BeforeEach
+	public void init(){
+        cartaInicio.setId(UUID.randomUUID());
+        cartaInicio.setNome("Teste");
+        cartaInicio.setDescricao("Descricao");
+
+        cartaObjetivo.setId(UUID.randomUUID());
+        cartaObjetivo.setDescricao("Texto da carta");
+        cartaObjetivo.setPontos(0);
+        cartaObjetivo.setClassificacao("Ganhe pontos");
+        cartaObjetivo.setCategoria("Física");
+
+        baralho.setId(UUID.randomUUID());
+        baralho.setCodigo("LILA");
+        baralho.setTitulo("Teste");
+        baralho.setDescricao("Exemplo");
+        baralho.setCartaInicio(new ArrayList<>());
+        baralho.adicionarCartaDoInicio(cartaInicio);
+        baralho.setCartasDoJogo(new ArrayList<>());
+        baralho.adicionarCartadoJogo(carta);
+        baralho.setCartasObjetivo(new ArrayList<>());
+        baralho.adicionarCartaDoInicio(cartaInicio);
+
+        sala.setId(UUID.randomUUID());
+        sala.setBaralho(baralho);
+        sala.setHash("hashpraentrar");
+        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+        sala.adicionarJogador(jogador);
+    }
+
 	@Test
 	@DisplayName("Teste valida compra CartaDoJogo VERDADEIRO")
 	void testValidaCoracoesVerdadeiro() {
@@ -90,6 +127,21 @@ class RegrasDoJogoTest {
 		assertEquals(valida, false);
 		
 	}
+
+	@Test
+	@DisplayName("Teste jogador com oito pontos, jogo FINALIZADO")
+	void testValidaJogadorComOitoPontos() {
+		jogador.setPontos(8);
+		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
+		assertEquals("ULTIMA_RODADA", sala.getStatusEnum().name());
+	}
 	
-	
+	@Test
+	@DisplayName("Teste jogador com menos de oito pontos, jogo JOGANDO")
+	void testValidaJogadorComMenosDeOitoPontos() {
+		jogador.setPontos(6);
+		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
+		// TODO: Aguardando método que altera status do jogo. Alterar status para JOGANDO.
+		assertEquals("NOVO", sala.getStatusEnum().name());
+	}
 }

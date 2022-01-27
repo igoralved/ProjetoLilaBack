@@ -2,6 +2,8 @@ package com.db.jogo.util;
 
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
+import com.db.jogo.model.Sala.StatusEnum;
 
 public abstract class RegrasDoJogo {
 
@@ -35,6 +37,11 @@ public abstract class RegrasDoJogo {
 		return true;
 
 	}
-	
 
+	public static void verificaJogadorSeTemOitoPontos(Jogador jogador, Sala sala) {
+		if(jogador.getPontos() >= 8) {
+			sala.setStatusEnum(StatusEnum.ULTIMA_RODADA); 
+		}
+	}
+	
 }

@@ -13,7 +13,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gameplay")
-                .setAllowedOrigins("https://dev-coracoes-da-lila.herokuapp.com")
+                .setAllowedOrigins("http://dev-coracoes-da-lila.herokuapp.com")
                 .withSockJS();
     }
 
