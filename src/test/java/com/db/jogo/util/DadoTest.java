@@ -57,7 +57,7 @@ class DadoTest {
         jogador.setCoracaoGra(1);
         jogador.setCoracaoPeq(1);
 
-        Integer resultado =Dado.quantidaDeCoracoes(jogador);
+        Integer resultado =Dado.quantidadeDeCoracoes(jogador);
         assertEquals(4,resultado);
     }
 }

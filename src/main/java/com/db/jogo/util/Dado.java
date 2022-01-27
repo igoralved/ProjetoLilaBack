@@ -1,40 +1,32 @@
 package com.db.jogo.util;
 
-import java.util.Optional;
 import java.util.Random;
 
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
-import com.db.jogo.service.SalaService;
+
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @NoArgsConstructor
 public class Dado {
-	private SalaService salaService;
 
-	@Autowired
-	public Dado(SalaService salaService){
-		this.salaService = salaService;
-	}
 
 	public Jogador  girarDado(CartaDoJogo cartaDoJogo, Jogador jogador, Sala sala) {
-		Optional<Sala> salaAdicionarDado = this.salaService.findSalaByHash(sala.getHash());
 		Jogador jogadorAtualizado = new Jogador();
 
 		Random ran = new Random();
 		if (cartaDoJogo.getBonus()) {
-			salaAdicionarDado.get().setDado(ran.nextInt(6) + 1);
-			jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(), salaAdicionarDado.get().getDado(), jogador);
-			this.salaService.saveSala(salaAdicionarDado.get());
+			sala.setDado(ran.nextInt(6) + 1);
+			jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(), sala.getDado(), jogador);
 		}
+
 		return jogadorAtualizado;
 	}
 
 	private   static void descontaCoracao(Jogador jogador, Integer bonusCoracao) {
 
-		Integer totalCoracoes = quantidaDeCoracoes(jogador);
+		Integer totalCoracoes = quantidadeDeCoracoes(jogador);
 		switch (bonusCoracao) {
 			case -1: {
 				if (jogador.getBonusCoracaoPeq() > 0) {
@@ -94,7 +86,7 @@ public class Dado {
 		}
 			return jogador;
 	}
-	 public static Integer quantidaDeCoracoes( Jogador jogador){
+	 public static Integer quantidadeDeCoracoes( Jogador jogador){
 		return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
 	}
 }
