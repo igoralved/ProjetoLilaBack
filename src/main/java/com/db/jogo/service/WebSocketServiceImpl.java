@@ -252,12 +252,12 @@ public class WebSocketServiceImpl implements WebSocketService {
 		SalaResponse salaResp = new SalaResponse();
 
 		if (sala.isPresent()) {
-			if (sala.get().getStatusEnum() == StatusEnum.FINALIZADO) {
+			if (sala.get().getStatus() == StatusEnum.FINALIZADO) {
 				throw new JogoInvalidoException("Jogo ja foi finalizado");
 			}
 			Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
 			sala.get().adicionarJogador(savedJogador);
-			sala.get().setStatusEnum(StatusEnum.JOGANDO);
+			sala.get().setStatus(StatusEnum.JOGANDO);
 
 			salaResp.setJogador(savedJogador);
 			salaResp.setSala(sala.get());

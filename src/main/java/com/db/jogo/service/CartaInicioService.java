@@ -1,12 +1,12 @@
 package com.db.jogo.service;
 
-import com.db.jogo.model.CartaInicio;
-import org.springframework.dao.DataAccessException;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.dao.DataAccessException;
+
+import com.db.jogo.model.CartaInicio;
 
 public interface CartaInicioService {
 

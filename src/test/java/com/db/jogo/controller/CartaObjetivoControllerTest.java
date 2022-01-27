@@ -1,14 +1,12 @@
 package com.db.jogo.controller;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import com.db.jogo.model.CartaObjetivo;
-import com.db.jogo.service.CartaObjetivoServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,11 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.db.jogo.model.CartaObjetivo;
+import com.db.jogo.service.CartaObjetivoServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

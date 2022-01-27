@@ -1,9 +1,13 @@
 package com.db.jogo.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-import com.db.jogo.model.*;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +16,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.UUID;
+import com.db.jogo.model.Baralho;
+import com.db.jogo.model.CartaDoJogo;
+import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.CartaObjetivo;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
 
 @ExtendWith(MockitoExtension.class)
 public class SalaServiceTest {
@@ -77,7 +83,7 @@ public class SalaServiceTest {
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
-        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+        sala.setStatus(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
     }
