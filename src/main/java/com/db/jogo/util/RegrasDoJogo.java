@@ -52,6 +52,21 @@ public abstract class RegrasDoJogo {
 			return true;
 	}
 	
+	public static Jogador adicionaCoracoesPequenos (Jogador jogador) {
+	
+		 int coracaoPequenos = 2;
+		 
+		 if(Dado.quantidaDeCoracoes(jogador) < 5) {
+			 coracaoPequenos += Dado.quantidaDeCoracoes(jogador);
+			 						 
+		 }
+			
+		
+		return jogador;
+		
+	}
+	
+	// metodo para coracoes grande 
 	
 	public static boolean validaCompraCartaObjetivo(Jogador jogador) {
 

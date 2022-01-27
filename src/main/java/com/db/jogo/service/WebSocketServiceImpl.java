@@ -33,14 +33,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 	private CartaDoJogoService cartaService;
 	private int indexDoProximoJogador;
 	private Jogador jogador;
-	
+
 	@Autowired
-	private WebSocketServiceImpl(
-			SalaService salaService,
-			BaralhoService baralhoService,
-			JogadorService jogadorService,
-			SimpMessagingTemplate template,
-			CartaDoJogoService cartaService) {
+	private WebSocketServiceImpl(SalaService salaService, BaralhoService baralhoService, JogadorService jogadorService,
+			SimpMessagingTemplate template, CartaDoJogoService cartaService) {
 		this.salaService = salaService;
 		this.baralhoService = baralhoService;
 		this.jogadorService = jogadorService;
@@ -51,43 +47,42 @@ public class WebSocketServiceImpl implements WebSocketService {
 	}
 
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
-	
+
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
-		
-		/*FALTA
+
+		/*
+		 * FALTA
 		 * 
-		 * Verificar Status Da Sala como JOGANDO ou última rodada ou finalizado
-		 * Se for Ultima_Rodada, e o próximo jogador for ishost= true, sala deve ser finalizada
+		 * Verificar Status Da Sala como JOGANDO ou última rodada ou finalizado Se for
+		 * Ultima_Rodada, e o próximo jogador for ishost= true, sala deve ser finalizada
 		 * Refatorar para criar metodos que possam ser reutilizados
 		 * 
-		 * */
-		
+		 */
+
 		try {
 			// verifico se a sala existe no banco
 			if (salaParaAtualizar.isPresent()) {
-				//AQUI  verificar status da sala, se for JOGANDO continua
-				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++ ) {
-					
+				// AQUI verificar status da sala, se for JOGANDO continua
+				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
+
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
-					
+
 					// verifica qual o jogador da vez
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-						
 
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
-						
+
 						// captura qual carta o jogador comprou
 						cartaComprada = procuraCartaComprada(salaFront);
-						
-						if (cartaComprada.getId()==null) {
-								return salaParaAtualizar;
-							}
-						
+
+						if (cartaComprada.getId() == null) {
+							return salaParaAtualizar;
+						}
+
 						// fazer lógica do jogo e atualizar os status da sala
 
 						// mapeia o jogador do banco de dados
 						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
-						
 
 						// valida se o jogador pode comprar a carta
 						if (RegrasDoJogo.validaCompraCarta(this.jogador, cartaComprada)) {
@@ -112,44 +107,43 @@ public class WebSocketServiceImpl implements WebSocketService {
 							} else {
 								salaParaAtualizar.get().setDado(0);
 							}
-							
+
 							// Salva a carta no jogador
 							Optional<CartaDoJogo> cartaParaAtualizarNoJogador = this.cartaService
 									.findById(cartaComprada.getId());
-							
-			
+
 							jogadorParaAtualizar.get().adicionaCarta(cartaParaAtualizarNoJogador.get());
 							jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
 
 							this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
-							
-							if(index >= salaParaAtualizar.get().getJogadores().size()-1){
+							if (index >= salaParaAtualizar.get().getJogadores().size() - 1) {
 								this.indexDoProximoJogador = 0;
-							}else{								
-								this.indexDoProximoJogador = index+1;
+							} else {
+								this.indexDoProximoJogador = index + 1;
 							}
-							
+
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
 						}
-						RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador,salaParaAtualizar.get());	
-						//AQUI add método para alterar status da sala para finalizada caso seja ultimo jogador da rodada
-						//AQUI Add método verificar pontos totais do jogador e setar status da sala para ULTIMA_RODADA "se" status da sala for JOGANDO
+						RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador, salaParaAtualizar.get());
+						// AQUI add método para alterar status da sala para finalizada caso seja ultimo
+						// jogador da rodada
+						// AQUI Add método verificar pontos totais do jogador e setar status da sala
+						// para ULTIMA_RODADA "se" status da sala for JOGANDO
 						/*---*Fim da Lógica para Adicionar a Carta*----*/
 					}
 				}
-				
-				salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
-				
-				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
-						this.salaService.saveSala(salaParaAtualizar.get()));
+
+				salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador)
+						.setStatus(StatusEnumJogador.JOGANDO);
+
+				Optional<Sala> salaRetornoDoSaveNoBanco = Optional
+						.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
 
 				// envia a sala para todos os jogadores conectados a sala
 				if (salaRetornoDoSaveNoBanco.isPresent()) {
-					this.template.convertAndSend(
-							"URL/" + salaRetornoDoSaveNoBanco
-									.get().getHash(),
+					this.template.convertAndSend("URL/" + salaRetornoDoSaveNoBanco.get().getHash(),
 							salaRetornoDoSaveNoBanco.get());
 					// retorna sala que foi salva no banco
 					return salaRetornoDoSaveNoBanco;
@@ -197,7 +191,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 					}
 					return cartaComprada;
 				} catch (Exception e) {
-				throw new CartaCompradaInvalidaException("Carta Não encontrada na base de dados");
+					throw new CartaCompradaInvalidaException("Carta Não encontrada na base de dados");
 				}
 			}
 		}
@@ -230,19 +224,72 @@ public class WebSocketServiceImpl implements WebSocketService {
 	}
 
 	public CartaDoJogo criarCartaDoJogo() {
-		CartaDoJogo carta = CartaDoJogo.builder()
-				.bonus(false)
-				.categoria("")
-				.fonte("")
-				.pontos(0)
-				.valorCorGrande(0)
-				.valorCorPequeno(0)
-				.tipo("")
-				.build();
+		CartaDoJogo carta = CartaDoJogo.builder().bonus(false).categoria("").fonte("").pontos(0).valorCorGrande(0)
+				.valorCorPequeno(0).tipo("").build();
 
 		return carta;
 	}
 
+	
+     public Optional<Sala> compraCoracoesPequenos(Sala salaFront) throws IllegalArgumentException {
+
+		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
+		
+		try {
+			
+			if (salaParaAtualizar.isPresent()) {
+				
+				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
+
+					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
+
+					
+					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
+						
+					   RegrasDoJogo.adicionaCoracoesPequenos(jogador); 
+					
+					
+					}
+					
+					Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
+
+					jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
+		
+		
+					Optional<Jogador> atualizarOCoracaoPequeno = this.jogadorService
+							.findById(jogador.getId());
+
+					
+					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
+
+					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+
+					if (index >= salaParaAtualizar.get().getJogadores().size() - 1) {
+						this.indexDoProximoJogador = 0;
+					} else {
+						this.indexDoProximoJogador = index + 1;
+					}
+
+					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+					
+					
+					
+				}
+		}
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Coração não pode ser comprado!! ", e);
+		}
+
+		return salaParaAtualizar;
+	}		
+		
+		
+	//CORAÇÃO GRANDE
+		
+	
+	
+	
+	
 	public SalaResponse conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
 		if (jogador == null || hash == null) {
 			throw new JogoInvalidoException("Parametros nulos");

@@ -73,7 +73,28 @@ public class WebSocketController {
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Jogada Não pode ser processada!! ", e);
 		}
+	}
 
+		@PutMapping("/jogada/comprarcoracoapequeno")
+		public ResponseEntity<?> comprarCoracoaPequeno(@RequestBody Sala sala, BindingResult bindingResult) throws JogoInvalidoException {
+
+			if (bindingResult.hasErrors() || sala == null || sala.getHash() == null) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+
+			try {
+				Optional<Sala> salaParaAtualizar = this.webSocketServiceImpl.compraCoracoesPequenos(sala);
+				
+	
+				if(salaParaAtualizar.isPresent()) {
+					return new ResponseEntity<Sala>(salaParaAtualizar.get(), HttpStatus.OK);
+				}
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				
+			} catch (IllegalArgumentException e) {
+				throw new IllegalArgumentException("Jogada Não pode ser processada!! ", e);
+			}
+		
 	}
 	
 	

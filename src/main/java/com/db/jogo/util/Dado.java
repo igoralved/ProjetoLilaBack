@@ -87,6 +87,6 @@ public class Dado {
 			return jogador;
 	}
 	 public static Integer quantidaDeCoracoes( Jogador jogador){
-		return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
+				return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
 	}
 }

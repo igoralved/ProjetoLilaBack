@@ -10,7 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import org.springframework.lang.NonNull;
 
 import lombok.AllArgsConstructor;
@@ -23,33 +27,44 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
+@Table(name = "baralho")
 public class Baralho {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@NonNull
-	@Column
-	private String codigo;
-
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "baralho_cartadojogo", joinColumns = {
+			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "cartadojogo_id", referencedColumnName = "id") })
 	@Builder.Default
 	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "baralho_cartaobjetivo", joinColumns = {
+			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "cartaobjetivo_id", referencedColumnName = "id") })
 	@Builder.Default
 	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "baralho_cartainicio", joinColumns = {
+			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "cartainicio_id", referencedColumnName = "id") })
 	@Builder.Default
-	private List<CartaInicio> cartaInicio = new ArrayList<>();
+	private List<CartaInicio> cartasInicio = new ArrayList<>();
 
 	@NonNull
-	@Column(name = "titulo", nullable = false)
+	@Column(name = "codigo", length = 20, nullable = false, unique = true)
+	private String codigo;
+
+	@NonNull
+	@Column(name = "titulo", length = 20, nullable = false)
 	private String titulo;
 
-	@Column(name = "descricao", nullable = false)
+	@NonNull
+	@Column(name = "descricao", length = 255, nullable = false)
 	private String descricao;
 
 	public void adicionarCartadoJogo(CartaDoJogo cartaDoJogo) {
@@ -69,11 +84,11 @@ public class Baralho {
 	}
 
 	public void adicionarCartaDoInicio(CartaInicio cartaInicio) {
-		this.cartaInicio.add(cartaInicio);
+		this.cartasInicio.add(cartaInicio);
 	}
 
 	public boolean removerCartaDoInicio(CartaInicio cartaInicio) {
-		return this.cartaInicio.remove(cartaInicio);
+		return this.cartasInicio.remove(cartaInicio);
 	}
 
 }
