@@ -20,9 +20,6 @@ import com.db.jogo.model.Sala.StatusEnum;
 import com.db.jogo.util.Dado;
 import com.db.jogo.util.RegrasDoJogo;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class WebSocketServiceImpl implements WebSocketService {
 
