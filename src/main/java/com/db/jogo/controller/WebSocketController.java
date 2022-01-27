@@ -38,7 +38,7 @@ public class WebSocketController {
         return new ResponseEntity<>(sala, HttpStatus.OK);
     }
 
-    @PostMapping("/conectar")
+    @PutMapping("/conectar")
     public ResponseEntity<SalaResponse> conectar(@RequestBody SalaRequest request) throws JogoInvalidoException {
         log.info("Requisição da conexão: {}", request);
         SalaResponse sala = webSocketServiceImpl.conectarJogo(request.getJogador(), request.getHash());
@@ -55,15 +55,13 @@ public class WebSocketController {
             System.err.println("Não foi possível criar o JSON da sala.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        // return new ResponseEntity<>(sala, HttpStatus.OK);
     }
 
-    @PutMapping("/iniciarPartida")
-    public ResponseEntity<Sala> updateSala(@RequestBody @Valid Sala sala) {
+    @PutMapping("/iniciarpartida")
+    public ResponseEntity<Sala> updateSala(@RequestBody Sala sala) {
         try {
             webSocketServiceImpl.sendSala(sala); // envia a sala para o websocket
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(sala,HttpStatus.OK);
         } catch (JsonInvalidoException e) {
             System.err.println("Não foi possível criar o JSON da sala.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
