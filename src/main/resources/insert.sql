@@ -206,8 +206,14 @@ INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, corac
 
 INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos,status,is_host  ) values
         ('0accbbfb-075a-4e55-8fb5-3debe5813c0a', 0, 0, 1, 2, 'Pedro', 5, 1 ,'false');
+        
+INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos,status,is_host  ) values
+        ('2a7178c6-2a2f-447d-b005-03cf9330ee47', 0, 0, 2, 2, 'Anderson', 5, 1 ,'false');
 
 INSERT INTO sala_jogadores(sala_id, jogadores_id) values
+        ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '2a7178c6-2a2f-447d-b005-03cf9330ee47');
+        
+ INSERT INTO sala_jogadores(sala_id, jogadores_id) values
         ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '01fa2624-bc16-4d3b-a1d6-6e797b47e04d');
 
 INSERT INTO sala_jogadores(sala_id, jogadores_id) values
