@@ -72,11 +72,11 @@ public class Sala {
 	}
 
 	@NonNull
-	public StatusEnum getStatusEnum() {
+	public StatusEnum getStatus() {
 		return this.status;
 	}
 
-	public void setStatusEnum(@NonNull StatusEnum status) {
+	public void setStatus(@NonNull StatusEnum status) {
 		this.status= status;
 	}
 
