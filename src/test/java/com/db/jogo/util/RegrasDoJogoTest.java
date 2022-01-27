@@ -129,7 +129,7 @@ class RegrasDoJogoTest {
 	}
 
 	@Test
-	@DisplayName("Teste jogador com oito pontos, jogo FINALIZADO")
+	@DisplayName("Teste jogador com oito pontos, status jogo ULTIMA_RODADA")
 	void testValidaJogadorComOitoPontos() {
 		jogador.setPontos(8);
 		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
