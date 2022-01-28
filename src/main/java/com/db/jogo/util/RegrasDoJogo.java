@@ -57,7 +57,8 @@ public abstract class RegrasDoJogo {
 		 int coracaoPequenos = 2;
 		 
 		 if(Dado.quantidaDeCoracoes(jogador) < 4) {
-			 coracaoPequenos += Dado.quantidaDeCoracoes(jogador);
+			
+			jogador.setCoracaoPeq(coracaoPequenos+= jogador.getCoracaoPeq());
 			 						 
 		 }
 			

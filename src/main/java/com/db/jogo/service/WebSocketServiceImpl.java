@@ -158,6 +158,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 		return salaParaAtualizar;
 	}
+	
 
 	public SalaResponse criarJogo(Jogador jogador) throws JogoInvalidoException {
 		if (jogador.getNome().isEmpty()) {
@@ -230,36 +231,29 @@ public class WebSocketServiceImpl implements WebSocketService {
 		return carta;
 	}
 
-	
-     public Optional<Sala> compraCoracoesPequenos(Sala salaFront) throws IllegalArgumentException {
+	// Compra coração pequeno
+	public Optional<Sala> compraCoracoesPequenos(Sala salaFront) throws IllegalArgumentException {
 
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
-		
+
 		try {
-			
+
 			if (salaParaAtualizar.isPresent()) {
-				
+
 				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
 
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
 
-					
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-						
-					   RegrasDoJogo.adicionaCoracoesPequenos(jogador); 
-					
-					
+
+						RegrasDoJogo.adicionaCoracoesPequenos(jogador);
+
 					}
-					
+
 					Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 
 					jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
-		
-		
-					Optional<Jogador> atualizarOCoracaoPequeno = this.jogadorService
-							.findById(jogador.getId());
 
-					
 					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
 
 					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
@@ -271,17 +265,28 @@ public class WebSocketServiceImpl implements WebSocketService {
 					}
 
 					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
-					
-					
-					
+
 				}
-		}
+			}
+			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+
+			Optional<Sala> salaRetornoDoSaveNoBanco = Optional
+					.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
+
+					if (salaRetornoDoSaveNoBanco.isPresent()) {
+				this.template.convertAndSend("URL/" + salaRetornoDoSaveNoBanco.get().getHash(),
+						salaRetornoDoSaveNoBanco.get());
+				
+				return salaRetornoDoSaveNoBanco;
+
+			}
+
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Coração não pode ser comprado!! ", e);
 		}
 
 		return salaParaAtualizar;
-	}		
+	}
 		
 		
 	//CORAÇÃO GRANDE
