@@ -329,6 +329,12 @@ public class WebSocketServiceImpl implements WebSocketService {
  		}
  			
  			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+ 			
+ 			if(salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
+				if(salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
+					salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+				}
+			}
 
             Optional<Sala> salaRetornoDoSaveNoBanco = Optional
                     .ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
