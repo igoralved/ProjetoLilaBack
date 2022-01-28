@@ -97,7 +97,9 @@ public class WebSocketControllerTest {
         jogador.setBonusCoracaoPeq(2);
         jogador.setCoracaoGra(5);
         jogador.setCoracaoPeq(3);
-        jogador.setCartasDoJogo(new ArrayList());
+
+        jogador.setCartasDoJogo(new ArrayList<>());
+
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -108,14 +110,19 @@ public class WebSocketControllerTest {
         jogador2.setBonusCoracaoPeq(2);
         jogador2.setCoracaoGra(5);
         jogador2.setCoracaoPeq(3);
-        jogador2.setCartasDoJogo(new ArrayList());
+
+        jogador2.setCartasDoJogo(new ArrayList<>());
+
         jogador2.adicionaCarta(carta);
         jogador2.adicionaObjetivo(cartaObjetivo);
 
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
-        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+
+ 
+        sala.setStatus(Sala.StatusEnum.NOVO);
+
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
 

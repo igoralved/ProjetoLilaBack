@@ -1,11 +1,21 @@
 package com.db.jogo.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.TreeSet;
 import java.util.UUID;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.dto.SalaResponse;
@@ -17,12 +27,8 @@ import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+
+
 
 @ExtendWith(MockitoExtension.class)
 public class WebSocketServiceTest {
@@ -66,11 +72,13 @@ public class WebSocketServiceTest {
         baralho.setId(UUID.randomUUID());
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-        baralho.setCartasInicio(new ArrayList<>());
+
+        baralho.setCartasInicio(new ArrayList<CartaInicio>());
         baralho.adicionarCartaDoInicio(cartaInicio);
-        baralho.setCartasDoJogo(new ArrayList<>());
+        baralho.setCartasDoJogo(new ArrayList<CartaDoJogo>());
         baralho.adicionarCartadoJogo(carta);
-        baralho.setCartasObjetivo(new ArrayList<>());
+        baralho.setCartasObjetivo(new ArrayList<CartaObjetivo>());
+
         baralho.adicionarCartaDoInicio(cartaInicio);
 
         jogador.setId(UUID.randomUUID());
@@ -96,8 +104,10 @@ public class WebSocketServiceTest {
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
-        sala.setStatusEnum(Sala.StatusEnum.NOVO);
-        sala.setJogadores(new ArrayList<>());
+
+        sala.setStatus(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<Jogador>());
+
         sala.adicionarJogador(jogador);
 
         salaRequest.setHash("hashpraentrar");

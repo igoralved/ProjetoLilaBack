@@ -3,7 +3,6 @@ package com.db.jogo.model;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
@@ -32,8 +31,7 @@ public class Sala {
 	
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@Builder.Default
-	private List<Jogador> jogadores = new ArrayList();
+	private List<Jogador> jogadores ;
 
 	@OneToOne
 	
@@ -70,7 +68,7 @@ public class Sala {
 	}
 
 	public enum StatusEnum {
-		NOVO, JOGANDO, FINALIZADO,AGUARDANDO , ULTIMA_RODADA
+		NOVO, JOGANDO, FINALIZADO,AGUARDANDO ,ULTIMA_JOGADA
 	}
 
 	@NonNull

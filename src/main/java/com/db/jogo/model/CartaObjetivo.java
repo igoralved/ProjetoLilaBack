@@ -9,13 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import lombok.NonNull;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 @Entity
+
+@Table(name = "carta_objetivo")
 
 public class CartaObjetivo {
 
@@ -23,19 +23,16 @@ public class CartaObjetivo {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@NonNull
-	@Column(name = "classificacao")
+	@Column(name = "classificacao", length = 255, nullable = false)
 	private String classificacao;
 
-	@NonNull
-	@Column(name = "pontos")
+	@Column(name = "pontos", length = 10, nullable = false)
 	private Integer pontos;
 
-	@NonNull
-	@Column(name = "categoria")
+	@Column(name = "categoria", length = 80, nullable = false)
 	private String categoria;
 
-	@NonNull
-	@Column(name = "descricao")
+	@Column(name = "descricao", length = 255, nullable = false)
+
 	private String descricao;
 }

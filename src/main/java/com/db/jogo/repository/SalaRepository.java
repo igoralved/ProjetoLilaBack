@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SalaRepository extends CrudRepository<Sala, UUID> {
     Optional<Sala> findSalaByHash(String hash) throws DataAccessException;
+
 }

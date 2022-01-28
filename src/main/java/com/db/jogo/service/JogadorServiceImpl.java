@@ -49,7 +49,8 @@ public class JogadorServiceImpl implements JogadorService {
 				jogadorParaAtualizar.get().setCartasObjetivo(jogador.getCartasObjetivo());
 				jogadorParaAtualizar.get().setNome(jogador.getNome());
 				jogadorParaAtualizar.get().setPontos(jogador.getPontos());
-			
+
+
 				Optional<Jogador> jogadorRetonadoDoSaveDoBanco = Optional.ofNullable(
 						jogadorRepository.save(
 						jogadorParaAtualizar.get()
