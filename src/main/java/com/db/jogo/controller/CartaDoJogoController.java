@@ -58,7 +58,6 @@ public class CartaDoJogoController {
 			return new ResponseEntity<CartaDoJogo>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<CartaDoJogo>(cartaInicio.get(), HttpStatus.OK);
-
 	}
 
 }
