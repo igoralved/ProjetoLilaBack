@@ -1,17 +1,19 @@
 package com.db.jogo.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,61 +26,80 @@ import lombok.NonNull;
 @Builder
 @Data
 @Entity
+@Table(name = "jogador")
 public class Jogador {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "jogador_cartadojogo", joinColumns = {
+			@JoinColumn(name = "jogador_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "cartadojogo_id", referencedColumnName = "id") })
+	@Builder.Default
+	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
 
-    @NonNull
-    @Column( name ="nome")
-    private String nome;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "jogador_cartaobjetivo", joinColumns = {
+			@JoinColumn(name = "jogador_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "cartaobjtivo_id", referencedColumnName = "id") })
+	@Builder.Default
+	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Builder.Default
-    private Set<CartaDoJogo> listaDeCartas =  new HashSet<>();
+	@Column(name = "nome", length = 30, nullable = false)
+	private String nome;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Builder.Default
-    private  Set<CartaObjetivo> listaDeObjetivos = new HashSet<>();
+	@Column(name = "pontos", length = 20, nullable = false)
+	private Integer pontos;
 
-    @NonNull
-    @Column( name ="pontos")
-    private Integer pontos;
+	@Column(name = "coracaoPeq", length = 20, nullable = false)
+	private Integer coracaoPeq;
 
-    @NonNull
-    @Column( name ="coracaoPeq")
-    private Integer coracaoPeq;
+	@Column(name = "coracaoGra", length = 20, nullable = false)
+	private Integer coracaoGra;
 
-    @NonNull
-    @Column( name ="coracaoGra")
-    private Integer coracaoGra;
+	@Column(name = "bonusCoracaoPeq", length = 10, nullable = false)
+	private Integer bonusCoracaoPeq;
 
-    @NonNull
-    @Column( name ="bonusCoracaoPeq")
-    private Integer bonusCoracaoPeq;
+	@Column(name = "bonusCoracaoGra", length = 10, nullable = false)
+	private Integer bonusCoracaoGra;
 
-    @NonNull
-    @Column( name ="bonusCoracaoGra")
-    private Integer bonusCoracaoGra;
+	@Column(name="is_host", nullable = false)
+	private Boolean ishost;
+	
+	@Column(name = "status")
+	@Builder.Default
+	private StatusEnumJogador status = StatusEnumJogador.ESPERANDO ;
 
+	public enum StatusEnumJogador {
+		JOGANDO, ESPERANDO 
+	}
 
-    public void adicionaCarta(CartaDoJogo carta) {
-        this.listaDeCartas.add(carta);
-    }
+	public void adicionaCarta(CartaDoJogo carta) {
+		this.cartasDoJogo.add(carta);
+	}
 
-    public void removeCarta(CartaDoJogo carta) {
-        this.listaDeCartas.remove(carta);
-    }
+	public void removeCarta(CartaDoJogo carta) {
+		this.cartasDoJogo.remove(carta);
+	}
 
-    public void adicionaObjetivo(CartaObjetivo carta) {
-        this.listaDeObjetivos.add(carta);
-    }
+	public void adicionaObjetivo(CartaObjetivo carta) {
+		this.cartasObjetivo.add(carta);
+	}
 
-    public void removeObjetivo(CartaObjetivo carta) {
-        this.listaDeObjetivos.remove(carta);
-    }
+	public void removeObjetivo(CartaObjetivo carta) {
+		this.cartasObjetivo.remove(carta);
+	}
+
+	@NonNull
+	public StatusEnumJogador getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(@NonNull StatusEnumJogador status) {
+		this.status = status;
+	}
+
 }
-
 
