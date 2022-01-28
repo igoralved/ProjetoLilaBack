@@ -50,12 +50,14 @@ public class JogadorServiceImpl implements JogadorService {
 				jogadorParaAtualizar.get().setNome(jogador.getNome());
 				jogadorParaAtualizar.get().setPontos(jogador.getPontos());
 
+
 				Optional<Jogador> jogadorRetonadoDoSaveDoBanco = Optional.ofNullable(
 						jogadorRepository.save(
 						jogadorParaAtualizar.get()
 						));  
 				return jogadorRetonadoDoSaveDoBanco;
 				
+
 			}
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Impossível fazer atualização do objeto passado! ", e);

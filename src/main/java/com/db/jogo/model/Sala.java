@@ -32,9 +32,7 @@ public class Sala {
 	
 	
 	@OneToMany(cascade = CascadeType.ALL)
-
 	private List<Jogador> jogadores ;
-
 
 	@OneToOne
 	
@@ -74,6 +72,7 @@ public class Sala {
 
 		NOVO, JOGANDO, FINALIZADO,AGUARDANDO ,ULTIMA_JOGADA
 
+
 	}
 
 	@NonNull
@@ -85,5 +84,5 @@ public class Sala {
 		this.status= status;
 	}
 
-
 }
+

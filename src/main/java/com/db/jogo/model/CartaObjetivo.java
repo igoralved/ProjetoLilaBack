@@ -20,13 +20,15 @@ import lombok.NonNull;
 @Entity
 
 
-@Table(name = "carta_objetivo")
+
+
+@Table(name="carta_objetivo")
+
 public class CartaObjetivo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-
 
 	@Column(name = "classificacao", length = 255, nullable = false)
 	private String classificacao;
@@ -40,4 +42,5 @@ public class CartaObjetivo {
 	@Column(name = "descricao", length = 255, nullable = false)
 
   private String descricao;
+
 }

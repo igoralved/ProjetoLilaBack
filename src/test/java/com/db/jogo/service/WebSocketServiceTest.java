@@ -1,24 +1,5 @@
 package com.db.jogo.service;
 
-<<<<<<< HEAD
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.UUID;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-=======
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
->>>>>>> origin/US055/US059-compra-um-coracao-grande
 import com.db.jogo.dto.SalaRequest;
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.JogoInvalidoException;
@@ -37,17 +17,12 @@ import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
 import com.db.jogo.model.Sala;
 
-<<<<<<< HEAD
-
-
-=======
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
->>>>>>> origin/US055/US059-compra-um-coracao-grande
 
 @ExtendWith(MockitoExtension.class)
 public class WebSocketServiceTest {
@@ -91,21 +66,11 @@ public class WebSocketServiceTest {
         baralho.setId(UUID.randomUUID());
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-<<<<<<< HEAD
-
-        baralho.setCartasInicio(new ArrayList<CartaInicio>());
-        baralho.adicionarCartaDoInicio(cartaInicio);
-        baralho.setCartasDoJogo(new ArrayList<CartaDoJogo>());
-        baralho.adicionarCartadoJogo(carta);
-        baralho.setCartasObjetivo(new ArrayList<CartaObjetivo>());
-
-=======
         baralho.setCartasInicio(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
         baralho.setCartasDoJogo(new ArrayList<>());
         baralho.adicionarCartadoJogo(carta);
         baralho.setCartasObjetivo(new ArrayList<>());
->>>>>>> origin/US055/US059-compra-um-coracao-grande
         baralho.adicionarCartaDoInicio(cartaInicio);
 
         jogador.setId(UUID.randomUUID());
@@ -131,15 +96,8 @@ public class WebSocketServiceTest {
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
-<<<<<<< HEAD
-
-        sala.setStatus(Sala.StatusEnum.NOVO);
-        sala.setJogadores(new ArrayList<Jogador>());
-
-=======
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
->>>>>>> origin/US055/US059-compra-um-coracao-grande
         sala.adicionarJogador(jogador);
 
         salaRequest.setHash("hashpraentrar");

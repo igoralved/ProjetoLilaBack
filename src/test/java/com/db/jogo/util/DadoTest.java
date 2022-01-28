@@ -53,5 +53,4 @@ public class DadoTest {
         assertEquals(jogador, dado.girarDado(carta, jogador, sala));
 
     }
-
 }

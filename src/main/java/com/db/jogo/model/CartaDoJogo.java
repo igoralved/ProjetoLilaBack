@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 
-
 @Table(name ="carta_do_jogo")
 public class CartaDoJogo {
 	@Id
@@ -38,14 +37,13 @@ public class CartaDoJogo {
 	@Column(name = "valor_cor_pequeno", length = 10 ,nullable = true)
 	private Integer valorCorPequeno;
 
-	@Column(name = "valor_cor_grande", length = 10, nullable = true)
+	@Column(name = "valorCorGrande", nullable = true)
 	private Integer valorCorGrande;
 
 	@Column(name = "fonte",length = 80, nullable = false)
 	private String fonte;
 
 	@Column(name = "pontos", length = 20 ,nullable = false)
-
 	private Integer pontos;
 
 }

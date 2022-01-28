@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface SalaRepository extends CrudRepository<Sala, UUID> {
     Optional<Sala> findSalaByHash(String hash) throws DataAccessException;
 
+    Sala findByDado(Integer dado);
+    
+
 }

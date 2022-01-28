@@ -20,13 +20,17 @@ public class Dado {
 			sala.setDado(ran.nextInt(6) + 1);
 			jogadorAtualizado = resultadoDoDado( cartaDoJogo.getTipo(), sala.getDado(), jogador);
 		}
+
 		
+
 		return jogadorAtualizado;
 	}
 
 	private   static void descontaCoracao(Jogador jogador, Integer bonusCoracao) {
 
+
 		Integer totalCoracoes = quantidaDeCoracoes(jogador);
+
 		switch (bonusCoracao) {
 			case -1: {
 				if (jogador.getBonusCoracaoPeq() > 0) {
@@ -86,7 +90,9 @@ public class Dado {
 		}
 			return jogador;
 	}
+
 	 public static Integer quantidaDeCoracoes( Jogador jogador){
 				return (jogador.getBonusCoracaoGra() + jogador.getCoracaoGra() + jogador.getBonusCoracaoPeq() + jogador.getCoracaoPeq() );
+
 	}
 }

@@ -15,9 +15,7 @@
 	<description>Jogo de cartas </description>
 	<properties>
 
-
 		<java.version>17</java.version>
-
 
 	</properties>
 	<dependencies>
@@ -91,7 +89,21 @@
 			<optional>true</optional>
 		</dependency>
 
-    </dependencies>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-core</artifactId>
+            <version>1.6.2</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
+
 
 
 	<build>

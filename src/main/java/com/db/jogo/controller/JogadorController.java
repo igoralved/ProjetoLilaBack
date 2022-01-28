@@ -60,10 +60,6 @@ public class JogadorController {
 
 		if (bindingResult.hasErrors() || jogador == null || jogador.getId() == null) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/US055/US059-compra-um-coracao-grande
 			return new ResponseEntity<Jogador>(HttpStatus.BAD_REQUEST);
 		}
 
@@ -77,20 +73,8 @@ public class JogadorController {
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<Jogador>(HttpStatus.BAD_REQUEST);
 		}
-<<<<<<< HEAD
-=======
-			return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
-		}
-
-		Optional<Jogador> jogadorParaAtualizar = this.jogadorService.atualizarJogador(jogador);
-
-		if (jogadorParaAtualizar.isPresent()) {
-			return new ResponseEntity<Jogador>(jogador, HttpStatus.OK);
-		}
-		return new ResponseEntity<Jogador>(HttpStatus.NOT_FOUND);
->>>>>>> origin/AlteraçãoBanco-Models
-=======
->>>>>>> origin/US055/US059-compra-um-coracao-grande
 
 	}
 }
+
+

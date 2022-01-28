@@ -65,15 +65,19 @@ public class Jogador {
 	@Column(name = "bonusCoracaoGra", length = 10, nullable = false)
 	private Integer bonusCoracaoGra;
 
+
 	@Column(name="is_host", nullable = false)
-	private Boolean ishost;
+
+     private Boolean ishost;
 	
 	@Column(name = "status")
 	@Builder.Default
+
 	private StatusEnumJogador status = StatusEnumJogador.ESPERANDO ;
 
 	public enum StatusEnumJogador {
 		JOGANDO, ESPERANDO 
+
 	}
 
 	public void adicionaCarta(CartaDoJogo carta) {
@@ -93,11 +97,13 @@ public class Jogador {
 	}
 
 	@NonNull
+
 	public StatusEnumJogador getStatus() {
 		return this.status;
 	}
 
 	public void setStatus(@NonNull StatusEnumJogador status) {
+
 		this.status = status;
 	}
 

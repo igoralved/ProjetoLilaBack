@@ -2,11 +2,13 @@ package com.db.jogo.service;
 
 import java.util.Optional;
 
+
 import com.db.jogo.model.Sala;
 import com.db.jogo.repository.SalaRepository;
 
 
 import org.hibernate.dialect.DataDirectOracle9Dialect;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -41,8 +43,8 @@ public class SalaServiceImpl implements SalaService {
 	 */
 	@Override
 	public Sala jogada(Sala sala) throws DataAccessException {
-		/*TODO: AQUI VAI A LÓGICA DO JOGO*/
 
+	
 		return sala;
 	}
 }

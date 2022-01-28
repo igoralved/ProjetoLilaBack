@@ -2,7 +2,7 @@ INSERT INTO baralho(
 	id, codigo, descricao, titulo)
 	VALUES ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'Clila', 'Primeiro Baralho','Corações da Lila');
 	
-	INSERT INTO carta_do_jogo(id, bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
+	INSERT INTO public.carta_do_jogo(id, bonus, categoria, fonte, texto, tipo, valor_cor_grande, valor_cor_pequeno,pontos)
  Values ('d5c04bec-d0c0-414a-b160-6383c437267f','false', 'visual',  'Wikipedia', 'Deficiência visual abrange pessoas cegas e pessoas com visão reduzida', 'Definição', '0', '1','1') ,
  ('bb1ebadf-50c8-463c-8eb3-6f3998a466f3','true', 'visual', ' www.deficienteonline.com.br', 'A deficiência visual pode ser congênita ou adquirida ao longo da vida.', 'Informação', '0','2' ,'1' ),
  ('72a75c88-eb6d-4907-8e56-9ade773be768','true', 'visual', 'Wikipedia', 'Para apoio à pessoa com deficiência visual, softwares de leitura de tela  reproduzem a informação mostrada na tela do computador através de áudio.', 'Informação','0', '2', '1' ),
@@ -199,20 +199,19 @@ INSERT INTO baralho_cartadojogo(
 ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','04e501a8-e6a4-4ab5-84aa-1d76df1f62dc');
 
 INSERT INTO sala(id, hash, status, dado,baralho_id) values
-       ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '6g-Rg8V5', 0,0, 'a28ebdb0-d3bc-4220-9814-9a743a4d829e' );
+       ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '6g-Rg8V5', 0,2, 'a28ebdb0-d3bc-4220-9814-9a743a4d829e' );
 
-INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos,status,is_host  ) values
-        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 0, 0, 2, 3, 'João', 5, 0 ,'true');
-
-INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos,status,is_host  ) values
-        ('0accbbfb-075a-4e55-8fb5-3debe5813c0a', 0, 0, 1, 2, 'Pedro', 5, 1 ,'false');
+INSERT INTO jogador(id, bonus_coracao_gra, bonus_coracao_peq, coracao_gra, coracao_peq, nome, pontos,status,isHost  ) values
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 0, 0, 2, 3, 'João', 5,0,'true');
 
 INSERT INTO sala_jogadores(sala_id, jogadores_id) values
         ('7d487fb2-6fe2-4413-b7f7-1f7a2f9694ab', '01fa2624-bc16-4d3b-a1d6-6e797b47e04d');
 
 INSERT INTO jogador_cartadojogo ( jogador_id, cartadojogo_id) values
-        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'd5c04bec-d0c0-414a-b160-6383c437267f');       
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'd5c04bec-d0c0-414a-b160-6383c437267f'),
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', '72a75c88-eb6d-4907-8e56-9ade773be768'),
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'cbbac91b-f3f1-4780-b079-17fadb445cf9');
 
-INSERT INTO jogador_cartaobjetivo( jogador_id,cartaobjtivo_id) values
-        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261');
-        
+INSERT INTO jogador_cartaobjetivo( jogador_id, cartaobjetivo_id) values
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261' ),
+        ('01fa2624-bc16-4d3b-a1d6-6e797b47e04d', '5dc16976-9c0a-47f7-a3e4-00fa83de3c1d' );

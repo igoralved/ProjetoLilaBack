@@ -2,6 +2,7 @@ package com.db.jogo.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -34,6 +35,7 @@ public class Baralho {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "baralho_cartadojogo", joinColumns = {
 			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
@@ -41,12 +43,14 @@ public class Baralho {
 	@Builder.Default
 	private List<CartaDoJogo> cartasDoJogo = new ArrayList<>();
 
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "baralho_cartaobjetivo", joinColumns = {
 			@JoinColumn(name = "baralho_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "cartaobjetivo_id", referencedColumnName = "id") })
 	@Builder.Default
 	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
+
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "baralho_cartainicio", joinColumns = {
@@ -58,6 +62,7 @@ public class Baralho {
 	@NonNull
 	@Column(name = "codigo", length = 20, nullable = false, unique = true)
 	private String codigo;
+
 
 	@NonNull
 	@Column(name = "titulo", length = 20, nullable = false)

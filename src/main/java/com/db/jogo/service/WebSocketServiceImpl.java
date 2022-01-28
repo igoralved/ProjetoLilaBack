@@ -231,6 +231,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		return carta;
 	}
 
+
 	public Optional<Sala> compraCoracoesPequenos(Sala salaFront) throws IllegalArgumentException {
 
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
@@ -380,5 +381,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 		}
 		return salaResp;
 	}
+
 
 }
