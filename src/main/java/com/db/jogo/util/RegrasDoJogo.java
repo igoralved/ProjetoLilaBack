@@ -10,7 +10,7 @@ public abstract class RegrasDoJogo {
 	
 	public static void verificaJogadorSeTemOitoPontos(Jogador jogador, Sala sala) {
         if(jogador.getPontos() >= 8) {
-            sala.setStatus(StatusEnum.ULTIMA_RODADA);
+            sala.setStatusEnum(StatusEnum.ULTIMA_JOGADA);
         }
     }
 	
@@ -54,6 +54,7 @@ public abstract class RegrasDoJogo {
 			return true;
 	}
 	
+
 	public static Jogador adicionaCoracoesPequenos (Jogador jogador) {
 	
 		 int coracaoPequenos = 2;
@@ -61,6 +62,7 @@ public abstract class RegrasDoJogo {
 		 if(Dado.quantidaDeCoracoes(jogador) < 4) {
 			
 			jogador.setCoracaoPeq(coracaoPequenos+= jogador.getCoracaoPeq());
+
 			 						 
 		 }
 			
@@ -69,7 +71,23 @@ public abstract class RegrasDoJogo {
 		
 	}
 	
+
+	
 	// metodo para coracoes grande 
+	
+	public static Jogador adicionaCoracoesGrandes (Jogador jogador) {
+		
+		 int coracaoGrandes = 1;
+		 
+		 if(Dado.quantidaDeCoracoes(jogador) < 5) {
+			 
+			 jogador.setCoracaoGra(coracaoGrandes += jogador.getCoracaoGra());
+		 }
+			
+		
+		return jogador;
+		
+	}
 
 	
 	public static boolean validaCompraCartaObjetivo(Jogador jogador) {
@@ -84,5 +102,7 @@ public abstract class RegrasDoJogo {
 	
 
 
+
 }
+
 

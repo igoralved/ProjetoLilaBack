@@ -84,15 +84,20 @@ class SalaControllerTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
+<<<<<<< HEAD
 
         jogador.setCartasDoJogo(new ArrayList<CartaDoJogo>());
 
+=======
+        jogador.setCartasDoJogo(new ArrayList());
+>>>>>>> origin/US055/US059-compra-um-coracao-grande
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
+<<<<<<< HEAD
 
         sala.setStatusEnum(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
@@ -100,6 +105,10 @@ class SalaControllerTest {
         sala.setStatus(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
         sala.setDado(2);
+=======
+        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+>>>>>>> origin/US055/US059-compra-um-coracao-grande
         sala.adicionarJogador(jogador);
     }
 
@@ -156,9 +165,13 @@ class SalaControllerTest {
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
+<<<<<<< HEAD
 
         sala.setStatus(Sala.StatusEnum.NOVO);
 
+=======
+        sala.setStatusEnum(Sala.StatusEnum.NOVO);
+>>>>>>> origin/US055/US059-compra-um-coracao-grande
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
 

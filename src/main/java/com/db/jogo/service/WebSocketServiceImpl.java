@@ -231,7 +231,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 		return carta;
 	}
 
-	// Compra coração pequeno
 	public Optional<Sala> compraCoracoesPequenos(Sala salaFront) throws IllegalArgumentException {
 
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
@@ -293,14 +292,72 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 		return salaParaAtualizar;
 	}
-		
-		
-	//CORAÇÃO GRANDE
-		
-	
-	
-	
-	
+
+	// CORAÇÃO GRANDE
+	public Optional<Sala> compraCoracoesGrandes(Sala salaFront) throws IllegalArgumentException {
+
+		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
+
+		try {
+
+			if (salaParaAtualizar.isPresent()) {
+
+				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
+
+					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
+
+					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
+
+						RegrasDoJogo.adicionaCoracoesGrandes(jogador);
+
+					}
+
+					Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
+
+					jogadorParaAtualizar.get().setCoracaoGra(this.jogador.getCoracaoGra());
+
+					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
+
+					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+
+					if (index >= salaParaAtualizar.get().getJogadores().size() - 1) {
+						this.indexDoProximoJogador = 0;
+					} else {
+						this.indexDoProximoJogador = index + 1;
+					}
+
+					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+
+				}
+			}
+
+			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+
+			if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_JOGADA)) {
+
+				if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
+					salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+				}
+			}
+
+			Optional<Sala> salaRetornoDoSaveNoBanco = Optional
+					.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
+
+			if (salaRetornoDoSaveNoBanco.isPresent()) {
+				this.template.convertAndSend("URL/" + salaRetornoDoSaveNoBanco.get().getHash(),
+						salaRetornoDoSaveNoBanco.get());
+
+				return salaRetornoDoSaveNoBanco;
+
+			}
+
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Coração não pode ser comprado!! ", e);
+		}
+
+		return salaParaAtualizar;
+	}
+
 	public SalaResponse conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
 		if (jogador == null || hash == null) {
 			throw new JogoInvalidoException("Parametros nulos");

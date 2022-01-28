@@ -14,7 +14,9 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gameplay")
 
+
                 .setAllowedOrigins("http://localhost:4200")
+
 
                 .withSockJS();
     }

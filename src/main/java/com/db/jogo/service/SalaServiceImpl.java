@@ -5,10 +5,9 @@ import java.util.Optional;
 import com.db.jogo.model.Sala;
 import com.db.jogo.repository.SalaRepository;
 
-<<<<<<< HEAD
-=======
+
 import org.hibernate.dialect.DataDirectOracle9Dialect;
->>>>>>> origin/AlteraçãoBanco-Models
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -43,14 +42,7 @@ public class SalaServiceImpl implements SalaService {
 	@Override
 	public Sala jogada(Sala sala) throws DataAccessException {
 		/*TODO: AQUI VAI A LÓGICA DO JOGO*/
-<<<<<<< HEAD
-=======
-		
-		 
-		
-		
-		
->>>>>>> origin/AlteraçãoBanco-Models
+
 		return sala;
 	}
 }

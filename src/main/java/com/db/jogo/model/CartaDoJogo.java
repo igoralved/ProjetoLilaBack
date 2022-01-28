@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 
+
 @Table(name ="carta_do_jogo")
 public class CartaDoJogo {
 	@Id
@@ -44,6 +45,7 @@ public class CartaDoJogo {
 	private String fonte;
 
 	@Column(name = "pontos", length = 20 ,nullable = false)
+
 	private Integer pontos;
 
 }

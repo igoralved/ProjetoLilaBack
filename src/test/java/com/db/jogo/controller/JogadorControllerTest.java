@@ -111,8 +111,12 @@ class JogadorControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/jogador").content(jogadorParaAtualizarComoJSON)
 				.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+<<<<<<< HEAD
 	           .andExpect(status().isNotFound());
 
+=======
+				.andExpect(status().isBadRequest());
+>>>>>>> origin/US055/US059-compra-um-coracao-grande
 
 	}
 	
