@@ -1,6 +1,8 @@
 package com.db.jogo.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -9,6 +11,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.db.jogo.model.Baralho;
+import com.db.jogo.model.CartaDoJogo;
+import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.CartaObjetivo;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Sala;
+import com.db.jogo.service.SalaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,15 +30,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import com.db.jogo.model.Baralho;
-import com.db.jogo.model.CartaDoJogo;
-import com.db.jogo.model.CartaInicio;
-import com.db.jogo.model.CartaObjetivo;
-import com.db.jogo.model.Jogador;
-import com.db.jogo.model.Sala;
-import com.db.jogo.service.SalaService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @SpringBootTest
@@ -48,7 +50,7 @@ class SalaControllerTest {
     CartaObjetivo cartaObjetivo = new CartaObjetivo();
     Jogador jogador = new Jogador();
     Sala sala = new Sala();
-
+    Integer i = 0;
     @BeforeEach
     public void init(){
         cartaInicio.setId(UUID.randomUUID());
@@ -75,7 +77,7 @@ class SalaControllerTest {
         baralho.setCodigo("LILA");
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-        baralho.setCartaInicio(new ArrayList<>());
+        baralho.setCartasInicio(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
         baralho.setCartasDoJogo(new ArrayList<>());
         baralho.adicionarCartadoJogo(carta);
@@ -89,7 +91,7 @@ class SalaControllerTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
-        jogador.setCartasDoJogo(new ArrayList());
+        jogador.setCartasDoJogo(new ArrayList<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -163,9 +165,56 @@ class SalaControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String encontrarSalaAsJSON = mapper.writeValueAsString(sala);
         this.mockMvc.perform(get("/sala/" + sala.getHash())
-                        .content(encontrarSalaAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .content(encontrarSalaAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
+    }
+
+
+
+    @Test
+    @DisplayName("Teste total Jogadores do Controller")
+    void totalJogadores() throws Exception{
+
+        Sala sala = new Sala();
+        sala.setId(UUID.randomUUID());
+        sala.setBaralho(baralho);
+        sala.setHash("hashpraentrar");
+        sala.setStatus(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+        sala.adicionarJogador(jogador);
+
+        Integer i = 0;
+        when(salaService.totalJogadores(sala.getHash())).thenReturn(i);
+        assertEquals(i, salaService.totalJogadores(sala.getHash()));
+    }
+
+
+    @Test
+    @DisplayName("Teste primeiroAJogar do Controller")
+    void primeiroAJogar() throws Exception{
+
+        Jogador jogador = new Jogador();
+
+        Sala sala = new Sala();
+        sala.setId(UUID.randomUUID());
+        sala.setBaralho(baralho);
+        sala.setHash("hashpraentrar");
+        sala.setStatus(Sala.StatusEnum.NOVO);
+        sala.setJogadores(new ArrayList<>());
+        sala.adicionarJogador(jogador);
+
+
+
+        given(salaService.findFirst(sala.getHash())).willReturn(jogador);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String primeiroAJogarAsJSON = mapper.writeValueAsString(jogador);
+        this.mockMvc.perform(get("/sala/" + sala.getHash() + "/host")
+                .content(primeiroAJogarAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isFound());
     }
 }
