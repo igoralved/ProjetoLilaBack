@@ -300,7 +300,7 @@ public class WebSocketServiceImpl implements WebSocketService {
  					
  					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
  						
- 					   RegrasDoJogo.adicionaCoracoesPequenos(jogador); 
+ 					   RegrasDoJogo.adicionaCoracoesGrandes(jogador); 
  					
  					
  					}
@@ -310,8 +310,6 @@ public class WebSocketServiceImpl implements WebSocketService {
  					jogadorParaAtualizar.get().setCoracaoGra(this.jogador.getCoracaoGra());
  		
  		
- 					Optional<Jogador> atualizarOCoracaoGrande = this.jogadorService
- 							.findById(jogador.getId());
 
  					
  					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
@@ -327,9 +325,22 @@ public class WebSocketServiceImpl implements WebSocketService {
  					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
  					
  					
- 					
  				}
  		}
+ 			
+ 			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+
+            Optional<Sala> salaRetornoDoSaveNoBanco = Optional
+                    .ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
+
+                    if (salaRetornoDoSaveNoBanco.isPresent()) {
+                this.template.convertAndSend("URL/" + salaRetornoDoSaveNoBanco.get().getHash(),
+                        salaRetornoDoSaveNoBanco.get());
+
+                return salaRetornoDoSaveNoBanco;
+
+            }
+                    
  		} catch (Exception e) {
  			throw new IllegalArgumentException("Coração não pode ser comprado!! ", e);
  		}
