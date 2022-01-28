@@ -24,10 +24,11 @@ create table baralho (
   codigo varchar(20) not null,
   descricao varchar(255) not null, 
   titulo varchar(20) not null, 
-  primary key (id));
+  primary key (id)
+  );
 
 create table carta_do_jogo (
-     id uuid not null,
+     id uuid primary key  not null,
      bonus boolean not null, 
      categoria varchar(80) not null,
      fonte varchar(80) not null, 
@@ -35,16 +36,16 @@ create table carta_do_jogo (
      texto varchar(255) not null, 
      tipo varchar(50) not null, 
      valor_cor_grande int4,
-     valor_cor_pequeno int4, 
-     primary key (id)
+     valor_cor_pequeno int4
+             
      );
     
 create table carta_inicio (
     id uuid not null, 
     descricao varchar(255) not null,
     nome varchar(50) not null, 
-    baralho_id uuid,
-    primary key (id));
+    primary key (id)
+    );
     
 
 create table carta_objetivo (
@@ -57,22 +58,32 @@ create table carta_objetivo (
     );
     
 create table baralho_cartadojogo (
+   cartadojogo_id uuid not null ,
     baralho_id uuid not null,
-    cartadojogo_id uuid not null, 
-    primary key (baralho_id, cartadojogo_id));
+ CONSTRAINT FK_cartadojogo_id FOREIGN KEY (cartadojogo_id)
+ REFERENCES carta_do_jogo (id),
+ CONSTRAINT FK_baralho_id FOREIGN KEY (baralho_id)
+ REFERENCES baralho (id));
 
 create table baralho_cartainicio (
-    baralho_id uuid not null,
-    cartainicio_id uuid not null, 
-    primary key (baralho_id, cartainicio_id));
+    baralho_id uuid not null ,
+    cartainicio_id uuid not null,
+     CONSTRAINT FK_cartainicio_id FOREIGN KEY (cartainicio_id)
+     REFERENCES carta_inicio (id),
+     CONSTRAINT FK_baralho_id FOREIGN KEY (baralho_id)
+     REFERENCES baralho (id));
 
 create table baralho_cartaobjetivo (
     baralho_id uuid not null,
-    cartaobjetivo_id uuid not null, 
-    primary key (baralho_id, cartaobjetivo_id));
+    cartaobjetivo_id uuid not null,
+     CONSTRAINT FK_cartaobjetivo_id FOREIGN KEY (cartaobjetivo_id)
+     REFERENCES carta_objetivo (id),
+     CONSTRAINT FK_baralho_id FOREIGN KEY (baralho_id)
+     REFERENCES baralho (id));
+    
     
 create table jogador (
-    id uuid not null,
+     id uuid not null,
      bonus_coracao_gra int4 not null,
      bonus_coracao_peq int4 not null,
      coracao_gra int4 not null, 
@@ -80,18 +91,25 @@ create table jogador (
      nome varchar(30) not null,
      pontos int4 not null,
      status int4 not null,
-     isHost boolean not null, 
-     primary key (id));
+     is_host boolean not null, 
+     primary key (id)
+     );
 
 create table jogador_cartadojogo (
-    jogador_id uuid not null,
-    cartadojogo_id uuid not null, 
-    primary key (jogador_id, cartadojogo_id));
+  jogador_id uuid not null ,
+  cartadojogo_id uuid not null ,
+    CONSTRAINT FK_cartadojogo_id FOREIGN KEY (cartadojogo_id)
+     REFERENCES carta_do_jogo (id),
+     CONSTRAINT FK_jogador_id FOREIGN KEY (jogador_id)
+     REFERENCES jogador (id));
 
 create table jogador_cartaobjetivo (
-    jogador_id uuid not null, 
-    cartaobjetivo_id uuid not null,
-    primary key (jogador_id, cartaobjetivo_id));
+  jogador_id uuid not null ,
+  cartaobjetivo_id uuid not null ,
+    CONSTRAINT FK_cartaobjetivo_id FOREIGN KEY (cartaobjetivo_id)
+     REFERENCES carta_objetivo (id),
+     CONSTRAINT FK_jogador_id FOREIGN KEY (jogador_id)
+     REFERENCES jogador (id));
     
 create table sala (
     id uuid not null, 
@@ -105,6 +123,11 @@ create table sala_jogadores (
     sala_id uuid not null,
     jogadores_id uuid not null);
     
+
+
+
+
+
 
 
 

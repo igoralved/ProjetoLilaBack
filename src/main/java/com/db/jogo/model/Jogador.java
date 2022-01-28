@@ -43,7 +43,7 @@ public class Jogador {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "jogador_cartaobjetivo", joinColumns = {
 			@JoinColumn(name = "jogador_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "cartaobjtivo_id", referencedColumnName = "id") })
+					@JoinColumn(name = "cartaobjetivo_id", referencedColumnName = "id") })
 	@Builder.Default
 	private List<CartaObjetivo> cartasObjetivo = new ArrayList<>();
 
