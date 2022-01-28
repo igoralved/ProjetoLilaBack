@@ -206,6 +206,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		sala.setHash(sala.generateHash());
 		sala.setDado(0);
 		salaResp.setJogador(savedJogador);
+		sala.setStatus(StatusEnum.AGUARDANDO);
 		salaResp.setSala(salaService.saveSala(sala));
 		return salaResp;
 	}
@@ -283,7 +284,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 			}
 			Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
 			sala.get().adicionarJogador(savedJogador);
-			sala.get().setStatus(StatusEnum.JOGANDO);
 
 			salaResp.setJogador(savedJogador);
 			salaResp.setSala(this.salaService.saveSala(sala.get()));
