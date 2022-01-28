@@ -84,7 +84,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							
 							return salaParaAtualizar;
 							
-						}else if(!this.jogador.getCartasDoJogo().isEmpty()){
+						}else if(this.jogador.getCartasDoJogo().isEmpty()){
 							if(salaParaAtualizar.get()
 									.getBaralho()
 									.getCartasDoJogo()

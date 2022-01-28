@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -185,4 +186,24 @@ public class WebSocketControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andExpect(status().isBadRequest());
     }
+    
+//    @Test
+//    @DisplayName("Teste de Jogada de comprar carta")
+//    void comprarCartaDoJogo() throws Exception{
+//    	
+//        
+//        given(webSocketServiceImpl.comprarCartaDoJogo(sala)).willReturn(Optional.of(sala));
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String newConexaoAsJSON = mapper.writeValueAsString(sala);
+//        
+//        this.mockMvc.perform(post("/api/jogada/comprarcarta")
+//                        .content(newConexaoAsJSON)
+//                        .accept(MediaType.APPLICATION_JSON_VALUE)
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+//                        .andExpect(status().isOk());
+//    }
+    
+    
+    
 }
