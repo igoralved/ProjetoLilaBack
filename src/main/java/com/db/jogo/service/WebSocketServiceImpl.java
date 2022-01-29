@@ -310,7 +310,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 					.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
 
 					if (salaRetornoDoSaveNoBanco.isPresent()) {
-				this.template.convertAndSend("URL/" + salaRetornoDoSaveNoBanco.get().getHash(),
+				this.template.convertAndSend("/gameplay/game-update/" + salaRetornoDoSaveNoBanco.get().getHash(),
 						salaRetornoDoSaveNoBanco.get());
 				
 				return salaRetornoDoSaveNoBanco;
@@ -375,7 +375,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 					.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
 
 			if (salaRetornoDoSaveNoBanco.isPresent()) {
-				this.template.convertAndSend("URL/" + salaRetornoDoSaveNoBanco.get().getHash(),
+				this.template.convertAndSend("/gameplay/game-update/" + salaRetornoDoSaveNoBanco.get().getHash(),
 						salaRetornoDoSaveNoBanco.get());
 
 				return salaRetornoDoSaveNoBanco;

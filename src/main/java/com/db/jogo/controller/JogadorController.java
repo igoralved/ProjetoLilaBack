@@ -37,7 +37,7 @@ public class JogadorController {
 
 		Optional<Jogador> jogadorParaSalvar = Optional.of(jogador);
 
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || jogadorParaSalvar.isEmpty()) {
 			return new ResponseEntity<Jogador>(jogador, HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<Jogador>(jogadorService.saveJogador(jogador), HttpStatus.CREATED);
