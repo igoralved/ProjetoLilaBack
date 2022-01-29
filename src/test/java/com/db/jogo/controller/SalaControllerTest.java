@@ -17,6 +17,7 @@ import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.CartaInicio;
 import com.db.jogo.model.CartaObjetivo;
 import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Jogador.StatusEnumJogador;
 import com.db.jogo.model.Sala;
 import com.db.jogo.service.SalaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -92,6 +93,8 @@ class SalaControllerTest {
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
         jogador.setCartasDoJogo(new ArrayList<>());
+        jogador.setStatus(StatusEnumJogador.ESPERANDO);
+        jogador.setIshost(true);
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -100,6 +103,7 @@ class SalaControllerTest {
         sala.setHash("hashpraentrar");
         sala.setStatus(Sala.StatusEnum.NOVO);
         sala.setJogadores(new ArrayList<>());
+        sala.setDado(0);
         sala.adicionarJogador(jogador);
     }
 
