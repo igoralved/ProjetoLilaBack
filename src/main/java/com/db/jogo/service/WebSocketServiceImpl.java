@@ -88,7 +88,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							return salaParaAtualizar;
 							
 						}else if(this.jogador.getCartasDoJogo().isEmpty()){
-							if(salaParaAtualizar.get()
+							if(!salaParaAtualizar.get()
 									.getBaralho()
 									.getCartasDoJogo()
 									.contains(salaFront
@@ -100,7 +100,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 								return salaParaAtualizar;
 							}
 							
-						}else if(salaParaAtualizar.get()
+						}else if(!salaParaAtualizar.get()
 								.getBaralho()
 								.getCartasDoJogo()
 								.contains(salaFront
@@ -169,8 +169,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
 						}
 						RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador,salaParaAtualizar.get());	
-						//AQUI add método para alterar status da sala para finalizada caso seja ultimo jogador da rodada
-						//AQUI Add método verificar pontos totais do jogador e setar status da sala para ULTIMA_RODADA "se" status da sala for JOGANDO
+						
 						/*---*Fim da Lógica para Adicionar a Carta*----*/
 					}
 				}
