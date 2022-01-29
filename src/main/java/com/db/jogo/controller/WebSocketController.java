@@ -65,10 +65,13 @@ public class WebSocketController {
     }
 
     @PutMapping("/iniciarpartida")
-    public ResponseEntity<Sala> updateSala(@RequestBody Sala sala) {
+    public ResponseEntity<Sala> updateSala(@RequestBody Sala sala) throws JogoInvalidoException {
         try {
-            webSocketServiceImpl.sendSala(sala); // envia a sala para o websocket
-            return new ResponseEntity<>(sala, HttpStatus.OK);
+        	Optional<Sala> salaComStatusTrocado = webSocketServiceImpl.iniciarPartida(sala);
+            webSocketServiceImpl.sendSala(salaComStatusTrocado.get()); // envia a sala para o websocket
+            
+            return new ResponseEntity<>(salaComStatusTrocado.get(), HttpStatus.OK);
+            
         } catch (JsonInvalidoException e) {
             System.err.println("Não foi possível criar o JSON da sala.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

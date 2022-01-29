@@ -315,4 +315,21 @@ public class WebSocketServiceImpl implements WebSocketService {
         
         template.convertAndSend(url, salaAsJSON);
     }
+    public Optional<Sala> iniciarPartida(Sala sala) throws JogoInvalidoException{
+    		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(sala.getHash());
+    	try {
+    		if(salaParaAtualizar.isPresent()) {
+    			
+    			salaParaAtualizar.get().setStatus(StatusEnum.JOGANDO);
+    			this.salaService.saveSala(salaParaAtualizar.get());
+    			
+    			return salaParaAtualizar;
+    		}
+    	}catch(Exception e) {
+    		throw new JogoInvalidoException("Sala não encontrada");
+    	}
+    	
+    	return salaParaAtualizar;
+    
+    }
 }
