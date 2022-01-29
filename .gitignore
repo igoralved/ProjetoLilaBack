@@ -31,8 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-<<<<<<< HEAD
 docs
 bin/
-=======
->>>>>>> origin/US056-Carregarosdados

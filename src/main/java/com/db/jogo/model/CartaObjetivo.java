@@ -2,16 +2,17 @@ package com.db.jogo.model;
 
 import java.util.UUID;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
-import lombok.NonNull;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,16 +20,13 @@ import lombok.NonNull;
 @Data
 @Entity
 
-
-
-
 @Table(name="carta_objetivo")
-
 public class CartaObjetivo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
+
 
 	@Column(name = "classificacao", length = 255, nullable = false)
 	private String classificacao;
@@ -40,7 +38,6 @@ public class CartaObjetivo {
 	private String categoria;
 
 	@Column(name = "descricao", length = 255, nullable = false)
-
-  private String descricao;
+	private String descricao;
 
 }

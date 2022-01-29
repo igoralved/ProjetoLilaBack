@@ -4,12 +4,19 @@ DROP TABLE IF EXISTS baralho_cartaobjetivo CASCADE;
 DROP TABLE IF EXISTS baralho_cartadojogo CASCADE;
 DROP TABLE IF EXISTS baralho_cartainicio CASCADE;
 DROP TABLE IF EXISTS sala_jogadores CASCADE;
+
 DROP TABLE IF EXISTS admin CASCADE;
-DROP TABLE IF EXISTS sala CASCADE; 
-DROP TABLE IF EXISTS jogador CASCADE; 
-DROP TABLE IF EXISTS carta_inicio CASCADE;  
+
+DROP TABLE IF EXISTS sala CASCADE;
+
+DROP TABLE IF EXISTS jogador CASCADE;
+
+DROP TABLE IF EXISTS carta_inicio CASCADE;
+
 DROP TABLE IF EXISTS carta_do_jogo CASCADE;
+
 DROP TABLE IF EXISTS carta_objetivo CASCADE;
+
 DROP TABLE IF EXISTS baralho CASCADE;
 
 
@@ -122,12 +129,4 @@ create table sala (
 create table sala_jogadores (
     sala_id uuid not null,
     jogadores_id uuid not null);
-    
-
-
-
-
-
-
-
 

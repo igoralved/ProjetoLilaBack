@@ -1,13 +1,20 @@
 package com.db.jogo.model;
 
 import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.List;
 import java.util.UUID;
 
-import java.util.Base64;
-import java.util.Base64.Encoder;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.NonNull;
@@ -34,8 +41,8 @@ public class Sala {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Jogador> jogadores ;
 
+
 	@OneToOne
-	
 	private Baralho baralho;
 	
 	@NonNull
@@ -69,20 +76,19 @@ public class Sala {
 	}
 
 	public enum StatusEnum {
-
-		NOVO, JOGANDO, FINALIZADO,AGUARDANDO ,ULTIMA_JOGADA
-
-
+		NOVO, JOGANDO, FINALIZADO, AGUARDANDO, ULTIMA_JOGADA
 	}
 
 	@NonNull
-	public StatusEnum getStatusEnum() {
+	public StatusEnum getStatus() {
 		return this.status;
 	}
 
-	public void setStatusEnum(@NonNull StatusEnum status) {
+	public void setStatus(@NonNull StatusEnum status) {
 		this.status= status;
 	}
 
+
 }
+
 

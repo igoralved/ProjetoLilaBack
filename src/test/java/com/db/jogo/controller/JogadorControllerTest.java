@@ -38,7 +38,6 @@ class JogadorControllerTest {
 	JogadorServiceImpl jogadorService;
 
 	String id = "d1516d33-ff6f-4dc9-aedf-9316421096cb";
-	
 	Jogador jogador = Jogador.builder()
 			.id(UUID.fromString(id))
 			.nome("joão")
@@ -89,11 +88,11 @@ class JogadorControllerTest {
 				.andExpect(status().isOk()).andExpect(content().json(jogadorParaAtualizarComoJSON));
 
 	}
-	
+
 	@Test
 	@DisplayName("Teste do PUT/Error ID NULL do Controller do Jogador")
 	public void deveRetornarErro_QuandoAtualizarJogadorIdNull() throws Exception {
-		
+
 		Jogador jogadore = Jogador.builder()
 				.id(null)
 				.nome("joão")
@@ -103,7 +102,6 @@ class JogadorControllerTest {
 				.pontos(1)
 				.coracaoPeq(2)
 				.build();
-		
 		given(jogadorService.atualizarJogador(jogadore)).willReturn(Optional.of(jogadore));
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -111,18 +109,15 @@ class JogadorControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/jogador").content(jogadorParaAtualizarComoJSON)
 				.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-
-
-	           .andExpect(status().isNotFound());
-
+				.andExpect(status().isBadRequest());
 
 
 	}
-	
+
 	@Test
 	@DisplayName("Teste PUT/Error ID não Encontrado do Controller do Jogador")
 	public void deveRetornarErro_QuandoAtualizarJogador() throws Exception {
-		
+
 		Jogador jogadorAtualizar = Jogador.builder()
 				.id(UUID.randomUUID())
 				.nome("joão")
@@ -132,7 +127,6 @@ class JogadorControllerTest {
 				.pontos(1)
 				.coracaoPeq(2)
 				.build();
-	
 		given(jogadorService.atualizarJogador(jogadorAtualizar)).willReturn(Optional.of(jogador));
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -158,5 +152,11 @@ class JogadorControllerTest {
 				.andExpect(status().isOk()).andExpect(content().json(jogadorComoJSON));
 
 	}
+
+
+
+
+
+
 
 }

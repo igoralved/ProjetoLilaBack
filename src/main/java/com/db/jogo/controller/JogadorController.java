@@ -37,7 +37,7 @@ public class JogadorController {
 
 		Optional<Jogador> jogadorParaSalvar = Optional.of(jogador);
 
-		if (bindingResult.hasErrors() || jogadorParaSalvar.isEmpty()) {
+		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<Jogador>(jogador, HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<Jogador>(jogadorService.saveJogador(jogador), HttpStatus.CREATED);
@@ -75,6 +75,23 @@ public class JogadorController {
 		}
 
 	}
+
+
+	@GetMapping("/todos")
+	public Iterable<Jogador> listarTodos(){
+		return this.jogadorService.findAll();
+	}
+
+	@GetMapping("/totaljogadores")
+	public Integer totalJogadores() {
+		return this.jogadorService.totalJogadores();
+	}
+
+	@GetMapping("/podeJogar")
+	public Boolean podeJogar() {
+		return this.jogadorService.podeJogar();
+	}
+
 }
 
 

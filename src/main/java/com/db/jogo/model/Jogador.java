@@ -67,17 +67,14 @@ public class Jogador {
 
 
 	@Column(name="is_host", nullable = false)
-
      private Boolean ishost;
 	
 	@Column(name = "status")
 	@Builder.Default
-
 	private StatusEnumJogador status = StatusEnumJogador.ESPERANDO ;
 
 	public enum StatusEnumJogador {
 		JOGANDO, ESPERANDO 
-
 	}
 
 	public void adicionaCarta(CartaDoJogo carta) {
@@ -97,7 +94,6 @@ public class Jogador {
 	}
 
 	@NonNull
-
 	public StatusEnumJogador getStatus() {
 		return this.status;
 	}

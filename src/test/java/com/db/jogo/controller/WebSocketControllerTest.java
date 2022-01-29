@@ -2,23 +2,12 @@ package com.db.jogo.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
-
-import com.db.jogo.dto.SalaRequest;
-import com.db.jogo.dto.SalaResponse;
-import com.db.jogo.model.Baralho;
-import com.db.jogo.model.CartaDoJogo;
-import com.db.jogo.model.CartaInicio;
-import com.db.jogo.model.CartaObjetivo;
-import com.db.jogo.model.Jogador;
-import com.db.jogo.model.Sala;
-import com.db.jogo.service.WebSocketServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +18,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.db.jogo.dto.SalaRequest;
+import com.db.jogo.dto.SalaResponse;
+import com.db.jogo.model.Baralho;
+import com.db.jogo.model.CartaDoJogo;
+import com.db.jogo.model.CartaInicio;
+import com.db.jogo.model.CartaObjetivo;
+import com.db.jogo.model.Jogador;
+import com.db.jogo.model.Jogador.StatusEnumJogador;
+import com.db.jogo.model.Sala;
+import com.db.jogo.service.WebSocketServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @SpringBootTest
@@ -95,43 +96,32 @@ public class WebSocketControllerTest {
         jogador.setPontos(2);
         jogador.setBonusCoracaoGra(3);
         jogador.setBonusCoracaoPeq(2);
-        jogador.setCoracaoGra(5);
+        jogador.setCoracaoGra(1);
         jogador.setCoracaoPeq(3);
-
-
+        jogador.setIshost(true);
         jogador.setCartasDoJogo(new ArrayList<>());
-
-
-
         jogador.adicionaCarta(carta);
+        jogador.setStatus(StatusEnumJogador.JOGANDO);
         jogador.adicionaObjetivo(cartaObjetivo);
 
         jogador2.setId(UUID.randomUUID());
         jogador2.setNome("Guilherme");
+        jogador2.setIshost(false);
         jogador2.setPontos(2);
-        jogador2.setBonusCoracaoGra(3);
+        jogador.setStatus(StatusEnumJogador.ESPERANDO);
+        jogador2.setBonusCoracaoGra(1);
         jogador2.setBonusCoracaoPeq(2);
         jogador2.setCoracaoGra(5);
         jogador2.setCoracaoPeq(3);
-
-
         jogador2.setCartasDoJogo(new ArrayList<>());
-
-
-
         jogador2.adicionaCarta(carta);
         jogador2.adicionaObjetivo(cartaObjetivo);
 
         sala.setId(UUID.randomUUID());
         sala.setBaralho(baralho);
         sala.setHash("hashpraentrar");
-
- 
         sala.setStatus(Sala.StatusEnum.NOVO);
-
-
-        sala.setStatusEnum(Sala.StatusEnum.NOVO);
-
+        sala.setDado(0);
         sala.setJogadores(new ArrayList<>());
         sala.adicionarJogador(jogador);
 
@@ -151,12 +141,12 @@ public class WebSocketControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(jogador);
         this.mockMvc.perform(post("/api/iniciar")
-                        .content(jogadorAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andExpect(status().isOk());
+                .content(jogadorAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
-  
+
     @Test
     @DisplayName("Teste para conectar outro jogador")
     void testConectar() throws Exception{
@@ -166,7 +156,7 @@ public class WebSocketControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
         String newConexaoAsJSON = mapper.writeValueAsString(salaResponse);
-        this.mockMvc.perform(post("/api/conectar")
+        this.mockMvc.perform(put("/api/conectar")
                 .content(newConexaoAsJSON)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -182,10 +172,26 @@ public class WebSocketControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(null);
         this.mockMvc.perform(post("/api/iniciar")
-                        .content(jogadorAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andExpect(status().isBadRequest());
+                .content(jogadorAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    @DisplayName("Teste para sucesso na conexão")
+    void tesaConexaoComSucesso() throws Exception {
+        Jogador jogador = new Jogador();
+        Sala sala = new Sala();
+        given(webSocketServiceImpl.conectarJogo(jogador, sala.getHash())).willReturn(salaResponse);
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJson = mapper.writeValueAsString(salaResponse);
+        this.mockMvc.perform(put("/api/conectar")
+                .content(newConexaoAsJson)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -197,10 +203,47 @@ public class WebSocketControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
         String newConexaoAsJSON = mapper.writeValueAsString(null);
-        this.mockMvc.perform(post("/api/conectar")
+        this.mockMvc.perform(put("/api/conectar")
+                .content(newConexaoAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    @DisplayName("Teste de Jogada de comprar carta")
+    void comprarCartaDoJogo() throws Exception{
+    	
+        Optional<Sala> salaReposta = Optional.of(sala);
+        given(webSocketServiceImpl.comprarCartaDoJogo(sala)).willReturn(salaReposta);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJSON = mapper.writeValueAsString(sala);
+        
+        this.mockMvc.perform(put("/api/jogada/comprarcarta")
+                        .content(newConexaoAsJSON)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isOk());
+    }
+    @Test
+    @DisplayName("Teste de Jogada de comprar carta Error")
+    void comprarCartaDoJogoNula() throws Exception{
+    	
+        given(webSocketServiceImpl.comprarCartaDoJogo(null)).willReturn(null);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJSON = mapper.writeValueAsString(null);
+        
+        this.mockMvc.perform(put("/api/jogada/comprarcarta")
                         .content(newConexaoAsJSON)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andExpect(status().isBadRequest());
     }
+    
+    
+    
+    
+    
 }
