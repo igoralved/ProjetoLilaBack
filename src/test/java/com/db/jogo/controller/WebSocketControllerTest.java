@@ -227,6 +227,21 @@ public class WebSocketControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andExpect(status().isOk());
     }
+    @Test
+    @DisplayName("Teste de Jogada de comprar carta Error")
+    void comprarCartaDoJogoNula() throws Exception{
+    	
+        given(webSocketServiceImpl.comprarCartaDoJogo(null)).willReturn(null);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJSON = mapper.writeValueAsString(null);
+        
+        this.mockMvc.perform(put("/api/jogada/comprarcarta")
+                        .content(newConexaoAsJSON)
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andExpect(status().isBadRequest());
+    }
     
     
     
