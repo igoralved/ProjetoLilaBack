@@ -58,13 +58,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 			salaParaAtualizar.get().setDado(0);
 			return Optional.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
 		}
-		/*FALTA
-		 * 
-		 * 
-		 * Se for Ultima_Rodada, e o próximo jogador for ishost= true, sala deve ser finalizada
-		 * Refatorar para criar metodos que possam ser reutilizados
-		 * 
-		 * */
 		
 		try {
 			// verifico se a sala existe no banco
@@ -77,7 +70,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 					// verifica qual o jogador da vez
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
 						
-
+		/*---Inicio da Lógica de Comprar Carta----*/
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
 						
 						//Veririfica se jogador comprou alguma carta
@@ -187,7 +180,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 				// envia a sala para todos os jogadores conectados a sala
 				if (salaRetornoDoSaveNoBanco.isPresent()) {
 					sendSala(salaRetornoDoSaveNoBanco.get());
-					// retorna sala que foi salva no banco
+					// retorna sala que foi salva no banco 
 					return salaRetornoDoSaveNoBanco;	
 				}
 
