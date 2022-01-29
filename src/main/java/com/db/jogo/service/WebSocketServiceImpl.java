@@ -233,9 +233,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 	public Jogador criarPrimeiroJogador(Jogador jogador) {
 		jogador.setBonusCoracaoPeq(0);
 		jogador.setBonusCoracaoGra(0);
-		jogador.setCoracaoPeq(3);
-		jogador.setCoracaoGra(2);
-		jogador.setPontos(0);
+		jogador.setCoracaoPeq(2);
+		jogador.setCoracaoGra(1);
+		jogador.setPontos(6);
 		jogador.setIshost(true);
 		jogador.setNome(jogador.getNome());
 		jogador.setStatus(StatusEnumJogador.JOGANDO);
@@ -245,9 +245,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 	public Jogador criarJogador(Jogador jogador) {
 		jogador.setBonusCoracaoPeq(0);
 		jogador.setBonusCoracaoGra(0);
-		jogador.setCoracaoPeq(3);
-		jogador.setCoracaoGra(2);
-		jogador.setPontos(0);
+		jogador.setCoracaoPeq(2);
+		jogador.setCoracaoGra(1);
+		jogador.setPontos(6);
 		jogador.setIshost(false);
 		jogador.setNome(jogador.getNome());
 		jogador.setStatus(StatusEnumJogador.ESPERANDO);
