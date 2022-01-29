@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.db.jogo.dto.SalaResponse;
 import com.db.jogo.exception.CartaCompradaInvalidaException;
 import com.db.jogo.exception.JogoInvalidoException;
+import com.db.jogo.exception.JsonInvalidoException;
 import com.db.jogo.model.Baralho;
 import com.db.jogo.model.CartaDoJogo;
 import com.db.jogo.model.Jogador;
@@ -19,6 +20,8 @@ import com.db.jogo.model.Sala;
 import com.db.jogo.model.Sala.StatusEnum;
 import com.db.jogo.util.Dado;
 import com.db.jogo.util.RegrasDoJogo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class WebSocketServiceImpl implements WebSocketService {
@@ -184,13 +187,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 				// envia a sala para todos os jogadores conectados a sala
 				if (salaRetornoDoSaveNoBanco.isPresent()) {
-					this.template.convertAndSend(
-							"URL/" + salaRetornoDoSaveNoBanco
-									.get().getHash(),
-							salaRetornoDoSaveNoBanco.get());
+					sendSala(salaRetornoDoSaveNoBanco.get());
 					// retorna sala que foi salva no banco
-					return salaRetornoDoSaveNoBanco;
-
+					return salaRetornoDoSaveNoBanco;	
 				}
 
 			}
@@ -217,6 +216,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		sala.setHash(sala.generateHash());
 		sala.setDado(0);
 		salaResp.setJogador(savedJogador);
+		sala.setStatus(StatusEnum.AGUARDANDO);
 		salaResp.setSala(salaService.saveSala(sala));
 		return salaResp;
 	}
@@ -294,13 +294,33 @@ public class WebSocketServiceImpl implements WebSocketService {
 			}
 			Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
 			sala.get().adicionarJogador(savedJogador);
-			sala.get().setStatus(StatusEnum.JOGANDO);
 
 			salaResp.setJogador(savedJogador);
-			salaResp.setSala(sala.get());
+			salaResp.setSala(this.salaService.saveSala(sala.get()));
 			salaService.saveSala(sala.get());
 		}
 		return salaResp;
 	}
 
+    public Integer getQuantidadeJogadores(String hash) {
+
+        Integer numero = salaService.totalJogadores(hash);
+        String url = "/gameplay/" + hash;
+        template.convertAndSend(url, numero);
+
+        return numero;
+    }
+
+    public void sendSala(Sala sala) throws JsonInvalidoException{
+        ObjectMapper mapper = new ObjectMapper();
+        String salaAsJSON;
+        String url = "/gameplay/game-update/" + sala.getHash();
+        try{
+            salaAsJSON = mapper.writeValueAsString(sala);
+        } catch (JsonProcessingException e){
+            throw new JsonInvalidoException("Não foi possível construir o JSON da sala.");
+        }
+        
+        template.convertAndSend(url, salaAsJSON);
+    }
 }

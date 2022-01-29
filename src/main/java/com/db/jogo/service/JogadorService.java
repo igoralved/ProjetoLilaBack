@@ -10,9 +10,10 @@ import org.springframework.dao.DataAccessException;
 import com.db.jogo.model.Jogador;
 
 public interface JogadorService {
-	
+
 	Optional<Jogador> findById(UUID id) throws DataAccessException;
 	Jogador saveJogador(Jogador jogador) throws DataAccessException;
+	int totalJogadores();
+	Iterable<Jogador> findAll();
+	Boolean podeJogar();
 }
-
-

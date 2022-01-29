@@ -58,8 +58,8 @@ INSERT INTO baralho(
  ('fd039d09-d5d4-4eed-9a24-a6e6acff67f3','false', 'Genérica','Joyce C. S. Bastos (TCC)', 'Promova a interação e convivência de pessoas com e sem deficiência.', 'Ação', '1', '2', '3'),
  ('cbbac91b-f3f1-4780-b079-17fadb445cf9','false', 'Genérica', ' Programa de Inclusão DBServer', 'Antes da contratação, percorra as dependências da empresa com a pessoa para identificar pontos de dificuldades de acesso.', 'Ação', '2', '1', '3');
   
-  INSERT INTO carta_objetivo( id,categoria, classificacao, descricao, pontos)
-	VALUES ( 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261','FISICA', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Física ao final da partida','Um dos seus
+ INSERT INTO carta_objetivo( id,categoria, classificacao, descricao, pontos)
+    VALUES ( 'c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261','FISICA', 'Ganhe 3 pontos se você tiver a maior quantidade de cartas da categoria Física ao final da partida','Um dos seus
 funcionários passou a usar cadeira de rodas.','3') ,
 
 ('28230274-13a0-48ac-a393-188cf38cd5e8', 'FISICA ', 'Ganhe 1 ponto por cada carta que você tiver da categoria Física ao final da partida', 'Uma das suas amigas quebrouo braço.', '1'),
@@ -92,96 +92,311 @@ funcionários.', '1'),
 
 ('04e501a8-e6a4-4ab5-84aa-1d76df1f62dc', 'CARTA DE INFORMAÇÃO', 'Ganhe 2 pontos se você tiver alguma carta de informação ao final da partida', 'Você é responsável pelo newsletter da empresa', '2');
   
+
+INSERT INTO
+        carta_inicio(id, descricao, nome)
+VALUES
+        (
+                '5c425302-96e8-4c79-b576-8641aed0196e',
+                'Inicia o jogo quem tiver usado um recurso de acessibilidade mais recentemente',
+                'RECURSO DE ACESSIBILIDADE'
+        ),
+        (
+                '09eb905b-2be5-4bfd-95b6-3ea1f3c4e356',
+                'Inicia o jogo quem tiver quebrado um membro mais recentemente',
+                'MEMBRO QUEBRADO'
+        ),
+        (
+                'b354be94-dc3a-445b-a981-b09bb3cef252',
+                'Inicia o jogo quem soletrar seu nome em Libras mais rápido',
+                'NOME EM LIBRAS'
+        ),
+        (
+                '5c541ba0-25eb-4225-ab5b-e93fcf50c503',
+                'Inicia o jogo quem participou de uma palestra / capacitação
+sobre inclusão mais recentemente',
+                'PALESTRA OU CAPACITAÇÃO'
+        ),
+        (
+                'c769913a-1c98-4a9b-92f4-2f7dfcbf98ba',
+                'Inicia o jogo quem citar uma série / filme com um personagem com
+deficiência primeiro',
+                'FILME OU SÉRIE'
+        ),
+        (
+                '583429a1-f727-481f-8bb0-8fd6365180b7',
+                'Inicia o jogo quem começou a usar óculos mais cedo que os demais',
+                'USO DE ÓCULOS'
+        ),
+        (
+                '26b36506-6351-48f8-b2e3-bbb729f1e790',
+                'Inicia o jogo quem conversou com uma pessoa com deficiência
+mais recentemente',
+                'CONVERSA COM DEFICIENTE RECENTE'
+        ),
+        (
+                '03b52ad9-474a-4499-bd8e-6a9cb9581a43',
+                'Inicia o jogo quem conversou mais recentemente com uma pessoa com deficiência, sobre algo SEM relação com deficiência',
+                'CONVERSA COM DEFICIENTE'
+        );
+
+INSERT INTO
+        baralho_cartainicio(baralho_id, cartainicio_id)
+VALUES
+(
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '5c425302-96e8-4c79-b576-8641aed0196e'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '09eb905b-2be5-4bfd-95b6-3ea1f3c4e356'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'b354be94-dc3a-445b-a981-b09bb3cef252'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '5c541ba0-25eb-4225-ab5b-e93fcf50c503'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'c769913a-1c98-4a9b-92f4-2f7dfcbf98ba'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '583429a1-f727-481f-8bb0-8fd6365180b7'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '26b36506-6351-48f8-b2e3-bbb729f1e790'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '03b52ad9-474a-4499-bd8e-6a9cb9581a43'
+        );
+
+INSERT INTO
+        baralho_cartadojogo(baralho_id, cartadojogo_id)
+VALUES
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'd5c04bec-d0c0-414a-b160-6383c437267f'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'bb1ebadf-50c8-463c-8eb3-6f3998a466f3'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '72a75c88-eb6d-4907-8e56-9ade773be768'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '23597b56-4d1e-4bab-a378-f0bee0670c21'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '63eb9c0f-4322-481c-9609-c10da6625670'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'a3fecf8b-4e47-4c10-9159-0a0450d19fee'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '49c9b1af-d4b2-4bbe-8da3-d8197c8c4e74'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'ba7248cf-ae38-462b-b04a-75ee18e6aa2b'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'ea374b03-c5a8-4b7e-8126-740e3c2d93ae'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '775c7b9f-6ce2-4919-8696-c751dd322ac3'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '6d66bf26-ca3b-477a-8c21-0b524939f54d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '67bd2c4c-510e-4ed9-8097-667de830a0fb'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '4cbd300f-356f-4dc5-9e19-723f265e316c'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'cbf85483-c366-44cc-b87f-199c31a4b6ee'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '59fdea46-98c1-4bc8-b9f5-94c6d0e125e7'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'aa2a80cb-5373-4266-b2db-c7ffe320ed8a'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '70bc6f2a-1708-44e2-8176-eb328fcf6c6d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'cf457d7f-5077-4b88-924b-dc082797a4dd'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '87de0d7c-f7fb-409a-bca4-2e499593d1cf'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '9becbe7a-f825-4e22-81c0-4aa37111f35c'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '34dda9d2-9a49-42b0-bece-34de496f2275'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '661556c2-7c71-4d26-a170-c89e45b9b151'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '9a65d81b-25c4-46ae-be97-0ce9c2d615ba'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'd5adaa3e-d87c-4142-a1b8-db5fd208def4'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '830365f5-61b8-4ba0-bbe1-dd98d646139d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '0ce10c1c-a755-4681-9ea8-cebdd91a3d1a'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '2cf6543e-206c-4d25-bf74-c3b90cf16965'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '3beadf41-2959-4ab4-90cb-9569d0c5c62a'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '0e093f20-090c-4e2b-86cb-db82d9e647dd'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '0c418bab-eb8c-4fc1-91db-3e4edd4d2521'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '097a9142-e7fc-48ad-b4e9-b67c07cb73e1'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'cbe1f577-391a-4295-b014-b88934477918'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'f4382737-9a2b-4312-947d-7a35cba05757'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '6d550a16-c7ee-44ce-a451-7db033bf1cbe'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'fa2e82e2-477e-423c-9b21-5da1ec9ecad1'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'f6064e66-38fd-4b24-aa16-99527693ad5d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'f1731854-493f-4d39-8745-39ce48002e98'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'df5a10d6-e930-492a-865b-ea4b1825f0a2'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '60251f82-a52a-4f8b-a0f3-109bc6b61dd2'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '4f58247d-8639-48bc-97c8-d0648544ce0c'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '85d80193-42ae-4a8a-9e9e-dd9e47ea42d2'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '7fbd6d65-afec-4610-8e9a-222c753fc1b1'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '4053b7c3-6504-4c75-b064-c150dddbf467'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'b1efd9c4-36ac-4354-b42e-211c5302936d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '2f1eb2ad-e6ac-4d1d-bef0-3c5c2bf77fce'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '7cbd73e3-fcc8-4d54-8d04-d0ef86a6aef0'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '532c5bc9-9516-4bd4-9eb1-9565ec20ee12'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'f1c63293-62bf-4b33-85aa-a3109b69f56d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'e9100e2c-5e4b-42d4-951e-fdf1f52ddf81'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'dcfb3ae5-6ebe-44ce-bd62-30780203024d'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '170a8d26-5b2c-4cb2-8ccd-3889616bcfaf'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                '9b9dad58-a793-44f2-bf9c-418d02f6ed27'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'fd039d09-d5d4-4eed-9a24-a6e6acff67f3'
+        ),
+        (
+                'a28ebdb0-d3bc-4220-9814-9a743a4d829e',
+                'cbbac91b-f3f1-4780-b079-17fadb445cf9'
+        );
+
   
-INSERT INTO carta_inicio(id, descricao, nome)
-
-VALUES ('5c425302-96e8-4c79-b576-8641aed0196e','Inicia o jogo quem tiver usado um recurso de acessibilidade mais recentemente', 'RECURSO DE ACESSIBILIDADE'),
-
-('09eb905b-2be5-4bfd-95b6-3ea1f3c4e356','Inicia o jogo quem tiver quebrado um membro mais recentemente','MEMBRO QUEBRADO'),
-
-('b354be94-dc3a-445b-a981-b09bb3cef252','Inicia o jogo quem soletrar seu nome em Libras mais rápido', 'NOME EM LIBRAS'),
-
-('5c541ba0-25eb-4225-ab5b-e93fcf50c503','Inicia o jogo quem participou de uma palestra / capacitação
-sobre inclusão mais recentemente', 'PALESTRA OU CAPACITAÇÃO'),
-
-('c769913a-1c98-4a9b-92f4-2f7dfcbf98ba','Inicia o jogo quem citar uma série / filme com um personagem com
-deficiência primeiro', 'FILME OU SÉRIE'),
-
-('583429a1-f727-481f-8bb0-8fd6365180b7','Inicia o jogo quem começou a usar óculos mais cedo que os demais', 'USO DE ÓCULOS'),
-
-('26b36506-6351-48f8-b2e3-bbb729f1e790','Inicia o jogo quem conversou com uma pessoa com deficiência
-mais recentemente', 'CONVERSA COM DEFICIENTE RECENTE'),
-
-('03b52ad9-474a-4499-bd8e-6a9cb9581a43','Inicia o jogo quem conversou mais recentemente com uma pessoa com deficiência, sobre algo SEM relação com deficiência', 'CONVERSA COM DEFICIENTE');
-
-  INSERT INTO baralho_cartainicio(
-	baralho_id, cartainicio_id)
-	VALUES('a28ebdb0-d3bc-4220-9814-9a743a4d829e','5c425302-96e8-4c79-b576-8641aed0196e'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','09eb905b-2be5-4bfd-95b6-3ea1f3c4e356'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','b354be94-dc3a-445b-a981-b09bb3cef252'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','5c541ba0-25eb-4225-ab5b-e93fcf50c503'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','c769913a-1c98-4a9b-92f4-2f7dfcbf98ba'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','583429a1-f727-481f-8bb0-8fd6365180b7'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','26b36506-6351-48f8-b2e3-bbb729f1e790'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e','03b52ad9-474a-4499-bd8e-6a9cb9581a43');
-
-INSERT INTO baralho_cartadojogo(
-	baralho_id, cartadojogo_id)
-	VALUES ('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'd5c04bec-d0c0-414a-b160-6383c437267f'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'bb1ebadf-50c8-463c-8eb3-6f3998a466f3'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '72a75c88-eb6d-4907-8e56-9ade773be768'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '23597b56-4d1e-4bab-a378-f0bee0670c21'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '63eb9c0f-4322-481c-9609-c10da6625670'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'a3fecf8b-4e47-4c10-9159-0a0450d19fee'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '49c9b1af-d4b2-4bbe-8da3-d8197c8c4e74'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'ba7248cf-ae38-462b-b04a-75ee18e6aa2b'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'ea374b03-c5a8-4b7e-8126-740e3c2d93ae'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '775c7b9f-6ce2-4919-8696-c751dd322ac3'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '6d66bf26-ca3b-477a-8c21-0b524939f54d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '67bd2c4c-510e-4ed9-8097-667de830a0fb'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '4cbd300f-356f-4dc5-9e19-723f265e316c'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'cbf85483-c366-44cc-b87f-199c31a4b6ee'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '59fdea46-98c1-4bc8-b9f5-94c6d0e125e7'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'aa2a80cb-5373-4266-b2db-c7ffe320ed8a'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '70bc6f2a-1708-44e2-8176-eb328fcf6c6d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'cf457d7f-5077-4b88-924b-dc082797a4dd'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '87de0d7c-f7fb-409a-bca4-2e499593d1cf'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '9becbe7a-f825-4e22-81c0-4aa37111f35c'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '34dda9d2-9a49-42b0-bece-34de496f2275'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '661556c2-7c71-4d26-a170-c89e45b9b151'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '9a65d81b-25c4-46ae-be97-0ce9c2d615ba'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'd5adaa3e-d87c-4142-a1b8-db5fd208def4'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '830365f5-61b8-4ba0-bbe1-dd98d646139d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '0ce10c1c-a755-4681-9ea8-cebdd91a3d1a'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '2cf6543e-206c-4d25-bf74-c3b90cf16965'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '3beadf41-2959-4ab4-90cb-9569d0c5c62a'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '0e093f20-090c-4e2b-86cb-db82d9e647dd'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '0c418bab-eb8c-4fc1-91db-3e4edd4d2521'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '097a9142-e7fc-48ad-b4e9-b67c07cb73e1'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'cbe1f577-391a-4295-b014-b88934477918'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'f4382737-9a2b-4312-947d-7a35cba05757'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '6d550a16-c7ee-44ce-a451-7db033bf1cbe'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'fa2e82e2-477e-423c-9b21-5da1ec9ecad1'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'f6064e66-38fd-4b24-aa16-99527693ad5d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'f1731854-493f-4d39-8745-39ce48002e98'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'df5a10d6-e930-492a-865b-ea4b1825f0a2'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '60251f82-a52a-4f8b-a0f3-109bc6b61dd2'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '4f58247d-8639-48bc-97c8-d0648544ce0c'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '85d80193-42ae-4a8a-9e9e-dd9e47ea42d2'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '7fbd6d65-afec-4610-8e9a-222c753fc1b1'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '4053b7c3-6504-4c75-b064-c150dddbf467'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'b1efd9c4-36ac-4354-b42e-211c5302936d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '2f1eb2ad-e6ac-4d1d-bef0-3c5c2bf77fce'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '7cbd73e3-fcc8-4d54-8d04-d0ef86a6aef0'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '532c5bc9-9516-4bd4-9eb1-9565ec20ee12'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'f1c63293-62bf-4b33-85aa-a3109b69f56d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'e9100e2c-5e4b-42d4-951e-fdf1f52ddf81'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'dcfb3ae5-6ebe-44ce-bd62-30780203024d'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '170a8d26-5b2c-4cb2-8ccd-3889616bcfaf'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', '9b9dad58-a793-44f2-bf9c-418d02f6ed27'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'fd039d09-d5d4-4eed-9a24-a6e6acff67f3'),
-('a28ebdb0-d3bc-4220-9814-9a743a4d829e', 'cbbac91b-f3f1-4780-b079-17fadb445cf9');
- 
   INSERT INTO baralho_cartaobjetivo(
 	baralho_id, cartaobjetivo_id)
 	VALUES ('a28ebdb0-d3bc-4220-9814-9a743a4d829e','c15aafd2-8f1f-4863-9a9d-4bfe8c2d3261'),

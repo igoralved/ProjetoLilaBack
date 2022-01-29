@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -82,7 +81,7 @@ public class WebSocketControllerTest {
         baralho.setId(UUID.randomUUID());
         baralho.setTitulo("Teste");
         baralho.setDescricao("Exemplo");
-        baralho.setCartaInicio(new ArrayList<>());
+        baralho.setCartasInicio(new ArrayList<>());
         baralho.adicionarCartaDoInicio(cartaInicio);
         baralho.setCartasDoJogo(new ArrayList<>());
         baralho.adicionarCartadoJogo(carta);
@@ -96,7 +95,7 @@ public class WebSocketControllerTest {
         jogador.setBonusCoracaoPeq(2);
         jogador.setCoracaoGra(5);
         jogador.setCoracaoPeq(3);
-        jogador.setCartasDoJogo(new ArrayList());
+        jogador.setCartasDoJogo(new ArrayList<>());
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -107,7 +106,7 @@ public class WebSocketControllerTest {
         jogador2.setBonusCoracaoPeq(2);
         jogador2.setCoracaoGra(5);
         jogador2.setCoracaoPeq(3);
-        jogador2.setCartasDoJogo(new ArrayList());
+        jogador2.setCartasDoJogo(new ArrayList<>());
         jogador2.adicionaCarta(carta);
         jogador2.adicionaObjetivo(cartaObjetivo);
 
@@ -134,12 +133,12 @@ public class WebSocketControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(jogador);
         this.mockMvc.perform(post("/api/iniciar")
-                        .content(jogadorAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andExpect(status().isOk());
+                .content(jogadorAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
-  
+
     @Test
     @DisplayName("Teste para conectar outro jogador")
     void testConectar() throws Exception{
@@ -165,10 +164,26 @@ public class WebSocketControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jogadorAsJSON = mapper.writeValueAsString(null);
         this.mockMvc.perform(post("/api/iniciar")
-                        .content(jogadorAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andExpect(status().isBadRequest());
+                .content(jogadorAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    @DisplayName("Teste para sucesso na conexão")
+    void tesaConexaoComSucesso() throws Exception {
+        Jogador jogador = new Jogador();
+        Sala sala = new Sala();
+        given(webSocketServiceImpl.conectarJogo(jogador, sala.getHash())).willReturn(salaResponse);
+        ObjectMapper mapper = new ObjectMapper();
+        String newConexaoAsJson = mapper.writeValueAsString(salaResponse);
+        this.mockMvc.perform(post("/api/conectar")
+                .content(newConexaoAsJson)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -181,10 +196,10 @@ public class WebSocketControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String newConexaoAsJSON = mapper.writeValueAsString(null);
         this.mockMvc.perform(post("/api/conectar")
-                        .content(newConexaoAsJSON)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andExpect(status().isBadRequest());
+                .content(newConexaoAsJSON)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest());
     }
     
 //    @Test
