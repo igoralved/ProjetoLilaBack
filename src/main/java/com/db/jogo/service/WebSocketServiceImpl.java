@@ -70,37 +70,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		/*---Inicio da Lógica de Comprar Carta----*/
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
 						
-						//Veririfica se jogador comprou alguma carta
-						if(this.jogador.getCartasDoJogo().size() ==	salaFront
-																	.getJogadores()
-																	.get(index).getCartasDoJogo().size()) {
-							
-							return salaParaAtualizar;
-							
-						}else if(this.jogador.getCartasDoJogo().isEmpty()){
-							if(!salaParaAtualizar.get()
-									.getBaralho()
-									.getCartasDoJogo()
-									.contains(salaFront
-											.getJogadores()
-											.get(index)
-											.getCartasDoJogo()
-												.get(0))) {
-								
-								return salaParaAtualizar;
-							}
-							
-						}else if(!salaParaAtualizar.get()
-								.getBaralho()
-								.getCartasDoJogo()
-								.contains(salaFront
-										.getJogadores()
-										.get(index)
-										.getCartasDoJogo()
-											.get(this.jogador.getCartasDoJogo().size()))) {
-							
-							return salaParaAtualizar;
-						}
+						
 						// captura qual carta o jogador comprou
 						cartaComprada = procuraCartaComprada(salaFront);
 
