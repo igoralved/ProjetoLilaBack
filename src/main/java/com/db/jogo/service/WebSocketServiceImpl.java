@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -165,6 +166,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 		SalaResponse salaResp = new SalaResponse();
 		Jogador savedJogador = jogadorService.saveJogador(criarPrimeiroJogador(jogador));
 		Baralho baralho = baralhoService.findByCodigo("Clila").get();
+		Collections.shuffle(baralho.getCartasDoJogo());
+		Collections.shuffle(baralho.getCartasInicio());
+		Collections.shuffle(baralho.getCartasObjetivo());
 		sala.setId(UUID.randomUUID());
 		sala.setBaralho(baralho);
 		sala.setJogadores(new ArrayList<>());
@@ -260,8 +264,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
-					
-
 					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 
 				}
@@ -323,8 +325,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
 
 					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
-
-					
 
 					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 
