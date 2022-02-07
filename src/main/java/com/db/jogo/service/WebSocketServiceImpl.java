@@ -137,6 +137,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 				if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_JOGADA)) {
 					if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
 						salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+						//Colocar método para destruir as cartas restantes do jogo
 					}
 				}
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
@@ -165,15 +166,16 @@ public class WebSocketServiceImpl implements WebSocketService {
 		Sala sala = new Sala();
 		SalaResponse salaResp = new SalaResponse();
 		Jogador savedJogador = jogadorService.saveJogador(criarPrimeiroJogador(jogador));
-		Baralho baralho = baralhoService.findByCodigo("Clila").get();
+		Baralho baralho = criarBaralho();
 		Collections.shuffle(baralho.getCartasDoJogo());
 		Collections.shuffle(baralho.getCartasInicio());
 		Collections.shuffle(baralho.getCartasObjetivo());
 		sala.setId(UUID.randomUUID());
-		sala.setBaralho(baralho);
 		sala.setJogadores(new ArrayList<>());
 		sala.adicionarJogador(savedJogador);
 		sala.setHash(sala.generateHash());
+		baralho.setCodigo(sala.getHash());
+		sala.setBaralho(baralho);
 		sala.setDado(0);
 		salaResp.setJogador(savedJogador);
 		sala.setStatus(StatusEnum.AGUARDANDO);
@@ -200,6 +202,23 @@ public class WebSocketServiceImpl implements WebSocketService {
 		}
 		return cartaComprada;
 
+	}
+	
+		private Baralho criarBaralho(){
+		
+		Baralho baralho = baralhoService.findByCodigo("Clila").get();
+		Baralho baralhoCopy = new Baralho();
+		
+		baralhoCopy.setCartasDoJogo(baralho.getCartasDoJogo());
+		baralhoCopy.setCartasInicio(baralho.getCartasInicio());
+		baralhoCopy.setCartasObjetivo(baralho.getCartasObjetivo());
+		baralhoCopy.setCodigo("Clila");
+		baralhoCopy.setDescricao(baralho.getDescricao());
+		baralhoCopy.setTitulo(baralho.getTitulo());
+		baralhoCopy.setId(UUID.randomUUID());
+		System.out.println(baralhoCopy);
+		
+		return baralhoService.saveBaralho(baralhoCopy);
 	}
 
 	public Jogador criarPrimeiroJogador(Jogador jogador) {
