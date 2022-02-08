@@ -14,7 +14,7 @@ public interface WebSocketService {
 
      SalaResponse conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException;
 
-     Jogador criarJogador(Jogador jogador);
+     Jogador criarJogador(Jogador jogador, Integer num);
      
      CartaDoJogo criarCartaDoJogo();
      

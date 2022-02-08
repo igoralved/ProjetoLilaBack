@@ -16,4 +16,6 @@ public interface JogadorService {
 	int totalJogadores();
 	Iterable<Jogador> findAll();
 	Boolean podeJogar();
+	
+	Jogador findByIndex(Integer index)throws DataAccessException;
 }

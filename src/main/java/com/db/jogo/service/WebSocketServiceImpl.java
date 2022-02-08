@@ -227,18 +227,20 @@ public class WebSocketServiceImpl implements WebSocketService {
 		jogador.setCoracaoPeq(2);
 		jogador.setCoracaoGra(0);
 		jogador.setPontos(0);
+		jogador.setIndex(1);
 		jogador.setIshost(true);
 		jogador.setNome(jogador.getNome());
 		jogador.setStatus(StatusEnumJogador.JOGANDO);
 		return jogador;
 	}
 
-	public Jogador criarJogador(Jogador jogador) {
+	public Jogador criarJogador(Jogador jogador, Integer num) {
 		jogador.setBonusCoracaoPeq(0);
 		jogador.setBonusCoracaoGra(0);
 		jogador.setCoracaoPeq(2);
 		jogador.setCoracaoGra(0);
 		jogador.setPontos(0);
+		jogador.setIndex(num);
 		jogador.setIshost(false);
 		jogador.setNome(jogador.getNome());
 		jogador.setStatus(StatusEnumJogador.ESPERANDO);
@@ -389,7 +391,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 			if (sala.get().getStatus() == StatusEnum.FINALIZADO) {
 				throw new JogoInvalidoException("Jogo ja foi finalizado");
 			}
-			Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador));
+			Jogador savedJogador = jogadorService.saveJogador(criarJogador(jogador,sala.get().getJogadores().size()+1 ));
 			sala.get().adicionarJogador(savedJogador);
 
 			salaResp.setJogador(savedJogador);

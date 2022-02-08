@@ -32,6 +32,9 @@ public class Jogador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
+	
+	@Column(name = "index", length = 10, nullable = false)
+	private Integer index;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "jogador_cartadojogo", joinColumns = {
