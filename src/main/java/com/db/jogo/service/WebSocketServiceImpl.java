@@ -34,6 +34,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 	private CartaDoJogoService cartaService;
 	private Integer indexDoProximoJogador;
 	private Jogador jogador;
+	private CartaDoJogo cartaComprada;
 
 	@Autowired
 	private WebSocketServiceImpl(SalaService salaService, BaralhoService baralhoService, JogadorService jogadorService,
@@ -44,6 +45,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		this.template = template;
 		this.cartaService = cartaService;
 		this.jogador = new Jogador();
+		this.cartaComprada = new CartaDoJogo();
 	}
 
 	public Optional<Sala> comprarCartaDoJogo(Sala salaFront) throws IllegalArgumentException {
@@ -52,7 +54,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 		if (salaParaAtualizar.get().getStatus().equals(StatusEnum.FINALIZADO)) {
 			salaParaAtualizar.get().setDado(0);
-			return Optional.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
+			return salaParaAtualizar;
 		}
 
 		try {
@@ -65,16 +67,18 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 					// verifica qual o jogador da vez
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
+						
+						//Verifica se jogador comprou uma carta
 						if(this.jogador.getCartasDoJogo().size() == salaFront.getJogadores().get(index).getCartasDoJogo().size()){
 							this.sendSala(salaParaAtualizar.get());
 							return salaParaAtualizar;
 						}
 						/*---Inicio da Lógica de Comprar Carta----*/
-						CartaDoJogo cartaComprada = criarCartaDoJogo();
 
 						// captura qual carta o jogador comprou
-						cartaComprada = procuraCartaComprada(salaFront);
-
+						this.cartaComprada = procuraCartaComprada(salaFront);
+						
+						//verifica se a carta não é nula ou já esta na mão do jogador
 						if (cartaComprada.getId() == null) {
 							this.sendSala(salaParaAtualizar.get());
 							return salaParaAtualizar;
@@ -89,7 +93,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 
 						// valida se o jogador pode comprar a carta
-						if (RegrasDoJogo.validaCompraCarta(this.jogador, cartaComprada)) {
+						if (RegrasDoJogo.validaCompraCarta(jogadorParaAtualizar.get(), cartaComprada)) {
 							// Seta os pontos da carta no jogador
 							jogadorParaAtualizar.get()
 									.setPontos(jogadorParaAtualizar.get().getPontos() + cartaComprada.getPontos());
@@ -111,7 +115,12 @@ public class WebSocketServiceImpl implements WebSocketService {
 							} else {
 								salaParaAtualizar.get().setDado(0);
 							}
+							
 							//Seta estado da sala para ultima rodada
+							 if(jogadorParaAtualizar.get().getPontos() >= 8) {
+								 salaParaAtualizar.get().setStatus(StatusEnum.ULTIMA_RODADA);
+						        }
+							 
 							// Salva a carta no jogador
 							Optional<CartaDoJogo> cartaParaAtualizarNoJogador = this.cartaService
 									.findById(cartaComprada.getId());
@@ -128,15 +137,22 @@ public class WebSocketServiceImpl implements WebSocketService {
 							}
 
 							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
-							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
+							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaParaAtualizarNoJogador.get());
+							//RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador, salaParaAtualizar.get());
+							if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
+								if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
+									salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+								}
+							}
 						}
 
-						RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogadorParaAtualizar.get(), salaParaAtualizar.get());
-
+						
 						/*---*Fim da Lógica para Adicionar a Carta*----*/
 					
 					}
+		
 				}
+				
 				
 					for(Jogador jog : salaParaAtualizar.get().getJogadores()) {
 						if(jog.getPosicao() == this.indexDoProximoJogador) {
@@ -144,21 +160,18 @@ public class WebSocketServiceImpl implements WebSocketService {
 						}
 					}
 				
+		//TODO: Colocar método para destruir as cartas restantes do jogo
 				
-				if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-					if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
-						salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
-						//TODO: Colocar método para destruir as cartas restantes do jogo
-					}
-				}
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
 						this.salaService.saveSala(salaParaAtualizar.get()));
 
 				// envia a sala para todos os jogadores conectados a sala
 				if (salaRetornoDoSaveNoBanco.isPresent()) {
-					sendSala(salaRetornoDoSaveNoBanco.get());
-					// retorna sala que foi salva no banco
+					this.template.convertAndSend("/gameplay/game-update/" + salaRetornoDoSaveNoBanco.get().getHash(),
+							salaRetornoDoSaveNoBanco.get());
+
 					return salaRetornoDoSaveNoBanco;
+
 				}
 
 			}
@@ -196,22 +209,22 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 	private CartaDoJogo procuraCartaComprada(Sala sala) throws CartaCompradaInvalidaException {
 
-		CartaDoJogo cartaComprada = new CartaDoJogo();
+		CartaDoJogo carta = new CartaDoJogo();
 
 		for (Jogador jogador : sala.getJogadores()) {
 			if (jogador.getStatus() == StatusEnumJogador.JOGANDO) {
 				try {
-					Integer numCartaComprada = jogador.getCartasDoJogo().size() - 1;
-					if (numCartaComprada >= 0) {
-						cartaComprada = jogador.getCartasDoJogo().get(numCartaComprada);
+					Integer posicaoCartaComprada = jogador.getCartasDoJogo().size() - 1;
+					if (posicaoCartaComprada >= 0) {
+						carta = jogador.getCartasDoJogo().get(posicaoCartaComprada);
 					}
-					return cartaComprada;
+					return carta;
 				} catch (Exception e) {
 					throw new CartaCompradaInvalidaException("Carta Não encontrada na base de dados");
 				}
 			}
 		}
-		return cartaComprada;
+		return carta;
 
 	}
 	
@@ -297,16 +310,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
 					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
-
+					
+					if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
+						if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
+							salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+						}
+					}
 				}
 			}
 			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
-
-			if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-				if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
-					salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
-				}
-			}
 
 			Optional<Sala> salaRetornoDoSaveNoBanco = Optional
 					.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
@@ -359,18 +371,16 @@ public class WebSocketServiceImpl implements WebSocketService {
 					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
 
 					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+					if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
+						if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
+							salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+						}
+					}
 
 				}
 			}
 
 			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
-
-			if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-
-				if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
-					salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
-				}
-			}
 
 			Optional<Sala> salaRetornoDoSaveNoBanco = Optional
 					.ofNullable(this.salaService.saveSala(salaParaAtualizar.get()));
