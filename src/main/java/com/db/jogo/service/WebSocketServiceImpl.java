@@ -65,7 +65,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 					// verifica qual o jogador da vez
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-
+						if(this.jogador.getCartasDoJogo().size() == salaFront.getJogadores().get(index).getCartasDoJogo().size()){
+							this.sendSala(salaParaAtualizar.get());
+							return salaParaAtualizar;
+						}
 						/*---Inicio da Lógica de Comprar Carta----*/
 						CartaDoJogo cartaComprada = criarCartaDoJogo();
 
@@ -73,6 +76,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 						cartaComprada = procuraCartaComprada(salaFront);
 
 						if (cartaComprada.getId() == null) {
+							this.sendSala(salaParaAtualizar.get());
+							return salaParaAtualizar;
+						}else if(this.jogador.getCartasDoJogo().contains(cartaComprada)){
+							this.sendSala(salaParaAtualizar.get());
 							return salaParaAtualizar;
 						}
 
@@ -141,7 +148,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 				if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
 					if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
 						salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
-						//Colocar método para destruir as cartas restantes do jogo
+						//TODO: Colocar método para destruir as cartas restantes do jogo
 					}
 				}
 				Optional<Sala> salaRetornoDoSaveNoBanco = Optional.ofNullable(
@@ -159,7 +166,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Jogada Não pode ser processada!! ", e);
 		}
-
+		
 		return salaParaAtualizar;
 	}
 
