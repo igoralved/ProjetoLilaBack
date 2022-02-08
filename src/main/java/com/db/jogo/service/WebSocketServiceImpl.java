@@ -111,7 +111,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							} else {
 								salaParaAtualizar.get().setDado(0);
 							}
-
+							//Seta estado da sala para ultima rodada
 							// Salva a carta no jogador
 							Optional<CartaDoJogo> cartaParaAtualizarNoJogador = this.cartaService
 									.findById(cartaComprada.getId());
@@ -131,7 +131,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaComprada);
 						}
 
-						RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador, salaParaAtualizar.get());
+						RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogadorParaAtualizar.get(), salaParaAtualizar.get());
 
 						/*---*Fim da Lógica para Adicionar a Carta*----*/
 					

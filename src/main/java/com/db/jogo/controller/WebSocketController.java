@@ -102,8 +102,7 @@ public class WebSocketController {
         if (sala.getSala() == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Integer i = webSocketServiceImpl.getQuantidadeJogadores(request.getHash());
-
+        
         try {
             webSocketServiceImpl.sendSala(sala.getSala()); // envia a sala para o websocket
             return new ResponseEntity<>(sala, HttpStatus.OK);

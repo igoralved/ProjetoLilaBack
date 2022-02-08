@@ -41,8 +41,6 @@ class CartaObjetivoControllerTest {
 	@Test
 	@DisplayName("Teste do POST do Controller do Carta Objetivo")
 	public void testCriacaoCartaObjetivo() throws Exception {
-		CartaObjetivoServiceImpl cartaObjetivoService;
-
 		CartaObjetivo newCartaObjetivo = CartaObjetivo.builder().id(UUID.randomUUID())
 				.classificacao("Deficiencia Visual").categoria("Filmes").pontos(1).descricao("Exemplo descrição")
 				.build();

@@ -34,7 +34,6 @@ private CartaInicioService cartaService;
 
 	 @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<CartaInicio> saveCartaInicio(@RequestBody @Validated CartaInicio cartaInicio ,BindingResult bindingResult){
-    	Optional<CartaInicio> cartaInicioParaSalvar=Optional.of(cartaInicio);
     	if(bindingResult.hasErrors()) {
     		return new ResponseEntity<CartaInicio>(cartaInicio, HttpStatus.BAD_REQUEST);
     	}

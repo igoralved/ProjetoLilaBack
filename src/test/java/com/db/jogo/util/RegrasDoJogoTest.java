@@ -140,7 +140,6 @@ class RegrasDoJogoTest {
 	void testValidaJogadorComMenosDeOitoPontos() {
 		jogador.setPontos(6);
 		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
-		// TODO: Aguardando método que altera status do jogo para alterar status de NOVO para JOGANDO.
 		assertEquals("NOVO", sala.getStatus().name());
 	}
 }
