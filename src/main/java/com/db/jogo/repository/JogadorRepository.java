@@ -9,5 +9,5 @@ import com.db.jogo.model.Jogador;
 
 @Repository
 public interface JogadorRepository extends JpaRepository<Jogador, UUID> {
- public Jogador findByIndex(Integer index);
+
 }

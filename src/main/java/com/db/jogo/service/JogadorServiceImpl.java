@@ -86,9 +86,4 @@ public class JogadorServiceImpl implements JogadorService {
 		return numeroJogadores >= 2 && numeroJogadores <= 6;
 	}
 
-	@Override
-	public Jogador findByIndex(Integer index) throws DataAccessException {
-		return this.jogadorRepository.findByIndex(index);
-	}
-
 }

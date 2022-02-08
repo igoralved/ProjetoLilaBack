@@ -91,7 +91,7 @@ create table baralho_cartaobjetivo (
     
 create table jogador (
      id uuid not null,
-     index int4 not null,
+     posicao int4 not null,
      bonus_coracao_gra int4 not null,
      bonus_coracao_peq int4 not null,
      coracao_gra int4 not null, 

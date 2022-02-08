@@ -76,7 +76,7 @@ public class Sala {
 	}
 
 	public enum StatusEnum {
-		NOVO, JOGANDO, FINALIZADO, AGUARDANDO, ULTIMA_JOGADA
+		NOVO, JOGANDO, FINALIZADO, AGUARDANDO, ULTIMA_RODADA
 
 	}
 

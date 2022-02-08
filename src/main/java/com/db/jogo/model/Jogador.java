@@ -33,8 +33,8 @@ public class Jogador {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@Column(name = "index", length = 10, nullable = false)
-	private Integer index;
+	@Column(name = "posicao", length = 10, nullable = false)
+	private Integer posicao;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "jogador_cartadojogo", joinColumns = {

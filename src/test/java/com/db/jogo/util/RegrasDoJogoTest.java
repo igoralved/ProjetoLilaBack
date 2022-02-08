@@ -132,7 +132,7 @@ class RegrasDoJogoTest {
 	void testValidaJogadorComOitoPontos() {
 		jogador.setPontos(8);
 		RegrasDoJogo.verificaJogadorSeTemOitoPontos(jogador, sala);
-		assertEquals("ULTIMA_JOGADA", sala.getStatus().name());
+		assertEquals("ULTIMA_RODADA", sala.getStatus().name());
 	}
 	
 	@Test

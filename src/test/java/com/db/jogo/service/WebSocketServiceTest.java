@@ -81,6 +81,7 @@ public class WebSocketServiceTest {
         jogador.setBonusCoracaoPeq(0);
         jogador.setCoracaoGra(0);
         jogador.setCoracaoPeq(0);
+        jogador.setPosicao(2);
         jogador.adicionaCarta(carta);
         jogador.adicionaObjetivo(cartaObjetivo);
 
@@ -147,15 +148,15 @@ public class WebSocketServiceTest {
     @Test
     @DisplayName("Teste para criar um jogador")
     void testCriaJogador() {
-        when(webSocketServiceImpl.criarJogador(jogador)).thenReturn(jogador);
-        assertEquals(jogador, webSocketServiceImpl.criarJogador(jogador));
+        when(webSocketServiceImpl.criarJogador(jogador, 2)).thenReturn(jogador);
+        assertEquals(jogador, webSocketServiceImpl.criarJogador(jogador, 2));
     }
 
     @Test
     @DisplayName("Teste para não criar jogador com parametro null")
     void testCriaJogadorComErro()  {
-        when(webSocketServiceImpl.criarJogador(null)).thenReturn(null);
-        assertNull(webSocketServiceImpl.criarJogador(null));
+        when(webSocketServiceImpl.criarJogador(null,null)).thenReturn(null);
+        assertNull(webSocketServiceImpl.criarJogador(null,null));
     }
 
 

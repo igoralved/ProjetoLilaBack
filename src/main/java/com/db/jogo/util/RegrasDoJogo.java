@@ -9,7 +9,7 @@ public abstract class RegrasDoJogo {
 	
 	public static void verificaJogadorSeTemOitoPontos(Jogador jogador, Sala sala) {
         if(jogador.getPontos() >= 8) {
-            sala.setStatus(StatusEnum.ULTIMA_JOGADA);
+            sala.setStatus(StatusEnum.ULTIMA_RODADA);
         }
     }
 	
