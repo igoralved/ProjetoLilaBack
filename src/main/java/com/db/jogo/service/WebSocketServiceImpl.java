@@ -138,11 +138,16 @@ public class WebSocketServiceImpl implements WebSocketService {
 							}
 						
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaParaAtualizarNoJogador.get());
-						
+						//Verifica se o próximo jogador é o que iniciou a partida e encerra a partida
 							if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-								if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
-									salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+								//TODO: aqui error
+								for(Jogador jog : salaParaAtualizar.get().getJogadores()) {
+									if(jog.getPosicao() == this.indexDoProximoJogador && jog.getIshost()) {
+										salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+										break;
+									}
 								}
+						
 							}
 						}
 
