@@ -64,12 +64,13 @@ public class WebSocketServiceImpl implements WebSocketService {
 				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
 
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
+					Jogador jogadorStatusJogandoFront = procuraJogadorJogandoNoFront(salaFront);
 
 					// verifica qual o jogador da vez
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-						
+		
 						//Verifica se jogador comprou uma carta
-						if(this.jogador.getCartasDoJogo().size() == salaFront.getJogadores().get(index).getCartasDoJogo().size()){
+						if(this.jogador.getCartasDoJogo().size() >= jogadorStatusJogandoFront.getCartasDoJogo().size()){
 							this.sendSala(salaParaAtualizar.get());
 							return salaParaAtualizar;
 						}
@@ -79,10 +80,11 @@ public class WebSocketServiceImpl implements WebSocketService {
 						this.cartaComprada = procuraCartaComprada(salaFront);
 						
 						//verifica se a carta não é nula ou já esta na mão do jogador
-						if (cartaComprada.getId() == null) {
+						if (this.cartaComprada.getId() == null) {
 							this.sendSala(salaParaAtualizar.get());
 							return salaParaAtualizar;
-						}else if(this.jogador.getCartasDoJogo().contains(cartaComprada)){
+						}
+						if(this.jogador.getCartasDoJogo().contains(cartaComprada)){
 							this.sendSala(salaParaAtualizar.get());
 							return salaParaAtualizar;
 						}
@@ -97,7 +99,11 @@ public class WebSocketServiceImpl implements WebSocketService {
 							// Seta os pontos da carta no jogador
 							jogadorParaAtualizar.get()
 									.setPontos(jogadorParaAtualizar.get().getPontos() + cartaComprada.getPontos());
-
+							
+						//Seta estado da sala para ultima rodada
+						if(jogadorParaAtualizar.get().getPontos() >= 8) {
+							 salaParaAtualizar.get().setStatus(StatusEnum.ULTIMA_RODADA);
+						  }
 							// Retira os corações da carta do jogador
 							this.jogador = RegrasDoJogo.descontaCoracoes(this.jogador, cartaComprada);
 
@@ -107,7 +113,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 							if (cartaComprada.getBonus()) {
 								// jogador joga o dado
 								Dado dado = new Dado();
-								Jogador jogadorGirouDado = dado.girarDado(cartaComprada, jogadorParaAtualizar.get(),
+								Jogador jogadorGirouDado = dado.girarDado(this.cartaComprada, jogadorParaAtualizar.get(),
 										salaParaAtualizar.get());
 								// jogador é atualizado conforme resultado do dado
 								jogadorParaAtualizar.get().setBonusCoracaoGra(jogadorGirouDado.getBonusCoracaoGra());
@@ -115,15 +121,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 							} else {
 								salaParaAtualizar.get().setDado(0);
 							}
-							
-							//Seta estado da sala para ultima rodada
-							 if(jogadorParaAtualizar.get().getPontos() >= 8) {
-								 salaParaAtualizar.get().setStatus(StatusEnum.ULTIMA_RODADA);
-						        }
 							 
 							// Salva a carta no jogador
 							Optional<CartaDoJogo> cartaParaAtualizarNoJogador = this.cartaService
-									.findById(cartaComprada.getId());
+									.findById(this.cartaComprada.getId());
 
 							jogadorParaAtualizar.get().adicionaCarta(cartaParaAtualizarNoJogador.get());
 							jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
@@ -135,10 +136,9 @@ public class WebSocketServiceImpl implements WebSocketService {
 							} else {
 								this.indexDoProximoJogador = jogadorParaAtualizar.get().getPosicao() + 1;
 							}
-
-							salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+						
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo().remove(cartaParaAtualizarNoJogador.get());
-							//RegrasDoJogo.verificaJogadorSeTemOitoPontos(this.jogador, salaParaAtualizar.get());
+						
 							if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
 								if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
 									salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
@@ -181,6 +181,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 		}
 		
 		return salaParaAtualizar;
+	}
+	
+	public Jogador procuraJogadorJogandoNoFront(Sala sala) {
+		for(Jogador jogadorFront : sala.getJogadores()) {
+			if(jogadorFront.getStatus().equals(StatusEnumJogador.JOGANDO)) {
+				return jogadorFront;
+			}
+		}
+		return null;
 	}
 
 	public SalaResponse criarJogo(Jogador jogador) throws JogoInvalidoException {
