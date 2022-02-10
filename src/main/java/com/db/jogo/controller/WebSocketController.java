@@ -67,8 +67,9 @@ public class WebSocketController {
 				if (bindingResult.hasErrors() || sala == null || sala.getHash() == null) {
 					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 				}
-
+                    
 				try {
+
 					Optional<Sala> salaParaAtualizar = this.webSocketServiceImpl.compraCoracoesGrandes(sala);
 					
 		
