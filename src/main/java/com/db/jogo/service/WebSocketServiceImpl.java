@@ -142,9 +142,10 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 							salaParaAtualizar.get().getBaralho().getCartasDoJogo()
 									.remove(cartaParaAtualizarNoJogador.get());
+							
 							// Verifica se o próximo jogador é o que iniciou a partida e encerra a partida
 							if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-								// TODO: aqui error
+								
 								for (Jogador jog : salaParaAtualizar.get().getJogadores()) {
 									if (jog.getPosicao() == this.indexDoProximoJogador && jog.getIshost()) {
 										salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
@@ -256,7 +257,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		jogador.setBonusCoracaoGra(0);
 		jogador.setCoracaoPeq(2);
 		jogador.setCoracaoGra(0);
-		jogador.setPontos(0);
+		jogador.setPontos(6);
 		jogador.setPosicao(1);
 		jogador.setIshost(true);
 		jogador.setNome(jogador.getNome());
@@ -269,7 +270,7 @@ public class WebSocketServiceImpl implements WebSocketService {
 		jogador.setBonusCoracaoGra(0);
 		jogador.setCoracaoPeq(2);
 		jogador.setCoracaoGra(0);
-		jogador.setPontos(0);
+		jogador.setPontos(6);
 		jogador.setPosicao(num);
 		jogador.setIshost(false);
 		jogador.setNome(jogador.getNome());
@@ -294,36 +295,48 @@ public class WebSocketServiceImpl implements WebSocketService {
 				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
 
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
-
+					
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-
+						
+						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 						RegrasDoJogo.adicionaCoracoesPequenos(jogador);
 
-						if (index >= salaParaAtualizar.get().getJogadores().size() - 1) {
-							this.indexDoProximoJogador = 0;
+						jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
+
+						jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
+
+						if (jogadorParaAtualizar.get().getPosicao() >= salaParaAtualizar.get().getJogadores()
+								.size()) {
+							this.indexDoProximoJogador = 1;
 						} else {
-							this.indexDoProximoJogador = index + 1;
+							this.indexDoProximoJogador = jogadorParaAtualizar.get().getPosicao() + 1;
 						}
+						
+						this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+
+						salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+						
 					}
 
-					Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
-
-					jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
-
-					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
-
-					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
-
-					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 
 					if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-						if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
-							salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+						
+						for (Jogador jog : salaParaAtualizar.get().getJogadores()) {
+							if (jog.getPosicao() == this.indexDoProximoJogador && jog.getIshost()) {
+								salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+								break;
+							}
 						}
 					}
 				}
 			}
-			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+			
+			for (Jogador jog : salaParaAtualizar.get().getJogadores()) {
+				if (jog.getPosicao() == this.indexDoProximoJogador) {
+					jog.setStatus(StatusEnumJogador.JOGANDO);
+				}
+			}
+			
 			salaParaAtualizar.get().setDado(0);
 
 			Optional<Sala> salaRetornoDoSaveNoBanco = Optional
@@ -344,7 +357,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 
 	// CORAÇÃO GRANDE
 	public Optional<Sala> compraCoracoesGrandes(Sala salaFront) throws IllegalArgumentException {
-
 		Optional<Sala> salaParaAtualizar = this.salaService.findSalaByHash(salaFront.getHash());
 
 		try {
@@ -354,36 +366,48 @@ public class WebSocketServiceImpl implements WebSocketService {
 				for (int index = 0; index < salaParaAtualizar.get().getJogadores().size(); index++) {
 
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
-
+					
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-
+						
+						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 						RegrasDoJogo.adicionaCoracoesGrandes(jogador);
 
-						if (index >= salaParaAtualizar.get().getJogadores().size() - 1) {
-							this.indexDoProximoJogador = 0;
+						jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
+
+						jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
+
+						if (jogadorParaAtualizar.get().getPosicao() >= salaParaAtualizar.get().getJogadores()
+								.size()) {
+							this.indexDoProximoJogador = 1;
 						} else {
-							this.indexDoProximoJogador = index + 1;
+							this.indexDoProximoJogador = jogadorParaAtualizar.get().getPosicao() + 1;
 						}
+						
+						this.jogadorService.saveJogador(jogadorParaAtualizar.get());
+
+						salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
+						
 					}
 
-					Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 
-					jogadorParaAtualizar.get().setCoracaoGra(this.jogador.getCoracaoGra());
-
-					jogadorParaAtualizar.get().setStatus(StatusEnumJogador.ESPERANDO);
-
-					this.jogadorService.saveJogador(jogadorParaAtualizar.get());
-
-					salaParaAtualizar.get().getJogadores().set(index, jogadorParaAtualizar.get());
 					if (salaParaAtualizar.get().getStatus().equals(StatusEnum.ULTIMA_RODADA)) {
-						if (salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).getIshost()) {
-							salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+						
+						for (Jogador jog : salaParaAtualizar.get().getJogadores()) {
+							if (jog.getPosicao() == this.indexDoProximoJogador && jog.getIshost()) {
+								salaParaAtualizar.get().setStatus(StatusEnum.FINALIZADO);
+								break;
+							}
 						}
 					}
-
 				}
 			}
-			salaParaAtualizar.get().getJogadores().get(this.indexDoProximoJogador).setStatus(StatusEnumJogador.JOGANDO);
+			
+			for (Jogador jog : salaParaAtualizar.get().getJogadores()) {
+				if (jog.getPosicao() == this.indexDoProximoJogador) {
+					jog.setStatus(StatusEnumJogador.JOGANDO);
+				}
+			}
+			
 			salaParaAtualizar.get().setDado(0);
 
 			Optional<Sala> salaRetornoDoSaveNoBanco = Optional
@@ -392,16 +416,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 			if (salaRetornoDoSaveNoBanco.isPresent()) {
 				this.template.convertAndSend("/gameplay/game-update/" + salaRetornoDoSaveNoBanco.get().getHash(),
 						salaRetornoDoSaveNoBanco.get());
-
 				return salaRetornoDoSaveNoBanco;
 
 			}
-
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Coração não pode ser comprado!! ", e);
 		}
 
 		return salaParaAtualizar;
+	
 	}
 
 	public SalaResponse conectarJogo(Jogador jogador, String hash) throws JogoInvalidoException {
