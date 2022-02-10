@@ -297,8 +297,15 @@ public class WebSocketServiceImpl implements WebSocketService {
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
 					
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-						
+						Jogador jogadorStatusJogandoFront = procuraJogadorJogandoNoFront(salaFront);
+
+						if (!jogadorStatusJogandoFront.getNome().equals(this.jogador.getNome())) {
+							this.sendSala(salaParaAtualizar.get());
+							return salaParaAtualizar;
+						}
+
 						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
+
 						RegrasDoJogo.adicionaCoracoesPequenos(jogador);
 
 						jogadorParaAtualizar.get().setCoracaoPeq(this.jogador.getCoracaoPeq());
@@ -368,7 +375,12 @@ public class WebSocketServiceImpl implements WebSocketService {
 					this.jogador = salaParaAtualizar.get().getJogadores().get(index);
 					
 					if (this.jogador.getStatus().equals(StatusEnumJogador.JOGANDO)) {
-						
+						Jogador jogadorStatusJogandoFront = procuraJogadorJogandoNoFront(salaFront);
+
+						if (!jogadorStatusJogandoFront.getNome().equals(this.jogador.getNome())) {
+							this.sendSala(salaParaAtualizar.get());
+							return salaParaAtualizar;
+						}
 						Optional<Jogador> jogadorParaAtualizar = this.jogadorService.findById(this.jogador.getId());
 						RegrasDoJogo.adicionaCoracoesGrandes(jogador);
 
