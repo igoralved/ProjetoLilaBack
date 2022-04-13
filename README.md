@@ -1,4 +1,4 @@
-[![Java CI with Maven and Postgres](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml)
+[![CI with Maven and Postgres](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml)
 
 # ProjetoLilaBack
 
