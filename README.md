@@ -1,4 +1,7 @@
+Desenvolvimento
 [![CI with Maven and Postgres](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml)
+Main
+[![Java CI with Maven](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml)
 
 # ProjetoLilaBack
 
