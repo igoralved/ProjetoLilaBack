@@ -23,10 +23,10 @@ jobs:
       sudo -u postgres createdb --owner=lila coracoes_da_lila
       PGPASSWORD=lila psql --username=lila --host=localhost --list coracoes_da_lila
   - uses: actions/checkout@v2
-  - name: Set up JDK 11
+  - name: Set up JDK 17
     uses: actions/setup-java@v2
     with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'adopt'
         cache: maven
         
