@@ -14,20 +14,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 @Entity
-@Table(name="admin")
-public class Admin {
-	
+@Table(name = "carta_inicio")
+
+public class CartaInicio {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-		
-	@Column(name="senha", length =8 ,nullable =false)
-	private String senha;
+
+	@Column(name = "nome", length = 50, nullable = false)
+
+	private String nome;
+
+	@Column(name = "descricao", length = 255, nullable = false)
+	private String descricao;
+
 }
+

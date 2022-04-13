@@ -1,25 +1,25 @@
+[![CI with Maven and Postgres](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/development.yml)
+
 # ProjetoLilaBack
-Padrão usuario e senha do banco 
-user: lila 
-senha: corresponte a igualdade superior
 
-[![Java CI with Maven](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml/badge.svg)](https://github.com/igoralved/ProjetoLilaBack/actions/workflows/maven.yml)
+## Descrição do Projeto
+Aplicação que está sendo desenvolvida para o jogo de cartas Corações da Lila. O Corações da Lila tem o objetivo de educar pessoas sobre acessibilidade e inclusão.
 
-/* Padronização */
+Instagram do jogo: https://www.instagram.com/coracoesdalila/
 
-* Configuração do Banco  postegresSQL- 14 versão
-1- User: Postgres
-2-Database: coracoes_da_lila
+## Mapa de Tecnologias 🖱️
+
+O principal framework utilizado será o Spring.
+
+| Nome | Documentação |
+| :-: | :-: |
+| Spring | https://docs.spring.io/spring-framework/docs/current/reference/html/ |
+| Java | https://docs.oracle.com/en/java/ |
+| Maven | https://maven.apache.org/guides/|
+| Postgres | https://www.postgresql.org/docs/ |
 
 
-*Back end (dependencia a se adiconada)
-@Lombok 
-
-/*Para o Spring Boot*/
-1- Abra o projeto , botão direito ![image](https://user-images.githubusercontent.com/88458573/147160872-477e5c16-bd41-405d-8e9a-1c4e4465e87c.png)
-add Star , procure a dependência lombok , adicione depois deixe ele carregar; 
-
-2- Depois vá  em Manven dependencies , encontre esse nome ![image](https://user-images.githubusercontent.com/88458573/147161201-3669f1cf-9386-47e4-982d-63b2269b2b32.png);
-3- Botão direito , RUN AS , java aplication ;
-4-Irá abrir essa tela ![image](https://user-images.githubusercontent.com/88458573/147161650-e6402a05-d328-44a4-8c44-ba10b2e9c72d.png)
-Aqui vc deve selecionar onde está instalado  o sts e deixe ele instalado;
+## Executando o Projeto 💻
+```
+$ mvn spring-boot:run
+```
